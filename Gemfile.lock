@@ -98,6 +98,19 @@ GIT
       zeitwerk (~> 2.6)
 
 GEM
+  remote: https://get.railsdesigner.com/private/
+  specs:
+    rails_designer (1.13.1)
+      importmap-rails (~> 2.0)
+      propshaft (~> 1.0)
+      rails (>= 7.0, < 8.1)
+      rails_icons (~> 1.1)
+      stimulus-rails (~> 1.0)
+      tailwindcss-rails (~> 4.0)
+      turbo-rails (~> 2.0)
+      view_component (~> 3.0)
+
+GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.8.7)
@@ -187,6 +200,10 @@ GEM
       zeitwerk
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
+    importmap-rails (2.1.0)
+      actionpack (>= 6.0.0)
+      activesupport (>= 6.0.0)
+      railties (>= 6.0.0)
     io-console (0.8.0)
     irb (1.15.2)
       pp (>= 0.6.0)
@@ -309,6 +326,9 @@ GEM
     rails-html-sanitizer (1.6.2)
       loofah (~> 2.21)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
+    rails_icons (1.1.0)
+      nokogiri (~> 1.16, >= 1.16.4)
+      rails (> 6.1)
     rainbow (3.1.1)
     rake (13.2.1)
     rb-fsevent (0.11.2)
@@ -417,6 +437,16 @@ GEM
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringio (3.1.6)
+    tailwindcss-rails (4.2.2)
+      railties (>= 7.0.0)
+      tailwindcss-ruby (~> 4.0)
+    tailwindcss-ruby (4.1.3)
+    tailwindcss-ruby (4.1.3-aarch64-linux-gnu)
+    tailwindcss-ruby (4.1.3-aarch64-linux-musl)
+    tailwindcss-ruby (4.1.3-arm64-darwin)
+    tailwindcss-ruby (4.1.3-x86_64-darwin)
+    tailwindcss-ruby (4.1.3-x86_64-linux-gnu)
+    tailwindcss-ruby (4.1.3-x86_64-linux-musl)
     thor (1.3.2)
     thruster (0.1.12)
     thruster (0.1.12-aarch64-linux)
@@ -483,6 +513,8 @@ DEPENDENCIES
   propshaft
   puma (>= 5.0)
   rails!
+  rails_designer (~> 1.13.1)!
+  rails_icons (~> 1.1.0)
   rspec-rails (~> 7.0.0)
   rubocop-rails-omakase
   selenium-webdriver

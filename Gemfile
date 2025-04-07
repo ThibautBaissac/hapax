@@ -9,6 +9,7 @@ gem "pagy", "~> 9.3"
 gem "propshaft"
 gem "puma", ">= 5.0"
 gem "rails", github: "rails/rails", branch: "main"
+gem "rails_icons", "~> 1.1.0"
 gem "solid_cable"
 gem "solid_cache"
 gem "solid_queue"
@@ -18,6 +19,9 @@ gem "thruster", require: false
 gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "view_component"
+source "https://dGJhaXNzYWNAcHJvdG9uLm1l@get.railsdesigner.com/private" do
+  gem "rails_designer", "~> 1.13.1"
+end
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
