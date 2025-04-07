@@ -13,6 +13,7 @@
 ActiveRecord::Schema[8.1].define(version: 2025_04_07_083939) do
   create_table "users", force: :cascade do |t|
     t.string "address"
+    t.text "bio"
     t.string "city"
     t.datetime "confirmation_sent_at"
     t.string "confirmation_token"
