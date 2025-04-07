@@ -1,7 +1,19 @@
-<p>Hello <%= @email %>!</p>
+<div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <h1 style="color: #1F2937; font-size: 24px; font-weight: 600; text-align: center; margin-bottom: 24px;">
+    Hello <%= @email %>!
+  </h1>
 
-<% if @resource.try(:unconfirmed_email?) %>
-  <p>We're contacting you to notify you that your email is being changed to <%= @resource.unconfirmed_email %>.</p>
-<% else %>
-  <p>We're contacting you to notify you that your email has been changed to <%= @resource.email %>.</p>
-<% end %>
+  <% if @resource.try(:unconfirmed_email?) %>
+    <p style="color: #4B5563; font-size: 16px; line-height: 24px; text-align: center; margin-bottom: 24px;">
+      We're contacting you to notify you that your email is being changed to <strong style="color: #1F2937;"><%= @resource.unconfirmed_email %></strong>.
+    </p>
+  <% else %>
+    <p style="color: #4B5563; font-size: 16px; line-height: 24px; text-align: center; margin-bottom: 24px;">
+      We're contacting you to notify you that your email has been changed to <strong style="color: #1F2937;"><%= @resource.email %></strong>.
+    </p>
+  <% end %>
+
+  <p style="color: #6B7280; font-size: 14px; text-align: center; margin-top: 24px;">
+    If you didn't change your email, please contact support immediately.
+  </p>
+</div>

@@ -1,7 +1,22 @@
-<p>Hello <%= @resource.email %>!</p>
+<div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <h1 style="color: #1F2937; font-size: 24px; font-weight: 600; text-align: center; margin-bottom: 24px;">
+    Bonjour <%= @resource.email %>!
+  </h1>
 
-<p>Your account has been locked due to an excessive number of unsuccessful sign in attempts.</p>
+  <p style="color: #4B5563; font-size: 16px; line-height: 24px; margin-bottom: 24px;">
+    Votre compte a été verrouillé en raison d'un nombre excessif de tentatives de connexion infructueuses.
+  </p>
 
-<p>Click the link below to unlock your account:</p>
+  <p style="color: #4B5563; font-size: 16px; line-height: 24px; margin-bottom: 24px;">
+    Cliquez sur le lien ci-dessous pour déverrouiller votre compte :
+  </p>
 
-<p><%= link_to 'Unlock my account', unlock_url(@resource, unlock_token: @token) %></p>
+  <div style="text-align: center; margin: 32px 0;">
+    <%= link_to 'Déverrouiller mon compte', unlock_url(@resource, unlock_token: @token),
+        style: "display: inline-block; padding: 12px 24px; background-color: #4F46E5; color: #FFFFFF; text-decoration: none; font-weight: 500; border-radius: 6px;" %>
+  </div>
+
+  <p style="color: #6B7280; font-size: 14px; text-align: center; margin-top: 24px;">
+    Après le déverrouillage, pensez à changer votre mot de passe pour plus de sécurité.
+  </p>
+</div>
