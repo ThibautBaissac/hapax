@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gem "bootsnap", require: false
 gem "cssbundling-rails"
+gem "devise"
 gem "jbuilder"
 gem "jsbundling-rails"
 gem "kamal", require: false

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   mount RailsDesigner::Engine, at: '/rails_designer'
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
