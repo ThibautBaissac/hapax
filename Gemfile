@@ -32,6 +32,7 @@ end
 
 group :development do
   gem "hotwire-spark"
+  gem "letter_opener_web", "~> 3.0"
   gem "web-console"
 end
 
