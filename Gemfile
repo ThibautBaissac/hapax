@@ -5,6 +5,7 @@ gem "cssbundling-rails"
 gem "jbuilder"
 gem "jsbundling-rails"
 gem "kamal", require: false
+gem "pagy", "~> 9.3"
 gem "propshaft"
 gem "puma", ">= 5.0"
 gem "rails", github: "rails/rails", branch: "main"
