@@ -31,6 +31,7 @@ group :development, :test do
 end
 
 group :development do
+  gem "erb_lint", require: false
   gem "hotwire-spark"
   gem "letter_opener_web", "~> 3.0"
   gem "web-console"
