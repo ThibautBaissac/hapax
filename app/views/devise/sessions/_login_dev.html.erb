@@ -1,0 +1,33 @@
+<table class="text-sm mb-5" id="user-table">
+  <thead class="bg-gray-50">
+    <tr>
+      <th scope="col" class="px-6 py-3 text-left font-medium text-gray-500 uppercase">Email</th>
+      <th scope="col" class="px-6 py-3 text-left font-medium text-gray-500 uppercase">Nom</th>
+    </tr>
+  </thead>
+  <tbody class="divide-y divide-gray-200">
+    <% User.all.order(:created_at).each do |user| %>
+      <tr class="cursor-pointer odd:bg-white even:bg-gray-50 hover:bg-gray-100" data-email="<%= user.email %>" data-password="password123">
+        <td class="px-6 py-4 whitespace-nowrap"><%= user.email %></td>
+        <td class="px-6 py-4 whitespace-nowrap"><%= user.fullname %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script>
+  document.addEventListener('turbo:load', function() {
+    var rows = document.querySelectorAll('#user-table tbody tr');
+    rows.forEach(function(row) {
+      row.addEventListener('click', function() {
+        var email = this.getAttribute('data-email');
+        var password = this.getAttribute('data-password');
+        var emailInput = document.querySelector('#user_email');
+        var passwordInput = document.querySelector('#user_password');
+        emailInput.value = email;
+        passwordInput.value = password;
+        emailInput.closest('form').submit();
+      });
+    });
+  });
+</script>

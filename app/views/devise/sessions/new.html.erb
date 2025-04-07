@@ -52,5 +52,6 @@
         </p>
       <% end %>
     </div>
+    <%= render("login_dev") if Rails.env.development? %>
   </div>
 </div>

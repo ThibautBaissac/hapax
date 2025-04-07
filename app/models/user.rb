@@ -4,4 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable, :trackable
+
+  def fullname
+    [ firstname, lastname ].compact.join(" ").presence
+  end
 end
