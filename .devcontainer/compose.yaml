@@ -1,4 +1,4 @@
-name: "artists"
+name: "citations"
 
 services:
   rails-app:
@@ -23,5 +23,3 @@ services:
   selenium:
     image: selenium/standalone-chromium
     restart: unless-stopped
-
-  
