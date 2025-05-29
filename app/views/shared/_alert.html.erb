@@ -1,0 +1,81 @@
+<% if notice || alert || flash.any? %>
+  <div class="fixed top-4 right-4 z-50 space-y-3" id="flash-messages">
+    <!-- Success Notice -->
+    <% if notice %>
+      <div class="flash-message max-w-sm w-full bg-white shadow-xl rounded-xl border-l-4 border-emerald-500 transform translate-x-full opacity-0 transition-all duration-500 ease-out"
+            data-controller="flash"
+            data-flash-auto-dismiss-value="true"
+            data-flash-delay-value="5000"
+            data-action="mouseenter->flash#pauseAutoDismiss mouseleave->flash#resumeAutoDismiss">
+        <div class="p-4">
+          <div class="flex items-start">
+            <div class="flex-shrink-0">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-r from-emerald-500 to-green-500 flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="ml-3 flex-1">
+              <h3 class="text-sm font-semibold text-gray-900 mb-1">Succès</h3>
+              <p class="text-sm text-gray-700"><%= notice %></p>
+            </div>
+            <div class="ml-4 flex-shrink-0">
+              <button type="button"
+                      data-action="click->flash#dismiss"
+                      class="inline-flex text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600 transition-colors duration-200">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <!-- Progress bar -->
+          <div class="mt-3 bg-emerald-100 rounded-full h-1 overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-emerald-500 to-green-500 rounded-full progress-bar"
+                 data-flash-target="progressBar"></div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Error Alert -->
+    <% if alert %>
+      <div class="flash-message max-w-sm w-full bg-white shadow-xl rounded-xl border-l-4 border-red-500 transform translate-x-full opacity-0 transition-all duration-500 ease-out"
+            data-controller="flash"
+            data-flash-auto-dismiss-value="true"
+            data-flash-delay-value="5000"
+            data-action="mouseenter->flash#pauseAutoDismiss mouseleave->flash#resumeAutoDismiss">
+        <div class="p-4">
+          <div class="flex items-start">
+            <div class="flex-shrink-0">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-r from-red-500 to-pink-500 flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="ml-3 flex-1">
+              <h3 class="text-sm font-semibold text-gray-900 mb-1">Erreur</h3>
+              <p class="text-sm text-gray-700"><%= alert %></p>
+            </div>
+            <div class="ml-4 flex-shrink-0">
+              <button type="button"
+                      data-action="click->flash#dismiss"
+                      class="inline-flex text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600 transition-colors duration-200">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <!-- Progress bar -->
+          <div class="mt-3 bg-red-100 rounded-full h-1 overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-red-500 to-pink-500 rounded-full progress-bar"
+                 data-flash-target="progressBar"></div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
