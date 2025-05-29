@@ -1,9 +1,13 @@
 puts "Starting to empty the database..."
 
 models = [
+  MovementCitation,
+  Citation,
+  Movement,
+  Work,
+  Composer,
   User
 ]
-
 
 ActiveRecord::Base.transaction do
   models.each do |model|

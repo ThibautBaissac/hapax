@@ -10,7 +10,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_04_07_083939) do
+ActiveRecord::Schema[8.1].define(version: 2025_05_29_130454) do
+  create_table "citations", force: :cascade do |t|
+    t.string "author", null: false
+    t.datetime "created_at", null: false
+    t.text "notes"
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "composers", force: :cascade do |t|
+    t.text "bio"
+    t.date "birth_date"
+    t.datetime "created_at", null: false
+    t.date "death_date"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "nationnality"
+    t.text "short_bio"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "movement_citations", force: :cascade do |t|
+    t.string "category"
+    t.integer "citation_id", null: false
+    t.datetime "created_at", null: false
+    t.string "excerpt_text"
+    t.string "location_in_score"
+    t.integer "movement_id", null: false
+    t.text "notes"
+    t.datetime "updated_at", null: false
+    t.index ["citation_id"], name: "index_movement_citations_on_citation_id"
+    t.index ["movement_id"], name: "index_movement_citations_on_movement_id"
+  end
+
+  create_table "movements", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.integer "duration"
+    t.integer "position", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.integer "work_id", null: false
+    t.index ["work_id"], name: "index_movements_on_work_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "address"
     t.text "bio"
@@ -39,4 +83,20 @@ ActiveRecord::Schema[8.1].define(version: 2025_04_07_083939) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  create_table "works", force: :cascade do |t|
+    t.integer "composer_id", null: false
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.integer "duration"
+    t.string "opus"
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.index ["composer_id"], name: "index_works_on_composer_id"
+  end
+
+  add_foreign_key "movement_citations", "citations"
+  add_foreign_key "movement_citations", "movements"
+  add_foreign_key "movements", "works"
+  add_foreign_key "works", "composers"
 end

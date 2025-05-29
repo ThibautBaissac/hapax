@@ -1,2 +1,7 @@
 load "db/seeds/destroy_all.rb"
 load "db/seeds/users.rb"
+load "db/seeds/composers.rb"
+load "db/seeds/works.rb"
+load "db/seeds/movements.rb"
+load "db/seeds/citations.rb"
+load "db/seeds/movement_citations.rb"
