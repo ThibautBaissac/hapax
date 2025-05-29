@@ -1,0 +1,64 @@
+<div id="<%= dom_id citation %>" class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
+  <!-- Header with gradient background -->
+  <div class="bg-gradient-to-r from-emerald-600 to-emerald-700 p-6 text-white">
+    <h3 class="text-xl font-bold mb-2 line-clamp-2">
+      <%= citation.title %>
+    </h3>
+    <div class="flex items-center text-emerald-100">
+      <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+      </svg>
+      <span class="text-sm font-medium truncate">
+        <%= citation.author %>
+      </span>
+    </div>
+  </div>
+
+  <!-- Content Section -->
+  <div class="p-6">
+    <!-- Author Badge -->
+    <div class="mb-4">
+      <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800">
+        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
+        </svg>
+        <%= citation.author %>
+      </span>
+    </div>
+
+    <!-- Notes Preview -->
+    <% if citation.notes.present? %>
+      <div class="mb-4">
+        <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">
+          <%= citation.notes %>
+        </p>
+      </div>
+    <% end %>
+
+    <!-- Citation Details -->
+    <div class="bg-gray-50 rounded-lg p-3 mb-4">
+      <div class="text-gray-500 font-medium mb-1">Title</div>
+      <div class="text-gray-900 text-sm line-clamp-2">
+        <%= citation.title %>
+      </div>
+    </div>
+
+    <!-- Action Button -->
+    <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+      <%= link_to citation, class: "inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-lg shadow hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200" do %>
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+        </svg>
+        View Details
+      <% end %>
+
+      <!-- Optional: Movement citations count if available -->
+      <% if citation.respond_to?(:movement_citations) && citation.movement_citations.any? %>
+        <span class="text-xs text-gray-500 bg-amber-50 px-2 py-1 rounded-full">
+          <%= pluralize(citation.movement_citations.count, 'reference') %>
+        </span>
+      <% end %>
+    </div>
+  </div>
+</div>

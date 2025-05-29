@@ -1,0 +1,261 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, @movement.title %>
+
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-rose-50">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Back Navigation -->
+    <div class="mb-6">
+      <%= link_to movements_path, class: "inline-flex items-center text-rose-600 hover:text-rose-800 font-medium transition-colors duration-200" do %>
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        Back to Movements
+      <% end %>
+    </div>
+
+    <!-- Main Content Card -->
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+      <!-- Header Section -->
+      <div class="bg-gradient-to-r from-rose-600 via-rose-700 to-pink-700 px-8 py-12 text-white">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+          <div class="flex-1">
+            <h1 class="text-4xl lg:text-5xl font-bold mb-4">
+              <%= @movement.title %>
+            </h1>
+
+            <!-- Movement Details -->
+            <div class="flex flex-wrap items-center gap-6 text-rose-100 text-lg mb-4">
+              <% if @movement.position.present? %>
+                <span class="flex items-center">
+                  <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  Movement <%= @movement.position %>
+                </span>
+              <% end %>
+              <% if @movement.duration.present? %>
+                <span class="flex items-center">
+                  <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                  </svg>
+                  <%= time_duration(@movement.duration) %>
+                </span>
+              <% end %>
+            </div>
+
+            <!-- Work Badge -->
+            <% if @movement.work.present? %>
+              <div class="mt-6">
+                <%= link_to @movement.work, class: "inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-amber-100 text-amber-800 hover:bg-amber-200 transition-colors duration-200" do %>
+                  <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M9 19V6l12-3v13M9 19c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2zm12-3c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2zm-12 3V6l12-3v13" clip-rule="evenodd"></path>
+                  </svg>
+                  <%= @movement.work.title %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="mt-8 lg:mt-0 lg:ml-8 flex flex-col sm:flex-row gap-3">
+            <%= link_to edit_movement_path(@movement), class: "inline-flex items-center justify-center px-6 py-3 bg-white text-rose-700 font-semibold rounded-lg shadow-lg hover:shadow-xl hover:bg-gray-50 transform hover:-translate-y-0.5 transition-all duration-200" do %>
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+              </svg>
+              Edit Movement
+            <% end %>
+
+            <%= button_to @movement, method: :delete,
+                data: { confirm: "Are you sure you want to delete this movement? This action cannot be undone." },
+                class: "inline-flex items-center justify-center px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200" do %>
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+              </svg>
+              Delete
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Section -->
+      <div class="p-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Left Column - Description -->
+          <div class="lg:col-span-2 space-y-8">
+            <!-- Description -->
+            <% if @movement.description.present? %>
+              <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                  <svg class="w-6 h-6 mr-3 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                  </svg>
+                  About This Movement
+                </h2>
+                <div class="bg-gradient-to-r from-rose-50 to-pink-50 rounded-xl p-6 border-l-4 border-rose-500">
+                  <p class="text-gray-700 text-lg leading-relaxed whitespace-pre-line">
+                    <%= @movement.description %>
+                  </p>
+                </div>
+              </div>
+            <% end %>
+
+            <!-- Citations Section -->
+            <% if @movement.respond_to?(:movement_citations) && @movement.movement_citations.any? %>
+              <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                  <svg class="w-6 h-6 mr-3 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                  </svg>
+                  Citations & References
+                  <span class="ml-2 text-sm font-normal text-gray-500">(<%= @movement.movement_citations.count %>)</span>
+                </h2>
+                <div class="space-y-4">
+                  <% @movement.movement_citations.includes(:citation).each do |movement_citation| %>
+                    <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
+                      <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                          <%= link_to movement_citation.citation, class: "block" do %>
+                            <h3 class="font-semibold text-gray-900 hover:text-rose-600 transition-colors">
+                              <%= movement_citation.citation.title %>
+                            </h3>
+                            <p class="text-sm text-gray-600 mt-1">
+                              by <%= movement_citation.citation.author %>
+                            </p>
+                          <% end %>
+
+                          <% if movement_citation.category.present? %>
+                            <span class="inline-block mt-2 px-2 py-1 bg-rose-100 text-rose-800 text-xs rounded-full">
+                              <%= movement_citation.category %>
+                            </span>
+                          <% end %>
+
+                          <% if movement_citation.location_in_score.present? %>
+                            <p class="text-sm text-gray-600 mt-1">
+                              <strong>Location:</strong> <%= movement_citation.location_in_score %>
+                            </p>
+                          <% end %>
+
+                          <% if movement_citation.excerpt_text.present? %>
+                            <p class="text-sm text-gray-600 mt-1">
+                              <strong>Excerpt:</strong> "<%= movement_citation.excerpt_text %>"
+                            </p>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+          <!-- Right Column - Details -->
+          <div class="space-y-6">
+            <!-- Movement Details -->
+            <div class="bg-gray-50 rounded-xl p-6">
+              <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <svg class="w-5 h-5 mr-2 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Movement Details
+              </h3>
+
+              <div class="space-y-4">
+                <% if @movement.position.present? %>
+                  <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                    <span class="text-gray-600 font-medium">Position</span>
+                    <span class="text-gray-900">Movement <%= @movement.position %></span>
+                  </div>
+                <% end %>
+
+                <% if @movement.duration.present? %>
+                  <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                    <span class="text-gray-600 font-medium">Duration</span>
+                    <span class="text-gray-900"><%= time_duration(@movement.duration) %></span>
+                  </div>
+                <% end %>
+
+                <% if @movement.work.present? %>
+                  <div class="flex justify-between items-center py-2">
+                    <span class="text-gray-600 font-medium">From Work</span>
+                    <span class="text-gray-900">
+                      <%= link_to @movement.work, class: "text-rose-600 hover:text-rose-800" do %>
+                        <%= @movement.work.title %>
+                      <% end %>
+                    </span>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+
+            <!-- Statistics -->
+            <% if @movement.respond_to?(:movement_citations) && @movement.movement_citations.any? %>
+              <div class="bg-gradient-to-r from-rose-50 to-pink-50 rounded-xl p-6 border border-rose-100">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                  <svg class="w-5 h-5 mr-2 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                  </svg>
+                  Research Data
+                </h3>
+
+                <div class="space-y-3">
+                  <div class="flex justify-between items-center">
+                    <span class="text-gray-600">Total Citations</span>
+                    <span class="text-2xl font-bold text-rose-600"><%= @movement.movement_citations.count %></span>
+                  </div>
+
+                  <% unique_citations = @movement.movement_citations.includes(:citation).map(&:citation).uniq %>
+                  <div class="flex justify-between items-center">
+                    <span class="text-gray-600">Unique Sources</span>
+                    <span class="text-lg font-semibold text-gray-900"><%= unique_citations.count %></span>
+                  </div>
+
+                  <% categories = @movement.movement_citations.where.not(category: [nil, '']).pluck(:category).uniq %>
+                  <% if categories.any? %>
+                    <div class="pt-2">
+                      <span class="text-gray-600 text-sm">Categories</span>
+                      <div class="flex flex-wrap gap-1 mt-1">
+                        <% categories.each do |category| %>
+                          <span class="px-2 py-1 bg-rose-100 text-rose-800 text-xs rounded-full">
+                            <%= category %>
+                          </span>
+                        <% end %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+
+            <!-- Work Context (if part of a larger work) -->
+            <% if @movement.work.present? && @movement.work.movements.count > 1 %>
+              <div class="bg-amber-50 rounded-xl p-6 border border-amber-200">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                  <svg class="w-5 h-5 mr-2 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a1 1 0 011-1h12a1 1 0 011 1v2M7 7h10"></path>
+                  </svg>
+                  Other Movements
+                </h3>
+
+                <div class="space-y-2">
+                  <% @movement.work.movements.order(:position).each do |movement| %>
+                    <div class="flex justify-between items-center py-1 <%= 'font-semibold text-amber-700' if movement == @movement %>">
+                      <span class="<%= 'text-amber-800' if movement == @movement %>">
+                        <%= movement.position %>. <%= movement.title %>
+                        <%= "(Current)" if movement == @movement %>
+                      </span>
+                      <% if movement != @movement %>
+                        <%= link_to "View", movement, class: "text-xs text-amber-600 hover:text-amber-800" %>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

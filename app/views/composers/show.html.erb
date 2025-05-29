@@ -1,0 +1,236 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "#{@composer.first_name} #{@composer.last_name}" %>
+
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Back Navigation -->
+    <div class="mb-6">
+      <%= link_to composers_path, class: "inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium transition-colors duration-200" do %>
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        Back to Composers
+      <% end %>
+    </div>
+
+    <!-- Main Content Card -->
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+      <!-- Header Section -->
+      <div class="bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 px-8 py-12 text-white">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+          <div class="flex-1">
+            <h1 class="text-4xl lg:text-5xl font-bold mb-4">
+              <%= @composer.first_name %> <%= @composer.last_name %>
+            </h1>
+
+            <!-- Life Dates -->
+            <div class="flex items-center space-x-6 text-indigo-100 text-lg">
+              <span class="flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                </svg>
+                <%= @composer.birth_date&.year || "Unknown" %>
+              </span>
+              <span class="text-2xl">–</span>
+              <span><%= @composer.death_date&.year || "Present" %></span>
+            </div>
+
+            <!-- Nationality Badge -->
+            <% if @composer.nationnality.present? %>
+              <div class="mt-6">
+                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-amber-100 text-amber-800">
+                  <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z" clip-rule="evenodd"></path>
+                  </svg>
+                  <%= @composer.nationnality %>
+                </span>
+              </div>
+            <% end %>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="mt-8 lg:mt-0 lg:ml-8 flex flex-col sm:flex-row gap-3">
+            <%= link_to edit_composer_path(@composer), class: "inline-flex items-center justify-center px-6 py-3 bg-white text-indigo-700 font-semibold rounded-lg shadow-lg hover:shadow-xl hover:bg-gray-50 transform hover:-translate-y-0.5 transition-all duration-200" do %>
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+              </svg>
+              Edit Composer
+            <% end %>
+
+            <%= button_to @composer, method: :delete,
+                data: { confirm: "Are you sure you want to delete this composer? This action cannot be undone." },
+                class: "inline-flex items-center justify-center px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200" do %>
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+              </svg>
+              Delete
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Section -->
+      <div class="p-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Left Column - Biography -->
+          <div class="lg:col-span-2 space-y-8">
+            <!-- Short Bio -->
+            <% if @composer.short_bio.present? %>
+              <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                  <svg class="w-6 h-6 mr-3 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                  </svg>
+                  Overview
+                </h2>
+                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 border-l-4 border-indigo-500">
+                  <p class="text-gray-700 text-lg leading-relaxed">
+                    <%= @composer.short_bio %>
+                  </p>
+                </div>
+              </div>
+            <% end %>
+
+            <!-- Full Biography -->
+            <% if @composer.bio.present? %>
+              <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                  <svg class="w-6 h-6 mr-3 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                  </svg>
+                  Biography
+                </h2>
+                <div class="prose prose-lg max-w-none">
+                  <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <p class="text-gray-700 leading-relaxed whitespace-pre-line">
+                      <%= @composer.bio %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+
+            <!-- Works Section -->
+            <% if @composer.respond_to?(:works) && @composer.works.any? %>
+              <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                  <svg class="w-6 h-6 mr-3 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2zm12-3c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2zm-12 3V6l12-3v13"></path>
+                  </svg>
+                  Works
+                  <span class="ml-2 text-sm font-normal text-gray-500">(<%= @composer.works.count %>)</span>
+                </h2>
+                <div class="grid gap-4">
+                  <% @composer.works.each do |work| %>
+                    <%= link_to(work) do %>
+                      <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
+                        <div class="flex justify-between items-start">
+                          <div class="flex-1">
+                            <h3 class="font-semibold text-gray-900"><%= work.title %></h3>
+                            <% if work.opus.present? %>
+                              <p class="text-sm text-amber-600 font-medium"><%= work.opus %></p>
+                            <% end %>
+                            <% if work.description.present? %>
+                              <p class="text-sm text-gray-600 mt-1 line-clamp-2"><%= work.description %></p>
+                            <% end %>
+                          </div>
+                          <% if work.duration.present? %>
+                            <span class="ml-4 px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full whitespace-nowrap">
+                              <%= time_duration(work.duration) %>
+                            </span>
+                          <% end %>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+          <!-- Right Column - Details -->
+          <div class="space-y-6">
+            <!-- Personal Details -->
+            <div class="bg-gray-50 rounded-xl p-6">
+              <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <svg class="w-5 h-5 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Personal Details
+              </h3>
+
+              <div class="space-y-4">
+                <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                  <span class="text-gray-600 font-medium">Born</span>
+                  <span class="text-gray-900">
+                    <%= @composer.birth_date&.strftime("%B %d, %Y") || "Unknown" %>
+                  </span>
+                </div>
+
+                <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                  <span class="text-gray-600 font-medium">Died</span>
+                  <span class="text-gray-900">
+                    <%= @composer.death_date&.strftime("%B %d, %Y") || "Still alive" %>
+                  </span>
+                </div>
+
+                <% if @composer.birth_date && @composer.death_date %>
+                  <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                    <span class="text-gray-600 font-medium">Age at Death</span>
+                    <span class="text-gray-900">
+                      <%= ((@composer.death_date - @composer.birth_date) / 365.25).to_i %> years
+                    </span>
+                  </div>
+                <% end %>
+
+                <% if @composer.nationnality.present? %>
+                  <div class="flex justify-between items-center py-2">
+                    <span class="text-gray-600 font-medium">Nationality</span>
+                    <span class="text-gray-900"><%= @composer.nationnality %></span>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+
+            <!-- Statistics (if works are available) -->
+            <% if @composer.respond_to?(:works) && @composer.works.any? %>
+              <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 border border-indigo-100">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                  <svg class="w-5 h-5 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                  </svg>
+                  Catalog Statistics
+                </h3>
+
+                <div class="space-y-3">
+                  <div class="flex justify-between items-center">
+                    <span class="text-gray-600">Total Works</span>
+                    <span class="text-2xl font-bold text-indigo-600"><%= @composer.works.count %></span>
+                  </div>
+
+                  <% if @composer.works.where.not(duration: nil).any? %>
+                    <div class="flex justify-between items-center">
+                      <span class="text-gray-600">Total Duration</span>
+                      <span class="text-lg font-semibold text-gray-900">
+                        <%= time_duration(@composer.works.sum(:duration)) %>
+                      </span>
+                    </div>
+                  <% end %>
+
+                  <% total_movements = @composer.works.joins(:movements).count %>
+                  <% if total_movements > 0 %>
+                    <div class="flex justify-between items-center">
+                      <span class="text-gray-600">Total Movements</span>
+                      <span class="text-lg font-semibold text-gray-900"><%= total_movements %></span>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

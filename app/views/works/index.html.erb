@@ -1,0 +1,65 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Works" %>
+
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header Section -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        <span class="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          Musical Works
+        </span>
+      </h1>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        Explore the masterpieces that define classical music
+      </p>
+
+      <!-- Add New Work Button -->
+      <div class="mt-8">
+        <%= link_to "Add New Work", new_work_path,
+            class: "inline-flex items-center px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200" %>
+      </div>
+    </div>
+
+    <!-- Pagination Info -->
+    <% if @pagy.count > 0 %>
+      <div class="text-center mb-6">
+        <p class="text-gray-600">
+          Showing <%= @pagy.from %>-<%= @pagy.to %> of <%= @pagy.count %> works
+        </p>
+      </div>
+    <% end %>
+
+    <!-- Works Grid -->
+    <div id="works" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @works.each do |work| %>
+        <%= render work %>
+      <% end %>
+    </div>
+
+    <!-- Pagination Controls -->
+    <% if @pagy.pages > 1 %>
+      <div class="mt-12 flex justify-center">
+        <nav class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+          <%== pagy_nav(@pagy) %>
+        </nav>
+      </div>
+    <% end %>
+
+    <!-- Empty State -->
+    <% if @works.empty? %>
+      <div class="text-center py-16">
+        <div class="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
+          <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2zm12-3c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2zm-12 3V6l12-3v13"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">No works yet</h3>
+        <p class="text-gray-600 mb-6">Start building your collection of musical works</p>
+        <%= link_to "Add First Work", new_work_path,
+            class: "inline-flex items-center px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200" %>
+      </div>
+    <% end %>
+  </div>
+</div>

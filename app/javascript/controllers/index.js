@@ -4,5 +4,8 @@
 
 import { application } from "./application"
 
+import NavbarController from "./navbar_controller"
+application.register("navbar", NavbarController)
+
 import PwaController from "./pwa_controller"
 application.register("pwa", PwaController)

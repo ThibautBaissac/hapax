@@ -1,0 +1,65 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Citations" %>
+
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-emerald-50">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header Section -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        <span class="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+          Citations & References
+        </span>
+      </h1>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        Explore the scholarly works and references that inform musical understanding
+      </p>
+
+      <!-- Add New Citation Button -->
+      <div class="mt-8">
+        <%= link_to "Add New Citation", new_citation_path,
+            class: "inline-flex items-center px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200" %>
+      </div>
+    </div>
+
+    <!-- Pagination Info -->
+    <% if @pagy.count > 0 %>
+      <div class="text-center mb-6">
+        <p class="text-gray-600">
+          Showing <%= @pagy.from %>-<%= @pagy.to %> of <%= @pagy.count %> citations
+        </p>
+      </div>
+    <% end %>
+
+    <!-- Citations Grid -->
+    <div id="citations" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @citations.each do |citation| %>
+        <%= render citation %>
+      <% end %>
+    </div>
+
+    <!-- Pagination Controls -->
+    <% if @pagy.pages > 1 %>
+      <div class="mt-12 flex justify-center">
+        <nav class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+          <%== pagy_nav(@pagy) %>
+        </nav>
+      </div>
+    <% end %>
+
+    <!-- Empty State -->
+    <% if @citations.empty? %>
+      <div class="text-center py-16">
+        <div class="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
+          <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">No citations yet</h3>
+        <p class="text-gray-600 mb-6">Start building your collection of scholarly references</p>
+        <%= link_to "Add First Citation", new_citation_path,
+            class: "inline-flex items-center px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200" %>
+      </div>
+    <% end %>
+  </div>
+</div>
