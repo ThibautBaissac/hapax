@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  mount RailsDesigner::Engine, at: '/rails_designer'
+  mount RailsDesigner::Engine, at: "/rails_designer"
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -18,4 +18,5 @@ Rails.application.routes.draw do
   resources :works
   resources :composers
   devise_for :users
+  resource :profile, only: [ :show, :edit, :update ], controller: "profile"
 end
