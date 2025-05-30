@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :trackable
 
-  def fullname
+  def full_name
     [ firstname, lastname ].compact.join(" ").presence
   end
 end

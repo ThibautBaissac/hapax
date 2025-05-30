@@ -40,7 +40,7 @@ Composer.find_each do |composer|
       composer: composer
     )
     work_count += 1
-    puts "-- Created work #{work_count}: #{Work.last.title} by #{composer.fullname}"
+    puts "-- Created work #{work_count}: #{Work.last.title} by #{composer.full_name}"
   end
 end
 
