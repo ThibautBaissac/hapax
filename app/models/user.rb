@@ -5,6 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :trackable
 
+  sanitizes :firstname, :lastname, :bio, :phone, :address, :city, :zip_code, tags: [], attributes: []
+
   def full_name
     [ firstname, lastname ].compact.join(" ").presence
   end

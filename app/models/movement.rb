@@ -5,4 +5,7 @@ class Movement < ApplicationRecord
   has_many :citations, through: :movement_citations
 
   validates :title, presence: true
+
+  sanitizes :title, tags: [], attributes: []
+  sanitizes :description
 end

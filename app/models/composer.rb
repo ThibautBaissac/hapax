@@ -4,6 +4,9 @@ class Composer < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
 
+  sanitizes :first_name, :last_name, :nationnality, tags: [], attributes: []
+  sanitizes :short_bio, :bio
+
   def full_name
     [ first_name, last_name ].compact.join(" ").presence
   end

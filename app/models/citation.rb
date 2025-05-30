@@ -3,4 +3,7 @@ class Citation < ApplicationRecord
 
   validates :title, presence: true
   validates :author, presence: true
+
+  sanitizes :title, :author, tags: [], attributes: []
+  sanitizes :notes
 end
