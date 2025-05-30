@@ -204,6 +204,8 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    groupdate (6.6.0)
+      activesupport (>= 7.1)
     hotwire-spark (0.1.13)
       listen
       rails (>= 7.0.0)
@@ -523,6 +525,7 @@ DEPENDENCIES
   erb_lint
   factory_bot_rails
   faker
+  groupdate
   hotwire-spark
   jbuilder
   jsbundling-rails

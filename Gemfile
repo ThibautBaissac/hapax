@@ -4,6 +4,7 @@ gem "bootsnap", require: false
 gem "chartkick"
 gem "cssbundling-rails"
 gem "devise"
+gem "groupdate"
 gem "jbuilder"
 gem "jsbundling-rails"
 gem "kamal", require: false
