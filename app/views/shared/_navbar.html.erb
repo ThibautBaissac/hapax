@@ -11,7 +11,7 @@
           </div>
           <div class="hidden sm:block">
             <h1 class="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              Citations
+              Quotes
             </h1>
             <p class="text-xs text-gray-500 -mt-1">Musical Research</p>
           </div>
@@ -113,32 +113,32 @@
           </div>
         </div>
 
-        <!-- Citations Dropdown -->
+        <!-- Quotes Dropdown -->
         <div class="relative group">
-          <%= link_to citations_path, class: "nav-link flex items-center px-4 py-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all duration-200 group #{'bg-emerald-100 text-emerald-700' if current_page?(citations_path) || controller_name == 'citations'}" do %>
+          <%= link_to quotes_path, class: "nav-link flex items-center px-4 py-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all duration-200 group #{'bg-emerald-100 text-emerald-700' if current_page?(quotes_path) || controller_name == 'quotes'}" do %>
             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" clip-rule="evenodd"></path>
             </svg>
-            <span class="font-medium">Citations</span>
+            <span class="font-medium">Quotes</span>
             <svg class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
             </svg>
           <% end %>
 
-          <!-- Citations Dropdown Menu -->
+          <!-- Quotes Dropdown Menu -->
           <div class="absolute top-full left-0 mt-1 w-56 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2">
             <div class="py-2">
-              <%= link_to citations_path, class: "flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors duration-150" do %>
+              <%= link_to quotes_path, class: "flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors duration-150" do %>
                 <svg class="w-4 h-4 mr-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
                 </svg>
-                All Citations
+                All Quotes
               <% end %>
-              <%= link_to new_citation_path, class: "flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors duration-150" do %>
+              <%= link_to new_quote_path, class: "flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors duration-150" do %>
                 <svg class="w-4 h-4 mr-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                 </svg>
-                Add New Citation
+                Add New Quote
               <% end %>
             </div>
           </div>
@@ -253,27 +253,27 @@
         <% end %>
       </div>
 
-      <!-- Citations Mobile -->
+      <!-- Quotes Mobile -->
       <div class="space-y-1">
-        <div class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3 py-2">Citations</div>
-        <%= link_to citations_path,
+        <div class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3 py-2">Quotes</div>
+        <%= link_to quotes_path,
             data: { action: "click->navbar#closeMobileMenu" },
-            class: "block px-3 py-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors duration-150 #{'bg-emerald-100 text-emerald-700' if current_page?(citations_path) || controller_name == 'citations'}" do %>
+            class: "block px-3 py-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors duration-150 #{'bg-emerald-100 text-emerald-700' if current_page?(quotes_path) || controller_name == 'quotes'}" do %>
           <div class="flex items-center">
             <svg class="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" clip-rule="evenodd"></path>
             </svg>
-            All Citations
+            All Quotes
           </div>
         <% end %>
-        <%= link_to new_citation_path,
+        <%= link_to new_quote_path,
             data: { action: "click->navbar#closeMobileMenu" },
             class: "block px-3 py-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors duration-150" do %>
           <div class="flex items-center">
             <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
             </svg>
-            Add New Citation
+            Add New Quote
           </div>
         <% end %>
       </div>

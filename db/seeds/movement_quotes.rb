@@ -1,8 +1,8 @@
 require 'faker'
 
-puts "🔗 Creating movement citations"
+puts "🔗 Creating movement quotes"
 
-movement_citation_count = 0
+movement_quote_count = 0
 
 categories = [
   "Historical Context", "Musical Analysis", "Performance Notes", "Biographical Reference",
@@ -16,27 +16,27 @@ score_locations = [
 ]
 
 Movement.includes(:work).find_each do |movement|
-  # Each movement gets 0-3 citations
-  citations_count = rand(0..3)
+  # Each movement gets 0-3 quotes
+  quotes_count = rand(0..3)
 
-  # Get random citations for this movement
-  available_citations = Citation.order("RANDOM()").limit(citations_count)
+  # Get random quotes for this movement
+  available_quotes = Quote.order("RANDOM()").limit(quotes_count)
 
-  available_citations.each do |citation|
-    MovementCitation.create!(
-      citation: citation,
+  available_quotes.each do |quote|
+    MovementQuote.create!(
+      quote: quote,
       movement: movement,
       category: categories.sample,
       location_in_score: score_locations.sample,
       excerpt_text: Faker::Lorem.sentence(word_count: 12),
       notes: Faker::Lorem.paragraph(sentence_count: 3)
     )
-    movement_citation_count += 1
+    movement_quote_count += 1
   end
 
-  if citations_count > 0
-    puts "-- Created #{citations_count} citations for movement '#{movement.title}' from '#{movement.work.title}'"
+  if quotes_count > 0
+    puts "-- Created #{quotes_count} quotes for movement '#{movement.title}' from '#{movement.work.title}'"
   end
 end
 
-puts "✅ Created #{MovementCitation.count} movement citations in total"
+puts "✅ Created #{MovementQuote.count} movement quotes in total"

@@ -1,6 +1,6 @@
-class CreateCitations < ActiveRecord::Migration[8.1]
+class CreateQuotes < ActiveRecord::Migration[8.1]
   def change
-    create_table :citations do |t|
+    create_table :quotes do |t|
       t.string :title, null: false
       t.string :author, null: false
       t.text :notes

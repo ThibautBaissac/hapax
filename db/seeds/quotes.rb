@@ -1,9 +1,9 @@
 require 'faker'
 
-puts "📚 Creating citations"
+puts "📚 Creating quotes"
 
-citation_count = 0
-total_citation_count = 30
+quote_count = 0
+total_quote_count = 30
 
 # Mix of academic and popular sources
 source_types = [
@@ -33,7 +33,7 @@ book_titles = [
   "Great Composers and Their Times"
 ]
 
-total_citation_count.times do
+total_quote_count.times do
   source = source_types.sample
 
   case source[:author_format]
@@ -48,13 +48,13 @@ total_citation_count.times do
     title = "#{Faker::Lorem.sentence(word_count: 8).chomp('.')}: A Critical Analysis"
   end
 
-  Citation.create!(
+  Quote.create!(
     title: title,
     author: author,
     notes: Faker::Lorem.paragraph(sentence_count: 6, supplemental: true, random_sentences_to_add: 2)
   )
-  citation_count += 1
-  puts "-- Created citation #{citation_count}/#{total_citation_count}: '#{Citation.last.title}' by #{Citation.last.author}"
+  quote_count += 1
+  puts "-- Created quote #{quote_count}/#{total_quote_count}: '#{Quote.last.title}' by #{Quote.last.author}"
 end
 
-puts "✅ Created #{Citation.count} citations in total"
+puts "✅ Created #{Quote.count} quotes in total"

@@ -67,10 +67,10 @@
         View Details
       <% end %>
 
-      <!-- Optional: Citations count if available -->
-      <% if movement.respond_to?(:movement_citations) && movement.movement_citations.any? %>
+      <!-- Optional: Quotes count if available -->
+      <% if movement.respond_to?(:movement_quotes) && movement.movement_quotes.any? %>
         <span class="text-xs text-gray-500 bg-amber-50 px-2 py-1 rounded-full">
-          <%= pluralize(movement.movement_citations.count, 'citation') %>
+          <%= pluralize(movement.movement_quotes.count, 'quote') %>
         </span>
       <% end %>
     </div>

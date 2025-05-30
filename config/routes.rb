@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "composers#index"
 
-  resources :citations
+  resources :quotes
   resources :movements
   resources :works
   resources :composers

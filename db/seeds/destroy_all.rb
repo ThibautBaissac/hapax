@@ -1,8 +1,8 @@
 puts "Starting to empty the database..."
 
 models = [
-  MovementCitation,
-  Citation,
+  MovementQuote,
+  Quote,
   Movement,
   Work,
   Composer,

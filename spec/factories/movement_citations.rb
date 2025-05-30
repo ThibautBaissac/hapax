@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :movement_citation do
-    citation { nil }
+  factory :movement_quote do
+    quote { nil }
     movement { nil }
     category { "MyString" }
     location_in_score { "MyString" }

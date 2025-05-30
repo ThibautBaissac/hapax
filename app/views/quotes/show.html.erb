@@ -1,14 +1,14 @@
-<% content_for :title, @citation.title %>
+<% content_for :title, @quote.title %>
 
 <div class="min-h-screen bg-gradient-to-br from-slate-50 to-emerald-50">
   <div class="container mx-auto px-4 py-8">
     <!-- Back Navigation -->
     <div class="mb-6">
-      <%= link_to citations_path, class: "inline-flex items-center text-emerald-600 hover:text-emerald-800 font-medium transition-colors duration-200" do %>
+      <%= link_to quotes_path, class: "inline-flex items-center text-emerald-600 hover:text-emerald-800 font-medium transition-colors duration-200" do %>
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
-        Back to Citations
+        Back to Quotes
       <% end %>
     </div>
 
@@ -19,7 +19,7 @@
         <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between">
           <div class="flex-1">
             <h1 class="text-3xl lg:text-4xl font-bold mb-4 leading-tight">
-              <%= @citation.title %>
+              <%= @quote.title %>
             </h1>
 
             <!-- Author Info -->
@@ -27,21 +27,21 @@
               <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
               </svg>
-              <span class="font-medium">by <%= @citation.author %></span>
+              <span class="font-medium">by <%= @quote.author %></span>
             </div>
           </div>
 
           <!-- Action Buttons -->
           <div class="mt-8 lg:mt-0 lg:ml-8 flex flex-col sm:flex-row gap-3">
-            <%= link_to edit_citation_path(@citation), class: "inline-flex items-center justify-center px-6 py-3 bg-white text-emerald-700 font-semibold rounded-lg shadow-lg hover:shadow-xl hover:bg-gray-50 transform hover:-translate-y-0.5 transition-all duration-200" do %>
+            <%= link_to edit_quote_path(@quote), class: "inline-flex items-center justify-center px-6 py-3 bg-white text-emerald-700 font-semibold rounded-lg shadow-lg hover:shadow-xl hover:bg-gray-50 transform hover:-translate-y-0.5 transition-all duration-200" do %>
               <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
               </svg>
-              Edit Citation
+              Edit Quote
             <% end %>
 
-            <%= button_to @citation, method: :delete,
-                data: { confirm: "Are you sure you want to delete this citation? This action cannot be undone." },
+            <%= button_to @quote, method: :delete,
+                data: { confirm: "Are you sure you want to delete this quote? This action cannot be undone." },
                 class: "inline-flex items-center justify-center px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200" do %>
               <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
@@ -58,7 +58,7 @@
           <!-- Left Column - Content -->
           <div class="lg:col-span-2 space-y-8">
             <!-- Notes -->
-            <% if @citation.notes.present? %>
+            <% if @quote.notes.present? %>
               <div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
                   <svg class="w-6 h-6 mr-3 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,44 +69,44 @@
                 <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl p-6 border-l-4 border-emerald-500">
                   <div class="prose prose-lg max-w-none">
                     <p class="text-gray-700 leading-relaxed whitespace-pre-line">
-                      <%= @citation.notes %>
+                      <%= @quote.notes %>
                     </p>
                   </div>
                 </div>
               </div>
             <% end %>
 
-            <!-- Movement Citations Section -->
-            <% if @citation.respond_to?(:movement_citations) && @citation.movement_citations.any? %>
+            <!-- Movement Quotes Section -->
+            <% if @quote.respond_to?(:movement_quotes) && @quote.movement_quotes.any? %>
               <div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
                   <svg class="w-6 h-6 mr-3 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
                   </svg>
                   Referenced in Works
-                  <span class="ml-2 text-sm font-normal text-gray-500">(<%= @citation.movement_citations.count %>)</span>
+                  <span class="ml-2 text-sm font-normal text-gray-500">(<%= @quote.movement_quotes.count %>)</span>
                 </h2>
                 <div class="space-y-4">
-                  <% @citation.movement_citations.includes(movement: :work).each do |movement_citation| %>
+                  <% @quote.movement_quotes.includes(movement: :work).each do |movement_quote| %>
                     <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
                       <div class="flex justify-between items-start">
                         <div class="flex-1">
                           <h3 class="font-semibold text-gray-900">
-                            <%= movement_citation.movement.work.title %> - <%= movement_citation.movement.title %>
+                            <%= movement_quote.movement.work.title %> - <%= movement_quote.movement.title %>
                           </h3>
-                          <% if movement_citation.category.present? %>
+                          <% if movement_quote.category.present? %>
                             <span class="inline-block mt-2 px-2 py-1 bg-emerald-100 text-emerald-800 text-xs rounded-full">
-                              <%= movement_citation.category %>
+                              <%= movement_quote.category %>
                             </span>
                           <% end %>
-                          <% if movement_citation.location_in_score.present? %>
+                          <% if movement_quote.location_in_score.present? %>
                             <p class="text-sm text-gray-600 mt-1">
-                              <strong>Location:</strong> <%= movement_citation.location_in_score %>
+                              <strong>Location:</strong> <%= movement_quote.location_in_score %>
                             </p>
                           <% end %>
-                          <% if movement_citation.excerpt_text.present? %>
+                          <% if movement_quote.excerpt_text.present? %>
                             <p class="text-sm text-gray-600 mt-1">
-                              <strong>Excerpt:</strong> "<%= movement_citation.excerpt_text %>"
+                              <strong>Excerpt:</strong> "<%= movement_quote.excerpt_text %>"
                             </p>
                           <% end %>
                         </div>
@@ -120,41 +120,41 @@
 
           <!-- Right Column - Details -->
           <div class="space-y-6">
-            <!-- Citation Details -->
+            <!-- Quote Details -->
             <div class="bg-gray-50 rounded-xl p-6">
               <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                 <svg class="w-5 h-5 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                Citation Details
+                Quote Details
               </h3>
 
               <div class="space-y-4">
                 <div class="py-2 border-b border-gray-200">
                   <div class="text-gray-600 font-medium mb-1">Title</div>
                   <div class="text-gray-900">
-                    <%= @citation.title %>
+                    <%= @quote.title %>
                   </div>
                 </div>
 
                 <div class="py-2 border-b border-gray-200">
                   <div class="text-gray-600 font-medium mb-1">Author</div>
                   <div class="text-gray-900">
-                    <%= @citation.author %>
+                    <%= @quote.author %>
                   </div>
                 </div>
 
                 <div class="py-2">
                   <div class="text-gray-600 font-medium mb-1">Added</div>
                   <div class="text-gray-900">
-                    <%= @citation.created_at.strftime("%B %d, %Y") %>
+                    <%= @quote.created_at.strftime("%B %d, %Y") %>
                   </div>
                 </div>
               </div>
             </div>
 
             <!-- Statistics -->
-            <% if @citation.respond_to?(:movement_citations) && @citation.movement_citations.any? %>
+            <% if @quote.respond_to?(:movement_quotes) && @quote.movement_quotes.any? %>
               <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl p-6 border border-emerald-100">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                   <svg class="w-5 h-5 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -166,16 +166,16 @@
                 <div class="space-y-3">
                   <div class="flex justify-between items-center">
                     <span class="text-gray-600">References</span>
-                    <span class="text-2xl font-bold text-emerald-600"><%= @citation.movement_citations.count %></span>
+                    <span class="text-2xl font-bold text-emerald-600"><%= @quote.movement_quotes.count %></span>
                   </div>
 
-                  <% unique_works = @citation.movement_citations.joins(:movement).includes(movement: :work).map { |mc| mc.movement.work }.uniq %>
+                  <% unique_works = @quote.movement_quotes.joins(:movement).includes(movement: :work).map { |mc| mc.movement.work }.uniq %>
                   <div class="flex justify-between items-center">
                     <span class="text-gray-600">Works Referenced</span>
                     <span class="text-lg font-semibold text-gray-900"><%= unique_works.count %></span>
                   </div>
 
-                  <% categories = @citation.movement_citations.where.not(category: [nil, '']).pluck(:category).uniq %>
+                  <% categories = @quote.movement_quotes.where.not(category: [nil, '']).pluck(:category).uniq %>
                   <% if categories.any? %>
                     <div class="pt-2">
                       <span class="text-gray-600 text-sm">Categories</span>

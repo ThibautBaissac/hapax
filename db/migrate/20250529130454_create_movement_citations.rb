@@ -1,7 +1,7 @@
-class CreateMovementCitations < ActiveRecord::Migration[8.1]
+class CreateMovementQuotes < ActiveRecord::Migration[8.1]
   def change
-    create_table :movement_citations do |t|
-      t.references :citation, null: false, foreign_key: true
+    create_table :movement_quotes do |t|
+      t.references :quote, null: false, foreign_key: true
       t.references :movement, null: false, foreign_key: true
       t.string :category
       t.string :location_in_score

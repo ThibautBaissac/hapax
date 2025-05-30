@@ -98,45 +98,45 @@
               </div>
             <% end %>
 
-            <!-- Citations Section -->
-            <% if @movement.respond_to?(:movement_citations) && @movement.movement_citations.any? %>
+            <!-- Quotes Section -->
+            <% if @movement.respond_to?(:movement_quotes) && @movement.movement_quotes.any? %>
               <div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
                   <svg class="w-6 h-6 mr-3 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                   </svg>
-                  Citations & References
-                  <span class="ml-2 text-sm font-normal text-gray-500">(<%= @movement.movement_citations.count %>)</span>
+                  Quotes & References
+                  <span class="ml-2 text-sm font-normal text-gray-500">(<%= @movement.movement_quotes.count %>)</span>
                 </h2>
                 <div class="space-y-4">
-                  <% @movement.movement_citations.includes(:citation).each do |movement_citation| %>
+                  <% @movement.movement_quotes.includes(:quote).each do |movement_quote| %>
                     <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
                       <div class="flex justify-between items-start">
                         <div class="flex-1">
-                          <%= link_to movement_citation.citation, class: "block" do %>
+                          <%= link_to movement_quote.quote, class: "block" do %>
                             <h3 class="font-semibold text-gray-900 hover:text-rose-600 transition-colors">
-                              <%= movement_citation.citation.title %>
+                              <%= movement_quote.quote.title %>
                             </h3>
                             <p class="text-sm text-gray-600 mt-1">
-                              by <%= movement_citation.citation.author %>
+                              by <%= movement_quote.quote.author %>
                             </p>
                           <% end %>
 
-                          <% if movement_citation.category.present? %>
+                          <% if movement_quote.category.present? %>
                             <span class="inline-block mt-2 px-2 py-1 bg-rose-100 text-rose-800 text-xs rounded-full">
-                              <%= movement_citation.category %>
+                              <%= movement_quote.category %>
                             </span>
                           <% end %>
 
-                          <% if movement_citation.location_in_score.present? %>
+                          <% if movement_quote.location_in_score.present? %>
                             <p class="text-sm text-gray-600 mt-1">
-                              <strong>Location:</strong> <%= movement_citation.location_in_score %>
+                              <strong>Location:</strong> <%= movement_quote.location_in_score %>
                             </p>
                           <% end %>
 
-                          <% if movement_citation.excerpt_text.present? %>
+                          <% if movement_quote.excerpt_text.present? %>
                             <p class="text-sm text-gray-600 mt-1">
-                              <strong>Excerpt:</strong> "<%= movement_citation.excerpt_text %>"
+                              <strong>Excerpt:</strong> "<%= movement_quote.excerpt_text %>"
                             </p>
                           <% end %>
                         </div>
@@ -188,7 +188,7 @@
             </div>
 
             <!-- Statistics -->
-            <% if @movement.respond_to?(:movement_citations) && @movement.movement_citations.any? %>
+            <% if @movement.respond_to?(:movement_quotes) && @movement.movement_quotes.any? %>
               <div class="bg-gradient-to-r from-rose-50 to-pink-50 rounded-xl p-6 border border-rose-100">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                   <svg class="w-5 h-5 mr-2 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -199,17 +199,17 @@
 
                 <div class="space-y-3">
                   <div class="flex justify-between items-center">
-                    <span class="text-gray-600">Total Citations</span>
-                    <span class="text-2xl font-bold text-rose-600"><%= @movement.movement_citations.count %></span>
+                    <span class="text-gray-600">Total Quotes</span>
+                    <span class="text-2xl font-bold text-rose-600"><%= @movement.movement_quotes.count %></span>
                   </div>
 
-                  <% unique_citations = @movement.movement_citations.includes(:citation).map(&:citation).uniq %>
+                  <% unique_quotes = @movement.movement_quotes.includes(:quote).map(&:quote).uniq %>
                   <div class="flex justify-between items-center">
                     <span class="text-gray-600">Unique Sources</span>
-                    <span class="text-lg font-semibold text-gray-900"><%= unique_citations.count %></span>
+                    <span class="text-lg font-semibold text-gray-900"><%= unique_quotes.count %></span>
                   </div>
 
-                  <% categories = @movement.movement_citations.where.not(category: [nil, '']).pluck(:category).uniq %>
+                  <% categories = @movement.movement_quotes.where.not(category: [nil, '']).pluck(:category).uniq %>
                   <% if categories.any? %>
                     <div class="pt-2">
                       <span class="text-gray-600 text-sm">Categories</span>

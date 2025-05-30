@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :citation do
+  factory :quote do
     title { "MyString" }
     author { "MyString" }
     notes { "MyText" }

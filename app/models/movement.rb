@@ -1,8 +1,8 @@
 class Movement < ApplicationRecord
   belongs_to :work
 
-  has_many :movement_citations, dependent: :destroy
-  has_many :citations, through: :movement_citations
+  has_many :movement_quotes, dependent: :destroy
+  has_many :quotes, through: :movement_quotes
 
   validates :title, presence: true
 

@@ -1,4 +1,4 @@
-<% content_for :title, "New Citation" %>
+<% content_for :title, "New Quote" %>
 
 <div class="min-h-screen bg-gradient-to-br from-slate-50 to-emerald-50">
   <div class="container mx-auto px-4 py-8">
@@ -6,11 +6,11 @@
     <div class="mb-8">
       <!-- Back Navigation -->
       <div class="mb-6">
-        <%= link_to citations_path, class: "inline-flex items-center text-emerald-600 hover:text-emerald-800 font-medium transition-colors duration-200" do %>
+        <%= link_to quotes_path, class: "inline-flex items-center text-emerald-600 hover:text-emerald-800 font-medium transition-colors duration-200" do %>
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
           </svg>
-          Back to Citations
+          Back to Quotes
         <% end %>
       </div>
 
@@ -18,7 +18,7 @@
       <div class="text-center">
         <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           <span class="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
-            Add New Citation
+            Add New Quote
           </span>
         </h1>
         <p class="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -31,7 +31,7 @@
     <div class="max-w-4xl mx-auto">
       <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-1">
         <div class="bg-white rounded-xl p-8">
-          <%= render "form", citation: @citation %>
+          <%= render "form", quote: @quote %>
         </div>
       </div>
     </div>
