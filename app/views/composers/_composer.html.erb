@@ -1,20 +1,32 @@
 <div id="<%= dom_id composer %>" class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
   <!-- Header with gradient background -->
   <div class="bg-gradient-to-r from-indigo-600 to-indigo-700 p-6 text-white">
-    <h3 class="text-xl font-bold mb-1">
-      <%= composer.first_name %> <%= composer.last_name %>
-    </h3>
-    <div class="flex items-center space-x-4 text-indigo-100">
-      <span class="flex items-center">
-        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
-        </svg>
-        <%= composer.birth_date&.year || "Unknown" %>
-      </span>
-      <span>-</span>
-      <span class="flex items-center">
-        <%= composer.death_date&.year || "Present" %>
-      </span>
+    <div class="flex items-start space-x-4">
+      <!-- Portrait Preview -->
+      <% if composer.portrait.attached? %>
+        <div class="flex-shrink-0">
+          <div class="w-16 h-16 rounded-full overflow-hidden">
+            <%= image_tag composer.portrait,
+                alt: "Portrait of #{composer.full_name}",
+                class: "w-full h-full object-cover" %>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="flex-1">
+        <h3 class="text-xl font-bold mb-1">
+          <%= composer.first_name %> <%= composer.last_name %>
+        </h3>
+        <div class="flex items-center space-x-4 text-indigo-100">
+          <span class="flex items-center">
+            <%= composer.birth_date&.year || "Unknown" %>
+          </span>
+          <span>-</span>
+          <span class="flex items-center">
+            <%= composer.death_date&.year || "Present" %>
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 

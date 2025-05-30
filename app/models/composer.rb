@@ -1,4 +1,6 @@
 class Composer < ApplicationRecord
+  has_one_attached :portrait
+
   has_many :works, dependent: :destroy
 
   validates :first_name, presence: true

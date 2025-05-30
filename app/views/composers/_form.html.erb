@@ -45,11 +45,40 @@
       </div>
 
       <!-- Nationality -->
-      <div class="md:col-span-2">
+      <div>
         <%= form.label :nationnality, "Nationality", class: "block text-sm font-medium text-gray-700 mb-2" %>
         <%= form.text_field :nationnality,
             class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200",
             placeholder: "Austrian" %>
+      </div>
+
+      <!-- Portrait -->
+      <div class="md:col-span-2">
+        <%= form.label :portrait, class: "block text-sm font-medium text-gray-700 mb-2" %>
+        <div class="flex items-start gap-4">
+          <div class="flex-1">
+            <%= form.file_field :portrait,
+                accept: "image/*",
+                class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" %>
+            <p class="text-xs text-gray-500 mt-1">Upload a portrait image (JPG, PNG, etc.)</p>
+            <% if composer.portrait.attached? %>
+              <div class="mt-2">
+                <p class="text-xs text-green-600">Current image: <%= composer.portrait.filename %></p>
+              </div>
+            <% end %>
+          </div>
+
+          <!-- Portrait Preview -->
+          <% if composer.portrait.attached? %>
+            <div class="flex-shrink-0">
+              <div class="w-20 h-20 rounded-lg overflow-hidden border-2 border-gray-200 shadow-sm">
+                <%= image_tag composer.portrait,
+                    alt: "Current portrait",
+                    class: "w-full h-full object-cover" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
@@ -99,21 +128,6 @@
             class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200 resize-y",
             placeholder: "A brief overview of the composer's life and significance..." %>
         <p class="text-xs text-gray-500 mt-1">Brief summary for preview cards</p>
-      </div>
-
-      <!-- Full Bio -->
-      <div>
-        <%= form.label :bio, "Full Biography", class: "block text-sm font-medium text-gray-700 mb-2" %>
-        <%= form.text_area :bio,
-            rows: 8,
-            class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200 resize-y",
-            placeholder: "Detailed biography including early life, career highlights, musical style, and legacy..." %>
-        <p class="text-xs text-gray-500 mt-1">Comprehensive biography for the detailed view</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Form Actions -->
   <div class="flex flex-col sm:flex-row gap-4 pt-6">
     <%= form.submit class: "flex-1 sm:flex-none inline-flex items-center justify-center px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200" %>
 

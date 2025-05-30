@@ -51,6 +51,6 @@ class ComposersController < ApplicationController
     end
 
     def composer_params
-      params.expect(composer: [ :first_name, :last_name, :birth_date, :death_date, :short_bio, :bio, :nationnality ])
+      params.require(:composer).permit(:first_name, :last_name, :nationnality, :birth_date, :death_date, :short_bio, :bio, :portrait)
     end
 end
