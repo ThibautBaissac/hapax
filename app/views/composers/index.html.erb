@@ -1,23 +1,15 @@
 <% content_for :title, "Composers" %>
 
-<div class="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50">
+<div class="min-h-screen bg-slate-50">
   <div class="container mx-auto px-4 py-8">
     <!-- Header Section -->
     <div class="text-center mb-12">
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-        <span class="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-          Great Composers
-        </span>
+      <h1 class="text-4xl md:text-5xl font-bold text-indigo-500 mb-4">
+        Composers
       </h1>
       <p class="text-xl text-gray-600 max-w-2xl mx-auto">
         Discover the masterful minds behind classical music's greatest works
       </p>
-
-      <!-- Add New Composer Button -->
-      <div class="mt-8">
-        <%= link_to "Add New Composer", new_composer_path,
-            class: "inline-flex items-center px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200" %>
-      </div>
     </div>
 
     <!-- Pagination Info -->

@@ -1,6 +1,6 @@
 <% content_for :title, "New Quote" %>
 
-<div class="min-h-screen bg-gradient-to-br from-slate-50 to-emerald-50">
+<div class="min-h-screen bg-slate-50">
   <div class="container mx-auto px-4 py-8">
     <!-- Header Section -->
     <div class="mb-8">
@@ -17,7 +17,7 @@
       <!-- Page Title -->
       <div class="text-center">
         <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          <span class="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+          <span class="text-emerald-500">
             Add New Quote
           </span>
         </h1>
@@ -29,7 +29,7 @@
 
     <!-- Form Container -->
     <div class="max-w-4xl mx-auto">
-      <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-1">
+      <div class="bg-emerald-50 rounded-2xl p-1">
         <div class="bg-white rounded-xl p-8">
           <%= render "form", quote: @quote %>
         </div>

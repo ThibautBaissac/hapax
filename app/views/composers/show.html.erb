@@ -1,6 +1,6 @@
 <% content_for :title, "#{@composer.first_name} #{@composer.last_name}" %>
 
-<div class="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50">
+<div class="min-h-screen bg-slate-50">
   <div class="container mx-auto px-4 py-8">
     <!-- Top Navigation Bar -->
     <div class="mb-6 flex justify-between items-center">
@@ -35,7 +35,7 @@
     <!-- Main Content Card -->
     <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
       <!-- Header Section -->
-      <div class="bg-gradient-to-r from-indigo-600 to-indigo-900 px-8 py-12 text-white">
+      <div class="bg-indigo-800 px-6 py-4 text-white">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
           <div class="flex-1">
             <h1 class="text-4xl lg:text-5xl font-bold mb-4">
@@ -43,7 +43,7 @@
             </h1>
 
             <!-- Life Dates -->
-            <div class="flex items-center space-x-6 text-indigo-100 text-lg">
+            <div class="flex items-center space-x-2 text-indigo-100 text-lg">
               <span class="flex items-center">
                 <%= @composer.birth_date&.year || "Unknown" %>
               </span>
@@ -58,7 +58,7 @@
               <div class="relative">
                 <%= image_tag @composer.portrait,
                     alt: "Portrait of #{@composer.full_name}",
-                    class: "w-40 h-40 lg:w-48 lg:h-48 rounded-full object-cover" %>
+                    class: "w-40 h-40 lg:w-48 lg:h-48 object-cover" %>
               </div>
             </div>
           <% end %>
@@ -74,12 +74,9 @@
             <% if @composer.short_bio.present? %>
               <div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                  <svg class="w-6 h-6 mr-3 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                  </svg>
                   Short Biography
                 </h2>
-                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 border-l-4 border-indigo-500">
+                <div class="bg-indigo-50 rounded-xl p-6 border-l-4 border-indigo-500">
                   <p class="text-gray-700 text-lg leading-relaxed">
                     <%= @composer.short_bio %>
                   </p>
@@ -91,9 +88,6 @@
             <% if @composer.respond_to?(:works) && @composer.works.any? %>
               <div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                  <svg class="w-6 h-6 mr-3 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                  </svg>
                   Works
                   <span class="ml-2 text-sm font-normal text-gray-500">(<%= @composer.works.count %>)</span>
                 </h2>
@@ -175,7 +169,7 @@
 
             <!-- Statistics (if works are available) -->
             <% if @composer.respond_to?(:works) && @composer.works.any? %>
-              <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 border border-indigo-100">
+              <div class="bg-indigo-50 rounded-xl p-6 border border-indigo-100">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                   <svg class="w-5 h-5 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
@@ -195,14 +189,6 @@
                       <span class="text-lg font-semibold text-gray-900">
                         <%= time_duration(@composer.works.sum(:duration)) %>
                       </span>
-                    </div>
-                  <% end %>
-
-                  <% total_movements = @composer.works.joins(:movements).count %>
-                  <% if total_movements > 0 %>
-                    <div class="flex justify-between items-center">
-                      <span class="text-gray-600">Total Movements</span>
-                      <span class="text-lg font-semibold text-gray-900"><%= total_movements %></span>
                     </div>
                   <% end %>
                 </div>

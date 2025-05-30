@@ -7,7 +7,7 @@ total_composer_count = 15
 
 # Some famous classical composers for more realistic data
 famous_composers = [
-  { first_name: "Wolfgang Amadeus", last_name: "Mozart", birth_date: Date.new(1756, 1, 27), death_date: Date.new(1791, 12, 5), nationality: "Austrian" },
+  { first_name: "Olivier", last_name: "Greif", birth_date: Date.new(1950, 1, 3), death_date: Date.new(2000, 5, 13), nationality: "French" },
   { first_name: "Ludwig van", last_name: "Beethoven", birth_date: Date.new(1770, 12, 17), death_date: Date.new(1827, 3, 26), nationality: "German" },
   { first_name: "Johann Sebastian", last_name: "Bach", birth_date: Date.new(1685, 3, 31), death_date: Date.new(1750, 7, 28), nationality: "German" },
   { first_name: "Frédéric", last_name: "Chopin", birth_date: Date.new(1810, 3, 1), death_date: Date.new(1849, 10, 17), nationality: "Polish" },

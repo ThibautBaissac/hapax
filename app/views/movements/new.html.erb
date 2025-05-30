@@ -1,6 +1,6 @@
 <% content_for :title, "New Movement" %>
 
-<div class="min-h-screen bg-gradient-to-br from-slate-50 to-rose-50">
+<div class="min-h-screen bg-slate-50">
   <div class="container mx-auto px-4 py-8">
     <!-- Header Section -->
     <div class="mb-8">
@@ -17,7 +17,7 @@
       <!-- Page Title -->
       <div class="text-center">
         <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          <span class="bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">
+          <span class="text-rose-500">
             Add New Movement
           </span>
         </h1>
@@ -29,7 +29,7 @@
 
     <!-- Form Container -->
     <div class="max-w-4xl mx-auto">
-      <div class="bg-gradient-to-r from-rose-50 to-pink-50 rounded-2xl p-1">
+      <div class="bg-rose-50 rounded-2xl p-1">
         <div class="bg-white rounded-xl p-8">
           <%= render "form", movement: @movement %>
         </div>
