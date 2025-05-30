@@ -14,9 +14,11 @@ Rails.application.routes.draw do
   root "home#index"
 
   resources :quotes
-  resources :movements
-  resources :works
-  resources :composers
+  resources :composers do
+    resources :works do
+      resources :movements
+    end
+  end
   devise_for :users
   resource :profile, only: [ :show, :edit, :update ], controller: "profile"
 end

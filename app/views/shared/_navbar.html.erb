@@ -51,68 +51,6 @@
           </div>
         </div>
 
-        <!-- Works Dropdown -->
-        <div class="relative group">
-          <%= link_to works_path, class: "nav-link flex items-center px-4 py-2 text-gray-700 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-all duration-200 group #{'bg-purple-100 text-purple-700' if current_page?(works_path) || controller_name == 'works'}" do %>
-            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M9 19V6l12-3v13M9 19c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2zm12-3c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2zm-12 3V6l12-3v13" clip-rule="evenodd"></path>
-            </svg>
-            <span class="font-medium">Works</span>
-            <svg class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          <% end %>
-
-          <!-- Works Dropdown Menu -->
-          <div class="absolute top-full left-0 mt-1 w-56 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2">
-            <div class="py-2">
-              <%= link_to works_path, class: "flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-150" do %>
-                <svg class="w-4 h-4 mr-3 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                </svg>
-                All Works
-              <% end %>
-              <%= link_to new_work_path, class: "flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-150" do %>
-                <svg class="w-4 h-4 mr-3 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                </svg>
-                Add New Work
-              <% end %>
-            </div>
-          </div>
-        </div>
-
-        <!-- Movements Dropdown -->
-        <div class="relative group">
-          <%= link_to movements_path, class: "nav-link flex items-center px-4 py-2 text-gray-700 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all duration-200 group #{'bg-rose-100 text-rose-700' if current_page?(movements_path) || controller_name == 'movements'}" do %>
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-            </svg>
-            <span class="font-medium">Movements</span>
-            <svg class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          <% end %>
-
-          <!-- Movements Dropdown Menu -->
-          <div class="absolute top-full left-0 mt-1 w-56 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2">
-            <div class="py-2">
-              <%= link_to movements_path, class: "flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-rose-50 hover:text-rose-600 transition-colors duration-150" do %>
-                <svg class="w-4 h-4 mr-3 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                </svg>
-                All Movements
-              <% end %>
-              <%= link_to new_movement_path, class: "flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-rose-50 hover:text-rose-600 transition-colors duration-150" do %>
-                <svg class="w-4 h-4 mr-3 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                </svg>
-                Add New Movement
-              <% end %>
-            </div>
-          </div>
-        </div>
-
         <!-- Quotes Dropdown -->
         <div class="relative group">
           <%= link_to quotes_path, class: "nav-link flex items-center px-4 py-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all duration-200 group #{'bg-emerald-100 text-emerald-700' if current_page?(quotes_path) || controller_name == 'quotes'}" do %>
@@ -199,56 +137,6 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
             </svg>
             Add New Composer
-          </div>
-        <% end %>
-      </div>
-
-      <!-- Works Mobile -->
-      <div class="space-y-1">
-        <div class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3 py-2">Works</div>
-        <%= link_to works_path,
-            data: { action: "click->navbar#closeMobileMenu" },
-            class: "block px-3 py-2 text-gray-700 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors duration-150 #{'bg-purple-100 text-purple-700' if current_page?(works_path) || controller_name == 'works'}" do %>
-          <div class="flex items-center">
-            <svg class="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M9 19V6l12-3v13M9 19c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2zm12-3c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2zm-12 3V6l12-3v13" clip-rule="evenodd"></path>
-            </svg>
-            All Works
-          </div>
-        <% end %>
-        <%= link_to new_work_path,
-            data: { action: "click->navbar#closeMobileMenu" },
-            class: "block px-3 py-2 text-gray-700 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors duration-150" do %>
-          <div class="flex items-center">
-            <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-            </svg>
-            Add New Work
-          </div>
-        <% end %>
-      </div>
-
-      <!-- Movements Mobile -->
-      <div class="space-y-1">
-        <div class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3 py-2">Movements</div>
-        <%= link_to movements_path,
-            data: { action: "click->navbar#closeMobileMenu" },
-            class: "block px-3 py-2 text-gray-700 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors duration-150 #{'bg-rose-100 text-rose-700' if current_page?(movements_path) || controller_name == 'movements'}" do %>
-          <div class="flex items-center">
-            <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-            </svg>
-            All Movements
-          </div>
-        <% end %>
-        <%= link_to new_movement_path,
-            data: { action: "click->navbar#closeMobileMenu" },
-            class: "block px-3 py-2 text-gray-700 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors duration-150" do %>
-          <div class="flex items-center">
-            <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-            </svg>
-            Add New Movement
           </div>
         <% end %>
       </div>
