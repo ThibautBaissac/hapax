@@ -1,0 +1,289 @@
+<% content_for :title, @query.present? ? "Search results for \"#{@query}\"" : "Search" %>
+
+<div class="min-h-screen bg-slate-50">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header Section -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">
+        <% if @query.present? %>
+          Search Results
+        <% else %>
+          Search
+        <% end %>
+      </h1>
+      <% if @query.present? %>
+        <p class="text-lg text-gray-600">
+          Found <span class="font-semibold text-indigo-600"><%= @total_results %></span>
+          result<%= @total_results == 1 ? '' : 's' %> for "<span class="font-medium"><%= @query %></span>"
+        </p>
+      <% else %>
+        <p class="text-lg text-gray-600">Enter a search term to find composers, works, movements, quotes, and more.</p>
+      <% end %>
+    </div>
+
+    <!-- Search Form -->
+    <div class="max-w-2xl mx-auto mb-8">
+      <%= form_with url: search_path, method: :get, local: true,
+          class: "relative",
+          data: { controller: "search", search_target: "form" } do |form| %>
+        <div class="relative">
+          <%= form.text_field :q,
+              value: @query,
+              placeholder: "Search for composers, works, movements, quotes...",
+              class: "w-full px-6 py-4 text-lg border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 pr-12 shadow-sm",
+              autofocus: true,
+              data: {
+                search_target: "input",
+                action: "keydown->search#submitOnEnter focus->search#focusInput"
+              } %>
+          <button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-indigo-600 transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </button>
+        </div>
+      <% end %>
+    </div>
+
+    <% if @query.present? && @total_results > 0 %>
+      <!-- Results Section -->
+      <div class="max-w-5xl mx-auto space-y-8">
+        <!-- Composers Results -->
+        <% if @results[:composers].any? %>
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-indigo-50 px-6 py-4 border-b border-gray-200">
+              <h2 class="text-xl font-bold text-gray-900 flex items-center">
+                <svg class="w-6 h-6 mr-3 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                </svg>
+                Composers
+                <span class="ml-2 text-sm font-normal text-gray-500">(<%= @results[:composers].count %>)</span>
+              </h2>
+            </div>
+            <div class="p-6 space-y-4">
+              <% @results[:composers].each do |composer| %>
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                  <div class="flex-1">
+                    <%= link_to composer, class: "block" do %>
+                      <h3 class="font-semibold text-gray-900 hover:text-indigo-600 transition-colors">
+                        <%= composer.full_name %>
+                      </h3>
+                      <% if composer.nationnality.present? %>
+                        <p class="text-sm text-gray-600 mt-1"><%= composer.nationnality %></p>
+                      <% end %>
+                      <% if composer.short_bio.present? %>
+                        <p class="text-sm text-gray-600 mt-1 line-clamp-2"><%= composer.short_bio %></p>
+                      <% end %>
+                    <% end %>
+                  </div>
+                  <div class="flex-shrink-0 ml-4">
+                    <%= link_to composer, class: "inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors" do %>
+                      View Details
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Works Results -->
+        <% if @results[:works].any? %>
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-purple-50 px-6 py-4 border-b border-gray-200">
+              <h2 class="text-xl font-bold text-gray-900 flex items-center">
+                <svg class="w-6 h-6 mr-3 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M9 19V6l12-3v13M9 19c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2zm12-3c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2zm-12 3V6l12-3v13" clip-rule="evenodd"></path>
+                </svg>
+                Works
+                <span class="ml-2 text-sm font-normal text-gray-500">(<%= @results[:works].count %>)</span>
+              </h2>
+            </div>
+            <div class="p-6 space-y-4">
+              <% @results[:works].each do |work| %>
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                  <div class="flex-1">
+                    <%= link_to [work.composer, work], class: "block" do %>
+                      <h3 class="font-semibold text-gray-900 hover:text-purple-600 transition-colors">
+                        <%= work.title %>
+                        <% if work.opus.present? %>
+                          <span class="text-sm text-gray-500">(Op. <%= work.opus %>)</span>
+                        <% end %>
+                      </h3>
+                      <p class="text-sm text-gray-600 mt-1">by <%= work.composer.full_name %></p>
+                      <% if work.description.present? %>
+                        <p class="text-sm text-gray-600 mt-1 line-clamp-2"><%= work.description %></p>
+                      <% end %>
+                    <% end %>
+                  </div>
+                  <div class="flex-shrink-0 ml-4">
+                    <%= link_to [work.composer, work], class: "inline-flex items-center px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors" do %>
+                      View Details
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Movements Results -->
+        <% if @results[:movements].any? %>
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-rose-50 px-6 py-4 border-b border-gray-200">
+              <h2 class="text-xl font-bold text-gray-900 flex items-center">
+                <svg class="w-6 h-6 mr-3 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2zm12-3c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2zm-12 3V6l12-3v13"></path>
+                </svg>
+                Movements
+                <span class="ml-2 text-sm font-normal text-gray-500">(<%= @results[:movements].count %>)</span>
+              </h2>
+            </div>
+            <div class="p-6 space-y-4">
+              <% @results[:movements].each do |movement| %>
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                  <div class="flex-1">
+                    <%= link_to [movement.work.composer, movement.work, movement], class: "block" do %>
+                      <h3 class="font-semibold text-gray-900 hover:text-rose-600 transition-colors">
+                        <%= movement.title %>
+                        <% if movement.position.present? %>
+                          <span class="text-sm text-gray-500">(Movement <%= movement.position %>)</span>
+                        <% end %>
+                      </h3>
+                      <p class="text-sm text-gray-600 mt-1">
+                        from <%= movement.work.title %> by <%= movement.work.composer.full_name %>
+                      </p>
+                      <% if movement.description.present? %>
+                        <p class="text-sm text-gray-600 mt-1 line-clamp-2"><%= movement.description %></p>
+                      <% end %>
+                    <% end %>
+                  </div>
+                  <div class="flex-shrink-0 ml-4">
+                    <%= link_to [movement.work.composer, movement.work, movement], class: "inline-flex items-center px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-sm font-medium rounded-lg transition-colors" do %>
+                      View Details
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Quotes Results -->
+        <% if @results[:quotes].any? %>
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-emerald-50 px-6 py-4 border-b border-gray-200">
+              <h2 class="text-xl font-bold text-gray-900 flex items-center">
+                <svg class="w-6 h-6 mr-3 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" clip-rule="evenodd"></path>
+                </svg>
+                Quotes
+                <span class="ml-2 text-sm font-normal text-gray-500">(<%= @results[:quotes].count %>)</span>
+              </h2>
+            </div>
+            <div class="p-6 space-y-4">
+              <% @results[:quotes].each do |quote| %>
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                  <div class="flex-1">
+                    <%= link_to quote, class: "block" do %>
+                      <h3 class="font-semibold text-gray-900 hover:text-emerald-600 transition-colors">
+                        <%= quote.title %>
+                      </h3>
+                      <p class="text-sm text-gray-600 mt-1">by <%= quote.author %></p>
+                      <% if quote.notes.present? %>
+                        <p class="text-sm text-gray-600 mt-1 line-clamp-2"><%= quote.notes %></p>
+                      <% end %>
+                    <% end %>
+                  </div>
+                  <div class="flex-shrink-0 ml-4">
+                    <%= link_to quote, class: "inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition-colors" do %>
+                      View Details
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Movement Quotes Results -->
+        <% if @results[:movement_quotes].any? %>
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-amber-50 px-6 py-4 border-b border-gray-200">
+              <h2 class="text-xl font-bold text-gray-900 flex items-center">
+                <svg class="w-6 h-6 mr-3 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                </svg>
+                Quote References
+                <span class="ml-2 text-sm font-normal text-gray-500">(<%= @results[:movement_quotes].count %>)</span>
+              </h2>
+            </div>
+            <div class="p-6 space-y-4">
+              <% @results[:movement_quotes].each do |movement_quote| %>
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                  <div class="flex-1">
+                    <div class="block">
+                      <h3 class="font-semibold text-gray-900">
+                        <%= movement_quote.quote.title %> → <%= movement_quote.movement.work.title %> - <%= movement_quote.movement.title %>
+                      </h3>
+                      <p class="text-sm text-gray-600 mt-1">
+                        Quote by <%= movement_quote.quote.author %> • Work by <%= movement_quote.movement.work.composer.full_name %>
+                      </p>
+                      <% if movement_quote.category.present? %>
+                        <span class="inline-block mt-2 px-2 py-1 bg-amber-100 text-amber-800 text-xs rounded-full">
+                          <%= movement_quote.category %>
+                        </span>
+                      <% end %>
+                      <% if movement_quote.location_in_score.present? %>
+                        <p class="text-sm text-gray-600 mt-1">
+                          <strong>Location:</strong> <%= movement_quote.location_in_score %>
+                        </p>
+                      <% end %>
+                      <% if movement_quote.excerpt_text.present? %>
+                        <p class="text-sm text-gray-600 mt-1 line-clamp-2">
+                          <strong>Excerpt:</strong> "<%= movement_quote.excerpt_text %>"
+                        </p>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="flex-shrink-0 ml-4 flex flex-col gap-2">
+                    <%= link_to movement_quote.quote, class: "inline-flex items-center px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white text-xs font-medium rounded transition-colors" do %>
+                      View Quote
+                    <% end %>
+                    <%= link_to [movement_quote.movement.work.composer, movement_quote.movement.work, movement_quote.movement], class: "inline-flex items-center px-3 py-1 bg-gray-600 hover:bg-gray-700 text-white text-xs font-medium rounded transition-colors" do %>
+                      View Movement
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% elsif @query.present? && @total_results == 0 %>
+      <!-- No Results -->
+      <div class="max-w-2xl mx-auto text-center">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+          <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">No results found</h3>
+          <p class="text-gray-600 mb-4">
+            We couldn't find anything matching "<span class="font-medium"><%= @query %></span>".
+          </p>
+          <p class="text-sm text-gray-500">
+            Try adjusting your search terms or browse our collection directly.
+          </p>
+          <div class="mt-6 flex flex-wrap justify-center gap-4">
+            <%= link_to composers_path, class: "inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors" do %>
+              Browse Composers
+            <% end %>
+            <%= link_to quotes_path, class: "inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition-colors" do %>
+              Browse Quotes
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

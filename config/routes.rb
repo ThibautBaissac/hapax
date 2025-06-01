@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "home#index"
 
+  # Search route
+  get "search", to: "search#index"
+
   resources :quotes
   resources :composers do
     resources :works, only: [ :new, :create, :show, :edit, :update, :destroy] do
