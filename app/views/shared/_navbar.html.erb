@@ -1,36 +1,32 @@
-<nav class="bg-white shadow-lg border-b border-gray-100 sticky top-0 z-50" data-controller="navbar">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<nav class="bg-white border-b border-gray-200 sticky top-0 z-50" data-controller="navbar">
+  <div class="max-w-6xl mx-auto px-4">
     <div class="flex justify-between items-center h-16">
       <!-- Logo and Brand -->
       <div class="flex items-center">
         <%= link_to root_path, class: "flex items-center space-x-3 group" do %>
-          <div class="bg-indigo-600 p-2 rounded-lg group-hover:shadow-lg transition-all duration-200">
+          <div class="bg-indigo-600 p-2 rounded-lg">
             <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
             </svg>
           </div>
           <div class="hidden sm:block">
-            <h1 class="text-xl font-bold text-indigo-600">
-              Hapax
-            </h1>
-            <p class="text-xs text-gray-500 -mt-1">Musical Quotes</p>
+            <h1 class="text-xl font-bold text-indigo-600">Hapax</h1>
           </div>
         <% end %>
       </div>
 
       <!-- Search Bar -->
-      <div class="hidden md:flex flex-1 max-w-lg mx-8">
+      <div class="hidden md:flex flex-1 max-w-md mx-8">
         <%= form_with url: search_path, method: :get, local: true,
             class: "w-full",
             data: { controller: "search", search_target: "form" } do |form| %>
           <div class="relative">
             <%= form.text_field :q,
-                placeholder: "Search composers, works, movements, quotes...",
+                placeholder: "Search...",
                 value: params[:q],
-                class: "w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition-all duration-200",
+                class: "w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm",
                 data: {
-                  search_target: "input",
-                  action: "keydown->search#submitOnEnter focus->search#focusInput"
+                  search_target: "input"
                 } %>
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -42,78 +38,20 @@
       </div>
 
       <!-- Desktop Navigation -->
-      <div class="hidden md:flex items-center space-x-1">
-        <!-- Composers Dropdown -->
-        <div class="relative group">
-          <%= link_to composers_path, class: "nav-link flex items-center px-4 py-2 text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all duration-200 group #{'bg-indigo-100 text-indigo-700' if current_page?(composers_path) || controller_name == 'composers'}" do %>
-            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-            </svg>
-            <span class="font-medium">Composers</span>
-            <svg class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          <% end %>
+      <div class="hidden md:flex items-center space-x-2">
+        <%= link_to composers_path, class: "px-3 py-2 text-gray-700 hover:text-indigo-600 rounded-lg font-medium text-sm transition-colors #{'text-indigo-600' if controller_name == 'composers'}" do %>
+          Composers
+        <% end %>
 
-          <!-- Composers Dropdown Menu -->
-          <div class="absolute top-full left-0 mt-1 w-56 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2">
-            <div class="py-2">
-              <%= link_to composers_path, class: "flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors duration-150" do %>
-                <svg class="w-4 h-4 mr-3 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                </svg>
-                All Composers
-              <% end %>
-              <%= link_to new_composer_path, class: "flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors duration-150" do %>
-                <svg class="w-4 h-4 mr-3 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                </svg>
-                Add New Composer
-              <% end %>
-            </div>
-          </div>
-        </div>
+        <%= link_to quotes_path, class: "px-3 py-2 text-gray-700 hover:text-indigo-600 rounded-lg font-medium text-sm transition-colors #{'text-indigo-600' if controller_name == 'quotes'}" do %>
+          Quotes
+        <% end %>
 
-        <!-- Quotes Dropdown -->
-        <div class="relative group">
-          <%= link_to quotes_path, class: "nav-link flex items-center px-4 py-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all duration-200 group #{'bg-emerald-100 text-emerald-700' if current_page?(quotes_path) || controller_name == 'quotes'}" do %>
-            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" clip-rule="evenodd"></path>
-            </svg>
-            <span class="font-medium">Quotes</span>
-            <svg class="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          <% end %>
-
-          <!-- Quotes Dropdown Menu -->
-          <div class="absolute top-full left-0 mt-1 w-56 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2">
-            <div class="py-2">
-              <%= link_to quotes_path, class: "flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors duration-150" do %>
-                <svg class="w-4 h-4 mr-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                </svg>
-                All Quotes
-              <% end %>
-              <%= link_to new_quote_path, class: "flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors duration-150" do %>
-                <svg class="w-4 h-4 mr-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                </svg>
-                Add New Quote
-              <% end %>
-            </div>
-          </div>
-        </div>
-
-        <!-- Profile Dropdown -->
-        <div class="relative group">
-          <%= link_to profile_path, class: "nav-link flex items-center px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 group #{'bg-blue-100 text-blue-700' if current_page?(profile_path) || controller_name == 'profile'}" do %>
-            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-            </svg>
-            <span class="font-medium">Profile</span>
-          <% end %>
-        </div>
+        <%= link_to profile_path, class: "px-3 py-2 text-gray-700 hover:text-indigo-600 rounded-lg font-medium text-sm transition-colors #{'text-indigo-600' if controller_name == 'profile'}" do %>
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+          </svg>
+        <% end %>
       </div>
 
       <!-- Mobile menu button -->
@@ -121,14 +59,14 @@
         <button type="button"
                 data-navbar-target="menuButton"
                 data-action="click->navbar#toggleMenu"
-                class="inline-flex items-center justify-center p-2 rounded-lg text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 transition-colors duration-200"
+                class="p-2 rounded-lg text-gray-700 hover:text-indigo-600 hover:bg-gray-100"
                 aria-controls="mobile-menu"
                 aria-expanded="false">
           <span class="sr-only">Open main menu</span>
-          <svg data-navbar-target="menuIcon" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <svg data-navbar-target="menuIcon" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
-          <svg data-navbar-target="closeIcon" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <svg data-navbar-target="closeIcon" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
@@ -137,93 +75,41 @@
   </div>
 
   <!-- Mobile menu -->
-  <div data-navbar-target="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100" id="mobile-menu">
-    <div class="px-2 pt-2 pb-3 space-y-1">
+  <div data-navbar-target="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-200" id="mobile-menu">
+    <div class="px-4 py-4 space-y-4">
       <!-- Mobile Search -->
-      <div class="px-3 py-2">
-        <%= form_with url: search_path, method: :get, local: true,
-            class: "w-full",
-            data: { controller: "search", search_target: "form" } do |form| %>
-          <div class="relative">
-            <%= form.text_field :q,
-                placeholder: "Search...",
-                value: params[:q],
-                class: "w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition-all duration-200",
-                data: {
-                  search_target: "input",
-                  action: "keydown->search#submitOnEnter focus->search#focusInput"
-                } %>
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-              </svg>
-            </div>
+      <%= form_with url: search_path, method: :get, local: true, class: "w-full" do |form| %>
+        <div class="relative">
+          <%= form.text_field :q,
+              placeholder: "Search...",
+              value: params[:q],
+              class: "w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm" %>
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
           </div>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
 
-      <!-- Composers Mobile -->
+      <!-- Mobile Navigation Links -->
       <div class="space-y-1">
-        <div class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3 py-2">Composers</div>
         <%= link_to composers_path,
             data: { action: "click->navbar#closeMobileMenu" },
-            class: "block px-3 py-2 text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors duration-150 #{'bg-indigo-100 text-indigo-700' if current_page?(composers_path) || controller_name == 'composers'}" do %>
-          <div class="flex items-center">
-            <svg class="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-            </svg>
-            All Composers
-          </div>
+            class: "block px-3 py-2 text-gray-700 hover:text-indigo-600 rounded-lg font-medium #{'text-indigo-600' if controller_name == 'composers'}" do %>
+          Composers
         <% end %>
-        <%= link_to new_composer_path,
-            data: { action: "click->navbar#closeMobileMenu" },
-            class: "block px-3 py-2 text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors duration-150" do %>
-          <div class="flex items-center">
-            <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-            </svg>
-            Add New Composer
-          </div>
-        <% end %>
-      </div>
 
-      <!-- Quotes Mobile -->
-      <div class="space-y-1">
-        <div class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3 py-2">Quotes</div>
         <%= link_to quotes_path,
             data: { action: "click->navbar#closeMobileMenu" },
-            class: "block px-3 py-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors duration-150 #{'bg-emerald-100 text-emerald-700' if current_page?(quotes_path) || controller_name == 'quotes'}" do %>
-          <div class="flex items-center">
-            <svg class="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" clip-rule="evenodd"></path>
-            </svg>
-            All Quotes
-          </div>
+            class: "block px-3 py-2 text-gray-700 hover:text-indigo-600 rounded-lg font-medium #{'text-indigo-600' if controller_name == 'quotes'}" do %>
+          Quotes
         <% end %>
-        <%= link_to new_quote_path,
-            data: { action: "click->navbar#closeMobileMenu" },
-            class: "block px-3 py-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors duration-150" do %>
-          <div class="flex items-center">
-            <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-            </svg>
-            Add New Quote
-          </div>
-        <% end %>
-      </div>
 
-      <!-- Profile Mobile -->
-      <div class="space-y-1">
-        <div class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3 py-2">Profile</div>
         <%= link_to profile_path,
             data: { action: "click->navbar#closeMobileMenu" },
-            class: "block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-150 #{'bg-blue-100 text-blue-700' if current_page?(profile_path) || controller_name == 'profile'}" do %>
-          <div class="flex items-center">
-            <svg class="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-            </svg>
-            My Profile
-          </div>
+            class: "block px-3 py-2 text-gray-700 hover:text-indigo-600 rounded-lg font-medium #{'text-indigo-600' if controller_name == 'profile'}" do %>
+          Profile
         <% end %>
       </div>
     </div>

@@ -1,99 +1,177 @@
-<% content_for :title, "Hapax - Classical Music Quote Explorer" %>
+<% content_for :title, "Hapax - Musical Quote" %>
 
-<!-- Project Overview Section -->
-<div class="bg-gray-50 py-20">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-16">
-      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-        What is <span class="text-indigo-500">Hapax</span>?
-      </h2>
-      <p class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-        Hapax is a comprehensive digital library that captures and organizes meaningful quotes from classical music compositions.
-        Named after the literary term "hapax legomenon" (a word that occurs only once), our platform celebrates the unique and
-        profound moments found within the world's greatest musical works.
+<div class="min-h-screen bg-gray-50">
+  <!-- Hero Section -->
+  <div class="bg-white border-b border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 py-16 text-center">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">
+        Welcome to <span class="text-indigo-600">Hapax</span>
+      </h1>
+      <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+        A digital library that captures and organizes meaningful quotes from classical music compositions.
       </p>
-    </div>
 
-    <!-- Features Grid -->
-    <div class="grid md:grid-cols-3 gap-8 mb-16">
-      <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-2">
-        <div class="bg-indigo-400 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
-          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold text-gray-900 mb-3">Composers</h3>
-        <p class="text-gray-600">Explore works from history's greatest composers, from Bach to contemporary masters.</p>
-        <div class="mt-4 text-2xl font-bold text-indigo-500"><%= @composers_count %></div>
-      </div>
+      <div class="flex justify-center gap-4">
+        <%= link_to composers_path,
+            class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors" do %>
+          Explore Composers
+        <% end %>
 
-      <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-2">
-        <div class="bg-purple-400 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
-          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold text-gray-900 mb-3">Musical Works</h3>
-        <p class="text-gray-600">Discover symphonies, concertos, operas, and chamber music across all periods.</p>
-        <div class="mt-4 text-2xl font-bold text-purple-500"><%= @works_count %></div>
-      </div>
-
-      <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-2">
-        <div class="bg-emerald-400 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
-          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-1l-4 4z"></path>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold text-gray-900 mb-3">Quotes</h3>
-        <p class="text-gray-600">Curated collection of profound and inspiring musical quotes.</p>
-        <div class="mt-4 text-2xl font-bold text-emerald-500"><%= @quotes_count %></div>
+        <%= link_to quotes_path,
+            class: "inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors" do %>
+          Browse Quotes
+        <% end %>
       </div>
     </div>
   </div>
-</div>
 
-<!-- How It Works Section -->
-<div class="bg-white py-20">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-16">
-      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-        How <span class="text-indigo-500">Hapax</span> Works
-      </h2>
-      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-        Our platform organizes classical music content in a structured, intuitive way that makes exploration and discovery effortless.
-      </p>
+  <!-- Stats Section -->
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <div class="grid md:grid-cols-3 gap-8">
+      <%= link_to composers_path, class: "block bg-white rounded-xl border border-gray-200 p-6 hover:border-indigo-300 hover:bg-gray-50 transition-all group" do %>
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">
+              Composers
+            </h3>
+            <p class="text-sm text-gray-500 mt-1">
+              Master composers across all periods
+            </p>
+          </div>
+          <div class="text-2xl font-bold text-indigo-600">
+            <%= @composers_count %>
+          </div>
+        </div>
+      <% end %>
+
+      <%= link_to composers_path, class: "block bg-white rounded-xl border border-gray-200 p-6 hover:border-purple-300 hover:bg-gray-50 transition-all group" do %>
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition-colors">
+              Musical Works
+            </h3>
+            <p class="text-sm text-gray-500 mt-1">
+              Symphonies, concertos, and more
+            </p>
+          </div>
+          <div class="text-2xl font-bold text-purple-600">
+            <%= @works_count %>
+          </div>
+        </div>
+      <% end %>
+
+      <%= link_to quotes_path, class: "block bg-white rounded-xl border border-gray-200 p-6 hover:border-emerald-300 hover:bg-gray-50 transition-all group" do %>
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 group-hover:text-emerald-600 transition-colors">
+              Quotes
+            </h3>
+            <p class="text-sm text-gray-500 mt-1">
+              Literary quotes in musical works
+            </p>
+          </div>
+          <div class="text-2xl font-bold text-emerald-600">
+            <%= @quotes_count %>
+          </div>
+        </div>
+      <% end %>
     </div>
+  </div>
 
-    <div class="grid lg:grid-cols-3 gap-12">
-      <div class="text-center">
-        <div class="bg-indigo-400 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-          <span class="text-2xl font-bold text-white">1</span>
-        </div>
-        <h3 class="text-2xl font-bold text-gray-900 mb-4">Browse Composers</h3>
-        <p class="text-gray-600 text-lg">
-          Start your journey by exploring our collection of master composers from the Baroque period to contemporary times.
+  <!-- About Section -->
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <div class="bg-white rounded-xl border border-gray-200 p-8">
+      <h2 class="text-2xl font-semibold text-gray-900 mb-6">
+        About Hapax
+      </h2>
+
+      <div class="prose prose-gray max-w-none">
+        <p class="text-gray-700 leading-relaxed mb-4">
+          Named after the literary term "hapax legomenon" (a word that occurs only once),
+          Hapax celebrates the unique and profound moments found within classical music compositions.
         </p>
-      </div>
 
-      <div class="text-center">
-        <div class="bg-purple-400 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-          <span class="text-2xl font-bold text-white">2</span>
-        </div>
-        <h3 class="text-2xl font-bold text-gray-900 mb-4">Discover Works</h3>
-        <p class="text-gray-600 text-lg">
-          Dive into symphonies, concertos, sonatas, and other masterpieces, organized by composer and historical context.
-        </p>
-      </div>
-
-      <div class="text-center">
-        <div class="bg-rose-400 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-          <span class="text-2xl font-bold text-white">3</span>
-        </div>
-        <h3 class="text-2xl font-bold text-gray-900 mb-4">Collect Quotes</h3>
-        <p class="text-gray-600 text-lg">
-          Find and collect meaningful quotes from movements, building your personal library of musical wisdom.
+        <p class="text-gray-700 leading-relaxed">
+          Our platform organizes classical music content in a structured, intuitive way that makes
+          exploration and discovery effortless. Browse composers, discover their works, and collect
+          meaningful quotes from movements to build your personal library of musical wisdom.
         </p>
       </div>
     </div>
   </div>
+
+  <!-- Recent Activity -->
+  <% if @recent_composers.any? || @recent_quotes.any? %>
+    <div class="max-w-4xl mx-auto px-4 py-12">
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Recent Composers -->
+        <% if @recent_composers.any? %>
+          <div class="bg-white rounded-xl border border-gray-200 p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-semibold text-gray-900">Recent Composers</h3>
+              <%= link_to composers_path, class: "text-sm text-indigo-600 hover:text-indigo-700" do %>
+                View all
+              <% end %>
+            </div>
+
+            <div class="space-y-3">
+              <% @recent_composers.limit(3).each do |composer| %>
+                <%= link_to composer, class: "block p-3 rounded-lg hover:bg-gray-50 transition-colors group" do %>
+                  <div class="flex items-center gap-3">
+                    <% if composer.portrait.attached? %>
+                      <div class="w-8 h-8 rounded-md overflow-hidden border border-gray-200">
+                        <%= image_tag composer.portrait, class: "w-full h-full object-cover" %>
+                      </div>
+                    <% else %>
+                      <div class="w-8 h-8 rounded-md bg-indigo-100 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                        </svg>
+                      </div>
+                    <% end %>
+
+                    <div class="flex-1 min-w-0">
+                      <p class="text-sm font-medium text-gray-900 group-hover:text-indigo-600 transition-colors">
+                        <%= composer.full_name %>
+                      </p>
+                      <p class="text-xs text-gray-500">
+                        <%= composer.birth_date&.year || "Unknown" %> - <%= composer.death_date&.year || "Present" %>
+                      </p>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Recent Quotes -->
+        <% if @recent_quotes.any? %>
+          <div class="bg-white rounded-xl border border-gray-200 p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-semibold text-gray-900">Recent Quotes</h3>
+              <%= link_to quotes_path, class: "text-sm text-indigo-600 hover:text-indigo-700" do %>
+                View all
+              <% end %>
+            </div>
+
+            <div class="space-y-3">
+              <% @recent_quotes.limit(3).each do |quote| %>
+                <%= link_to quote, class: "block p-3 rounded-lg hover:bg-gray-50 transition-colors group" do %>
+                  <div>
+                    <p class="text-sm font-medium text-gray-900 group-hover:text-indigo-600 transition-colors truncate">
+                      <%= quote.title %>
+                    </p>
+                    <p class="text-xs text-gray-500 mt-1">
+                      by <%= quote.author %>
+                    </p>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 </div>

@@ -6,7 +6,7 @@ class Composer < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
 
-  sanitizes :first_name, :last_name, :nationnality, tags: [], attributes: []
+  sanitizes :first_name, :last_name, :nationality, tags: [], attributes: []
   sanitizes :short_bio, :bio
 
   def full_name

@@ -24,7 +24,7 @@ class SearchController < ApplicationController
 
   def search_composers
     Composer.where(
-      "first_name LIKE ? OR last_name LIKE ? OR nationnality LIKE ? OR short_bio LIKE ? OR bio LIKE ?",
+      "first_name LIKE ? OR last_name LIKE ? OR nationality LIKE ? OR short_bio LIKE ? OR bio LIKE ?",
       "%#{@query}%", "%#{@query}%", "%#{@query}%", "%#{@query}%", "%#{@query}%"
     ).limit(10)
   end

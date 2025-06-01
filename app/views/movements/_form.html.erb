@@ -1,16 +1,16 @@
 <%= form_with(model: [@composer, @work, movement], local: true, class: "space-y-6") do |form| %>
   <!-- Error Messages -->
   <% if movement.errors.any? %>
-    <div class="bg-red-50 border border-red-200 rounded-lg p-6">
-      <div class="flex items-center mb-3">
-        <svg class="w-5 h-5 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+      <div class="flex items-center mb-2">
+        <svg class="w-4 h-4 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
         </svg>
-        <h3 class="text-red-800 font-semibold">
+        <h3 class="text-red-800 font-medium">
           <%= pluralize(movement.errors.count, "error") %> prohibited this movement from being saved:
         </h3>
       </div>
-      <ul class="list-disc list-inside space-y-1 text-red-700">
+      <ul class="list-disc list-inside space-y-1 text-sm text-red-700">
         <% movement.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -18,75 +18,58 @@
     </div>
   <% end %>
 
-  <!-- Basic Information Section -->
+  <!-- Main Form -->
   <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-    <h2 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-      <svg class="w-5 h-5 mr-2 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-      </svg>
-      Movement Information
-    </h2>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="space-y-6">
       <!-- Title -->
-      <div class="md:col-span-2">
+      <div>
         <%= form.label :title, class: "block text-sm font-medium text-gray-700 mb-2" %>
         <%= form.text_field :title,
-            class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors duration-200",
+            class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors",
             placeholder: "Allegro con brio" %>
       </div>
 
-      <!-- Position -->
-      <div>
-        <%= form.label :position, class: "block text-sm font-medium text-gray-700 mb-2" %>
-        <%= form.number_field :position,
-            class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors duration-200",
-            placeholder: "1",
-            min: 1 %>
-        <p class="text-xs text-gray-500 mt-1">Order of this movement within the work</p>
+      <!-- Position and Duration -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <%= form.label :position, class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= form.number_field :position,
+              class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors",
+              placeholder: "1",
+              min: 1 %>
+          <p class="text-xs text-gray-500 mt-1">Order within the work</p>
+        </div>
+
+        <div>
+          <%= form.label :duration, "Duration (seconds)", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= form.number_field :duration,
+              class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors",
+              placeholder: "600",
+              min: 0 %>
+          <p class="text-xs text-gray-500 mt-1">Duration in seconds</p>
+        </div>
       </div>
 
-      <!-- Duration -->
+      <!-- Description -->
       <div>
-        <%= form.label :duration, "Duration (in seconds)", class: "block text-sm font-medium text-gray-700 mb-2" %>
-        <%= form.number_field :duration,
-            class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors duration-200",
-            placeholder: "600",
-            min: 0 %>
-        <p class="text-xs text-gray-500 mt-1">Duration in seconds (e.g., 600 = 10 minutes)</p>
+        <%= form.label :description, class: "block text-sm font-medium text-gray-700 mb-2" %>
+        <%= form.text_area :description,
+            rows: 4,
+            class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors resize-y",
+            placeholder: "Describe the character, tempo, key, and notable features of this movement..." %>
       </div>
-    </div>
-  </div>
-
-  <!-- Description Section -->
-  <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-    <h2 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-      <svg class="w-5 h-5 mr-2 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-      </svg>
-      Description
-    </h2>
-
-    <div>
-      <%= form.label :description, class: "block text-sm font-medium text-gray-700 mb-2" %>
-      <%= form.text_area :description,
-          rows: 6,
-          class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors duration-200 resize-y",
-          placeholder: "Describe the character, tempo, key, and notable features of this movement..." %>
-      <p class="text-xs text-gray-500 mt-1">Include tempo markings, key signature, and musical characteristics</p>
     </div>
   </div>
 
   <!-- Form Actions -->
-  <div class="flex flex-col sm:flex-row gap-4 pt-6">
-    <%= form.submit class: "flex-1 sm:flex-none inline-flex items-center justify-center px-8 py-3 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200" %>
-
+  <div class="flex gap-3">
+    <%= form.submit class: "px-4 py-2 bg-rose-600 text-white text-sm font-medium rounded-lg hover:bg-rose-700 transition-colors" %>
     <% if movement.persisted? %>
       <%= link_to "Cancel", composer_work_movement_path(@composer, @work, movement),
-          class: "flex-1 sm:flex-none inline-flex items-center justify-center px-8 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors duration-200" %>
+          class: "px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors" %>
     <% else %>
-      <%= link_to "Cancel", composer_work_movements_path(@composer, @work),
-          class: "flex-1 sm:flex-none inline-flex items-center justify-center px-8 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors duration-200" %>
+      <%= link_to "Cancel", composer_work_path(@composer, @work),
+          class: "px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors" %>
     <% end %>
   </div>
 <% end %>

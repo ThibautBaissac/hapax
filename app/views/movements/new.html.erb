@@ -1,39 +1,28 @@
-<% content_for :title, "New Movement" %>
+<% content_for :title, "New Movement - Hapax" %>
 
-<div class="min-h-screen bg-slate-50">
-  <div class="container mx-auto px-4 py-8">
-    <!-- Header Section -->
+<div class="min-h-screen bg-gray-50">
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <!-- Navigation -->
     <div class="mb-8">
-      <!-- Back Navigation -->
-      <div class="mb-6">
-        <%= link_to composer_work_movements_path(@composer, @work), class: "inline-flex items-center text-rose-600 hover:text-rose-800 font-medium transition-colors duration-200" do %>
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-          </svg>
-          Back to Movements
-        <% end %>
-      </div>
-
-      <!-- Page Title -->
-      <div class="text-center">
-        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          <span class="text-rose-500">
-            Add New Movement
-          </span>
-        </h1>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          Create a new movement to add to your musical works collection
-        </p>
-      </div>
+      <%= link_to composer_work_path(@composer, @work), class: "inline-flex items-center text-indigo-600 hover:text-indigo-700 font-medium transition-colors" do %>
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        <%= @work.title %>
+      <% end %>
     </div>
 
-    <!-- Form Container -->
-    <div class="max-w-4xl mx-auto">
-      <div class="bg-rose-50 rounded-2xl p-1">
-        <div class="bg-white rounded-xl p-8">
-          <%= render "form", movement: @movement %>
-        </div>
-      </div>
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">
+        Add New Movement
+      </h1>
+      <p class="text-lg text-gray-600">
+        Create a new movement for <%= @work.title %>
+      </p>
     </div>
+
+    <!-- Form -->
+    <%= render "form", movement: @movement %>
   </div>
 </div>

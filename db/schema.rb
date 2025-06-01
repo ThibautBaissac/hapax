@@ -46,7 +46,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_05_30_084016) do
     t.date "death_date"
     t.string "first_name", null: false
     t.string "last_name", null: false
-    t.string "nationnality"
+    t.string "nationality"
     t.text "short_bio"
     t.datetime "updated_at", null: false
   end

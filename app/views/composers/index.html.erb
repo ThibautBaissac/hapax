@@ -1,54 +1,71 @@
-<% content_for :title, "Composers" %>
+<% content_for :title, "Composers - Hapax" %>
 
-<div class="min-h-screen bg-slate-50">
-  <div class="container mx-auto px-4 py-8">
+<div class="min-h-screen bg-gray-50">
+  <div class="max-w-4xl mx-auto px-4 py-8">
     <!-- Header Section -->
-    <div class="text-center mb-12">
-      <h1 class="text-4xl md:text-5xl font-bold text-indigo-500 mb-4">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">
         Composers
       </h1>
-      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+      <p class="text-lg text-gray-600">
         Discover the masterful minds behind classical music's greatest works
       </p>
     </div>
 
-    <!-- Pagination Info -->
-    <% if @pagy.count > 0 %>
-      <div class="text-center mb-6">
-        <p class="text-gray-600">
+    <!-- Pagination Info and Actions -->
+    <div class="flex items-center justify-between mb-6">
+      <% if @pagy.count > 0 %>
+        <p class="text-sm text-gray-600">
           Showing <%= @pagy.from %>-<%= @pagy.to %> of <%= @pagy.count %> composers
         </p>
-      </div>
-    <% end %>
+      <% else %>
+        <div></div>
+      <% end %>
 
-    <!-- Composers Grid -->
-    <div id="composers" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <% @composers.each do |composer| %>
-        <%= render composer %>
+      <%= link_to new_composer_path,
+          class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors" do %>
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+        </svg>
+        Add Composer
       <% end %>
     </div>
 
-    <!-- Pagination Controls -->
-    <% if @pagy.pages > 1 %>
-      <div class="mt-12 flex justify-center">
-        <nav class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <%== pagy_nav(@pagy) %>
-        </nav>
+    <!-- Composers List -->
+    <% if @composers.any? %>
+      <div id="composers" class="space-y-4">
+        <% @composers.each do |composer| %>
+          <%= render composer %>
+        <% end %>
       </div>
-    <% end %>
 
-    <!-- Empty State -->
-    <% if @composers.empty? %>
-      <div class="text-center py-16">
-        <div class="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
-          <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-2.686 2 -6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2zm12-3c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2zm-12 3V6l12-3v13"></path>
-          </svg>
+      <!-- Pagination Controls -->
+      <% if @pagy.pages > 1 %>
+        <div class="mt-8 flex justify-center">
+          <nav class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+            <%== pagy_nav(@pagy) %>
+          </nav>
         </div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">No composers yet</h3>
-        <p class="text-gray-600 mb-6">Start building your collection of great composers</p>
-        <%= link_to "Add First Composer", new_composer_path,
-            class: "inline-flex items-center px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200" %>
+      <% end %>
+    <% else %>
+      <!-- Empty State -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="text-center py-16 px-8">
+          <div class="w-16 h-16 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">No composers yet</h3>
+          <p class="text-gray-600 mb-6">Start building your collection of great composers</p>
+          <%= link_to new_composer_path,
+              class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors" do %>
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            Add First Composer
+          <% end %>
+        </div>
       </div>
     <% end %>
   </div>

@@ -6,6 +6,6 @@ FactoryBot.define do
     death_date { "2025-05-29" }
     short_bio { "MyText" }
     bio { "MyText" }
-    nationnality { "MyString" }
+    nationality { "MyString" }
   end
 end

@@ -7,7 +7,7 @@ class CreateComposers < ActiveRecord::Migration[8.1]
       t.date :death_date
       t.text :short_bio
       t.text :bio
-      t.string :nationnality
+      t.string :nationality
 
       t.timestamps
     end

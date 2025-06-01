@@ -15,7 +15,7 @@ composers.each do |composer_data|
     last_name: composer_data[:last_name],
     birth_date: composer_data[:birth_date],
     death_date: composer_data[:death_date],
-    nationnality: composer_data[:nationality],
+    nationality: composer_data[:nationality],
     short_bio: Faker::Lorem.sentence(word_count: 15),
     bio: Faker::Lorem.paragraph(sentence_count: 8, supplemental: true, random_sentences_to_add: 3)
   )
