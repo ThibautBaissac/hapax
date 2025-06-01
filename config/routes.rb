@@ -15,8 +15,8 @@ Rails.application.routes.draw do
 
   resources :quotes
   resources :composers do
-    resources :works do
-      resources :movements
+    resources :works, only: [ :new, :create, :show, :edit, :update, :destroy] do
+      resources :movements, only: [ :new, :create, :show, :edit, :update, :destroy]
     end
   end
   devise_for :users

@@ -117,8 +117,16 @@ ActiveRecord::Schema[8.1].define(version: 2025_05_30_084016) do
     t.datetime "created_at", null: false
     t.text "description"
     t.integer "duration"
+    t.date "end_date_composed"
+    t.integer "form"
+    t.string "instrumentation"
     t.string "opus"
+    t.boolean "recorded"
+    t.date "start_date_composed"
+    t.integer "structure"
     t.string "title", null: false
+    t.boolean "unsure_end_date"
+    t.boolean "unsure_start_date"
     t.datetime "updated_at", null: false
     t.index ["composer_id"], name: "index_works_on_composer_id"
   end

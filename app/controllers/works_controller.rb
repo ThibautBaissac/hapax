@@ -2,10 +2,6 @@ class WorksController < ApplicationController
   before_action :set_composer
   before_action :set_work, only: %i[ show edit update destroy ]
 
-  def index
-    @pagy, @works = pagy(@composer.works.includes(:composer), items: 12)
-  end
-
   def show
   end
 

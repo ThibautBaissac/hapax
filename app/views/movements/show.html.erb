@@ -4,17 +4,17 @@
   <div class="container mx-auto px-4 py-8">
     <!-- Top Navigation Bar -->
     <div class="mb-6 flex justify-between items-center">
-      <%= link_to composer_work_movements_path(@movement.work.composer, @movement.work), class: "inline-flex items-center text-rose-600 hover:text-rose-800 font-medium transition-colors duration-200" do %>
+      <%= link_to composer_work_path(@movement.work.composer, @movement.work), class: "inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium transition-colors duration-200" do %>
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
-        Back to Movements
+        Back to <%= @movement.work.title %>
       <% end %>
 
       <!-- Action Buttons -->
       <div class="flex gap-2">
         <%= link_to edit_composer_work_movement_path(@movement.work.composer, @movement.work, @movement),
-            class: "inline-flex items-center justify-center w-10 h-10 bg-white text-rose-700 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-50 transform hover:-translate-y-0.5 transition-all duration-200",
+            class: "inline-flex items-center justify-center w-10 h-10 bg-white text-indigo-700 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-50 transform hover:-translate-y-0.5 transition-all duration-200",
             title: "Edit Movement" do %>
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
@@ -35,14 +35,14 @@
     <!-- Main Content Card -->
     <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
       <!-- Header Section -->
-      <div class="bg-rose-500 px-8 py-12 text-white">
+      <div class="bg-indigo-500 px-8 py-12 text-white">
         <div class="flex-1">
           <h1 class="text-4xl lg:text-5xl font-bold mb-4">
             <%= @movement.title %>
           </h1>
 
           <!-- Movement Details -->
-          <div class="flex flex-wrap items-center gap-6 text-rose-100 text-lg mb-4">
+          <div class="flex flex-wrap items-center gap-6 text-indigo-100 text-lg mb-4">
             <% if @movement.position.present? %>
               <span class="flex items-center">
                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -65,9 +65,6 @@
           <% if @movement.work.present? %>
             <div class="mt-6">
               <%= link_to [@movement.work.composer, @movement.work], class: "inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-amber-100 text-amber-800 hover:bg-amber-200 transition-colors duration-200" do %>
-                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M9 19V6l12-3v13M9 19c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2zm12-3c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2zm-12 3V6l12-3v13" clip-rule="evenodd"></path>
-                </svg>
                 <%= @movement.work.title %>
               <% end %>
             </div>
@@ -84,12 +81,9 @@
             <% if @movement.description.present? %>
               <div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                  <svg class="w-6 h-6 mr-3 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                  </svg>
                   About This Movement
                 </h2>
-                <div class="bg-rose-50 rounded-xl p-6 border-l-4 border-rose-500">
+                <div class="bg-indigo-50 rounded-xl p-6 border-l-4 border-indigo-500">
                   <p class="text-gray-700 text-lg leading-relaxed whitespace-pre-line">
                     <%= @movement.description %>
                   </p>
@@ -101,10 +95,7 @@
             <% if @movement.respond_to?(:movement_quotes) && @movement.movement_quotes.any? %>
               <div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                  <svg class="w-6 h-6 mr-3 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                  </svg>
-                  Quotes & References
+                  Quotes
                   <span class="ml-2 text-sm font-normal text-gray-500">(<%= @movement.movement_quotes.count %>)</span>
                 </h2>
                 <div class="space-y-4">
@@ -113,7 +104,7 @@
                       <div class="flex justify-between items-start">
                         <div class="flex-1">
                           <%= link_to movement_quote.quote, class: "block" do %>
-                            <h3 class="font-semibold text-gray-900 hover:text-rose-600 transition-colors">
+                            <h3 class="font-semibold text-gray-900 hover:text-indigo-600 transition-colors">
                               <%= movement_quote.quote.title %>
                             </h3>
                             <p class="text-sm text-gray-600 mt-1">
@@ -122,7 +113,7 @@
                           <% end %>
 
                           <% if movement_quote.category.present? %>
-                            <span class="inline-block mt-2 px-2 py-1 bg-rose-100 text-rose-800 text-xs rounded-full">
+                            <span class="inline-block mt-2 px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full">
                               <%= movement_quote.category %>
                             </span>
                           <% end %>
@@ -152,7 +143,7 @@
             <!-- Movement Details -->
             <div class="bg-gray-50 rounded-xl p-6">
               <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                <svg class="w-5 h-5 mr-2 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
                 Movement Details
@@ -177,7 +168,7 @@
                   <div class="flex justify-between items-center py-2">
                     <span class="text-gray-600 font-medium">From Work</span>
                     <span class="text-gray-900">
-                      <%= link_to [@movement.work.composer, @movement.work], class: "text-rose-600 hover:text-rose-800" do %>
+                      <%= link_to [@movement.work.composer, @movement.work], class: "text-indigo-600 hover:text-indigo-800" do %>
                         <%= @movement.work.title %>
                       <% end %>
                     </span>
@@ -188,9 +179,9 @@
 
             <!-- Statistics -->
             <% if @movement.respond_to?(:movement_quotes) && @movement.movement_quotes.any? %>
-              <div class="bg-rose-50 rounded-xl p-6 border border-rose-100">
+              <div class="bg-indigo-50 rounded-xl p-6 border border-indigo-100">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                  <svg class="w-5 h-5 mr-2 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-5 h-5 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                   </svg>
                   Research Data
@@ -199,7 +190,7 @@
                 <div class="space-y-3">
                   <div class="flex justify-between items-center">
                     <span class="text-gray-600">Total Quotes</span>
-                    <span class="text-2xl font-bold text-rose-600"><%= @movement.movement_quotes.count %></span>
+                    <span class="text-2xl font-bold text-indigo-600"><%= @movement.movement_quotes.count %></span>
                   </div>
 
                   <% unique_quotes = @movement.movement_quotes.includes(:quote).map(&:quote).uniq %>
@@ -214,7 +205,7 @@
                       <span class="text-gray-600 text-sm">Categories</span>
                       <div class="flex flex-wrap gap-1 mt-1">
                         <% categories.each do |category| %>
-                          <span class="px-2 py-1 bg-rose-100 text-rose-800 text-xs rounded-full">
+                          <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full">
                             <%= category %>
                           </span>
                         <% end %>

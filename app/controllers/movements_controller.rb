@@ -2,10 +2,6 @@ class MovementsController < ApplicationController
   before_action :set_composer_and_work
   before_action :set_movement, only: %i[ show edit update destroy ]
 
-  def index
-    @pagy, @movements = pagy(@work.movements, items: 12)
-  end
-
   def show
   end
 

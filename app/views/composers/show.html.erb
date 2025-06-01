@@ -58,7 +58,7 @@
               <div class="relative">
                 <%= image_tag @composer.portrait,
                     alt: "Portrait of #{@composer.full_name}",
-                    class: "w-40 h-40 lg:w-48 lg:h-48 object-cover" %>
+                    class: "w-40 h-40 lg:w-48 lg:h-48 object-cover rounded-lg" %>
               </div>
             </div>
           <% end %>
@@ -70,20 +70,6 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <!-- Left Column - Biography -->
           <div class="lg:col-span-2 space-y-8">
-            <!-- Short Bio -->
-            <% if @composer.short_bio.present? %>
-              <div>
-                <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                  Short Biography
-                </h2>
-                <div class="bg-indigo-50 rounded-xl p-6 border-l-4 border-indigo-500">
-                  <p class="text-gray-700 text-lg leading-relaxed">
-                    <%= @composer.short_bio %>
-                  </p>
-                </div>
-              </div>
-            <% end %>
-
             <!-- Works Section -->
             <% if @composer.respond_to?(:works) && @composer.works.any? %>
               <div>
@@ -114,10 +100,6 @@
                       </div>
                     <% end %>
                   <% end %>
-                </div>
-                <div class="mt-6 text-center">
-                  <%= link_to "View All Works", composer_works_path(@composer),
-                      class: "inline-flex items-center px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200" %>
                 </div>
               </div>
             <% end %>
@@ -182,15 +164,6 @@
                     <span class="text-gray-600">Total Works</span>
                     <span class="text-2xl font-bold text-indigo-600"><%= @composer.works.count %></span>
                   </div>
-
-                  <% if @composer.works.where.not(duration: nil).any? %>
-                    <div class="flex justify-between items-center">
-                      <span class="text-gray-600">Total Duration</span>
-                      <span class="text-lg font-semibold text-gray-900">
-                        <%= time_duration(@composer.works.sum(:duration)) %>
-                      </span>
-                    </div>
-                  <% end %>
                 </div>
               </div>
             <% end %>

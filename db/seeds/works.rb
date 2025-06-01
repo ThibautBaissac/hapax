@@ -6,8 +6,28 @@ work_count = 0
 total_work_count = 50
 
 work_types = [
-  "Symphony", "Concerto", "Sonata", "Quartet", "Quintet", "Suite", "Prelude",
-  "Fugue", "Etude", "Nocturne", "Waltz", "March", "Overture", "Fantasy"
+  "Piece",
+  "Fugue",
+  "Cantata",
+  "Opera",
+  "Oratorio",
+  "Mass",
+  "Suite",
+  "Symphony",
+  "Sonata",
+  "Trio",
+  "Quartet",
+  "Quintet",
+  "Sextet",
+  "Septet",
+  "Concerto",
+  "Song Cycle",
+  "Prelude",
+  "Etude",
+  "Nocturne",
+  "Lied",
+  "Ballade",
+  "Variation"
 ]
 
 instruments = [
@@ -15,7 +35,26 @@ instruments = [
   "Organ", "Harpsichord", "Oboe", "Horn", "Trumpet"
 ]
 
+# Greif
+composer = Composer.find_by(last_name: "Greif")
+Work.create!(
+  composer:,
+  opus: "Op. 270/271",
+  title: "Hölderlin Lieder",
+  description: Faker::Lorem.paragraph(sentence_count: 4),
+  duration: 5400,
+  instrumentation: "Voice, Piano",
+  recorded: false,
+  form: :song_cycle,
+  structure: :lied,
+  start_date_composed: Date.new(1990, 12, 21),
+  end_date_composed: Date.new(1992, 01, 01),
+  unsure_start_date: false,
+  unsure_end_date: true
+)
+
 Composer.find_each do |composer|
+  next if composer.last_name.downcase == "greif"
   works_for_composer = rand(2..5)
 
   works_for_composer.times do |i|
