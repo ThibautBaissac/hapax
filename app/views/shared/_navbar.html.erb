@@ -43,10 +43,6 @@
           Composers
         <% end %>
 
-        <%= link_to quotes_path, class: "px-3 py-2 text-gray-700 hover:text-indigo-600 rounded-lg font-medium text-sm transition-colors #{'text-indigo-600' if controller_name == 'quotes'}" do %>
-          Quotes
-        <% end %>
-
         <%= link_to profile_path, class: "px-3 py-2 text-gray-700 hover:text-indigo-600 rounded-lg font-medium text-sm transition-colors #{'text-indigo-600' if controller_name == 'profile'}" do %>
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
@@ -98,12 +94,6 @@
             data: { action: "click->navbar#closeMobileMenu" },
             class: "block px-3 py-2 text-gray-700 hover:text-indigo-600 rounded-lg font-medium #{'text-indigo-600' if controller_name == 'composers'}" do %>
           Composers
-        <% end %>
-
-        <%= link_to quotes_path,
-            data: { action: "click->navbar#closeMobileMenu" },
-            class: "block px-3 py-2 text-gray-700 hover:text-indigo-600 rounded-lg font-medium #{'text-indigo-600' if controller_name == 'quotes'}" do %>
-          Quotes
         <% end %>
 
         <%= link_to profile_path,

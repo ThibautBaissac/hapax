@@ -1,9 +1,9 @@
 FactoryBot.define do
-  factory :movement_quote do
+  factory :quote_detail do
     quote { nil }
     movement { nil }
     category { "MyString" }
-    location_in_score { "MyString" }
+    location { "MyString" }
     excerpt_text { "MyString" }
     notes { "MyText" }
   end

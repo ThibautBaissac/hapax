@@ -2,6 +2,8 @@ class Work < ApplicationRecord
   belongs_to :composer
 
   has_many :movements, dependent: :destroy
+  has_many :quote_details, as: :detailable, dependent: :destroy
+  has_many :quotes, through: :quote_details
 
   validates :title, presence: true
 

@@ -11,7 +11,7 @@ class SearchController < ApplicationController
         works: search_works,
         movements: search_movements,
         quotes: search_quotes,
-        movement_quotes: search_movement_quotes
+        quote_details: search_quote_details
       }
 
       @total_results = @results.values.sum(&:count)
@@ -50,9 +50,9 @@ class SearchController < ApplicationController
     ).limit(10)
   end
 
-  def search_movement_quotes
+  def search_quote_details
     MovementQuote.joins(:quote, movement: { work: :composer }).where(
-      "movement_quotes.category LIKE ? OR movement_quotes.location_in_score LIKE ? OR movement_quotes.excerpt_text LIKE ? OR movement_quotes.notes LIKE ? OR quotes.title LIKE ? OR quotes.author LIKE ?",
+      "quote_details.category LIKE ? OR quote_details.location LIKE ? OR quote_details.excerpt_text LIKE ? OR quote_details.notes LIKE ? OR quotes.title LIKE ? OR quotes.author LIKE ?",
       "%#{@query}%", "%#{@query}%", "%#{@query}%", "%#{@query}%", "%#{@query}%", "%#{@query}%"
     ).includes(:quote, movement: { work: :composer }).limit(10)
   end

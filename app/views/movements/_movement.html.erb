@@ -68,9 +68,9 @@
       <% end %>
 
       <!-- Optional: Quotes count if available -->
-      <% if movement.respond_to?(:movement_quotes) && movement.movement_quotes.any? %>
+      <% if movement.respond_to?(:quote_details) && movement.quote_details.any? %>
         <span class="text-xs text-gray-500 bg-amber-50 px-2 py-1 rounded-full">
-          <%= pluralize(movement.movement_quotes.count, 'quote') %>
+          <%= pluralize(movement.quote_details.count, 'quote') %>
         </span>
       <% end %>
     </div>

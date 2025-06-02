@@ -10,10 +10,10 @@
           <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
         </svg>
         <span>by <%= quote.author %></span>
-        <% if quote.respond_to?(:movement_quotes) && quote.movement_quotes.any? %>
+        <% if quote.respond_to?(:quote_details) && quote.quote_details.any? %>
           <span class="mx-2">•</span>
           <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
-            <%= pluralize(quote.movement_quotes.count, 'reference') %>
+            <%= pluralize(quote.quote_details.count, 'reference') %>
           </span>
         <% end %>
       </div>

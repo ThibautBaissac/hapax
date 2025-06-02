@@ -11,15 +11,10 @@
         A digital library that captures and organizes meaningful quotes from classical music compositions.
       </p>
 
-      <div class="flex justify-center gap-4">
+      <div class="flex justify-center">
         <%= link_to composers_path,
             class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors" do %>
           Explore Composers
-        <% end %>
-
-        <%= link_to quotes_path,
-            class: "inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors" do %>
-          Browse Quotes
         <% end %>
       </div>
     </div>
@@ -60,7 +55,7 @@
         </div>
       <% end %>
 
-      <%= link_to quotes_path, class: "block bg-white rounded-xl border border-gray-200 p-6 hover:border-emerald-300 hover:bg-gray-50 transition-all group" do %>
+      <div class="block bg-white rounded-xl border border-gray-200 p-6 hover:border-emerald-300 hover:bg-gray-50 transition-all group">
         <div class="flex items-center justify-between">
           <div>
             <h3 class="text-lg font-semibold text-gray-900 group-hover:text-emerald-600 transition-colors">
@@ -74,7 +69,7 @@
             <%= @quotes_count %>
           </div>
         </div>
-      <% end %>
+      </div>
     </div>
   </div>
 
@@ -99,79 +94,4 @@
       </div>
     </div>
   </div>
-
-  <!-- Recent Activity -->
-  <% if @recent_composers.any? || @recent_quotes.any? %>
-    <div class="max-w-4xl mx-auto px-4 py-12">
-      <div class="grid md:grid-cols-2 gap-8">
-        <!-- Recent Composers -->
-        <% if @recent_composers.any? %>
-          <div class="bg-white rounded-xl border border-gray-200 p-6">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-lg font-semibold text-gray-900">Recent Composers</h3>
-              <%= link_to composers_path, class: "text-sm text-indigo-600 hover:text-indigo-700" do %>
-                View all
-              <% end %>
-            </div>
-
-            <div class="space-y-3">
-              <% @recent_composers.limit(3).each do |composer| %>
-                <%= link_to composer, class: "block p-3 rounded-lg hover:bg-gray-50 transition-colors group" do %>
-                  <div class="flex items-center gap-3">
-                    <% if composer.portrait.attached? %>
-                      <div class="w-8 h-8 rounded-md overflow-hidden border border-gray-200">
-                        <%= image_tag composer.portrait, class: "w-full h-full object-cover" %>
-                      </div>
-                    <% else %>
-                      <div class="w-8 h-8 rounded-md bg-indigo-100 flex items-center justify-center">
-                        <svg class="w-4 h-4 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
-                          <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-                        </svg>
-                      </div>
-                    <% end %>
-
-                    <div class="flex-1 min-w-0">
-                      <p class="text-sm font-medium text-gray-900 group-hover:text-indigo-600 transition-colors">
-                        <%= composer.full_name %>
-                      </p>
-                      <p class="text-xs text-gray-500">
-                        <%= composer.birth_date&.year || "Unknown" %> - <%= composer.death_date&.year || "Present" %>
-                      </p>
-                    </div>
-                  </div>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-
-        <!-- Recent Quotes -->
-        <% if @recent_quotes.any? %>
-          <div class="bg-white rounded-xl border border-gray-200 p-6">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-lg font-semibold text-gray-900">Recent Quotes</h3>
-              <%= link_to quotes_path, class: "text-sm text-indigo-600 hover:text-indigo-700" do %>
-                View all
-              <% end %>
-            </div>
-
-            <div class="space-y-3">
-              <% @recent_quotes.limit(3).each do |quote| %>
-                <%= link_to quote, class: "block p-3 rounded-lg hover:bg-gray-50 transition-colors group" do %>
-                  <div>
-                    <p class="text-sm font-medium text-gray-900 group-hover:text-indigo-600 transition-colors truncate">
-                      <%= quote.title %>
-                    </p>
-                    <p class="text-xs text-gray-500 mt-1">
-                      by <%= quote.author %>
-                    </p>
-                  </div>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
 </div>

@@ -51,19 +51,6 @@ ActiveRecord::Schema[8.1].define(version: 2025_05_30_084016) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "movement_quotes", force: :cascade do |t|
-    t.string "category"
-    t.datetime "created_at", null: false
-    t.string "excerpt_text"
-    t.string "location_in_score"
-    t.integer "movement_id", null: false
-    t.text "notes"
-    t.integer "quote_id", null: false
-    t.datetime "updated_at", null: false
-    t.index ["movement_id"], name: "index_movement_quotes_on_movement_id"
-    t.index ["quote_id"], name: "index_movement_quotes_on_quote_id"
-  end
-
   create_table "movements", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
@@ -73,6 +60,20 @@ ActiveRecord::Schema[8.1].define(version: 2025_05_30_084016) do
     t.datetime "updated_at", null: false
     t.integer "work_id", null: false
     t.index ["work_id"], name: "index_movements_on_work_id"
+  end
+
+  create_table "quote_details", force: :cascade do |t|
+    t.string "category"
+    t.datetime "created_at", null: false
+    t.integer "detailable_id", null: false
+    t.string "detailable_type", null: false
+    t.string "excerpt_text"
+    t.string "location"
+    t.text "notes"
+    t.integer "quote_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["detailable_type", "detailable_id"], name: "index_quote_details_on_detailable"
+    t.index ["quote_id"], name: "index_quote_details_on_quote_id"
   end
 
   create_table "quotes", force: :cascade do |t|
@@ -133,8 +134,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_05_30_084016) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "movement_quotes", "movements"
-  add_foreign_key "movement_quotes", "quotes"
   add_foreign_key "movements", "works"
+  add_foreign_key "quote_details", "quotes"
   add_foreign_key "works", "composers"
 end

@@ -63,10 +63,10 @@
             </div>
           <% end %>
 
-          <% if @movement.respond_to?(:movement_quotes) && @movement.movement_quotes.any? %>
+          <% if @movement.respond_to?(:quote_details) && @movement.quote_details.any? %>
             <div class="flex items-center">
               <span class="text-gray-500 mr-2">Quotes:</span>
-              <span class="font-medium text-gray-900"><%= @movement.movement_quotes.count %></span>
+              <span class="font-medium text-gray-900"><%= @movement.quote_details.count %></span>
             </div>
           <% end %>
         </div>
@@ -82,43 +82,43 @@
       <% end %>
 
       <!-- Quotes -->
-      <% if @movement.respond_to?(:movement_quotes) && @movement.movement_quotes.any? %>
+      <% if @movement.respond_to?(:quote_details) && @movement.quote_details.any? %>
         <div class="px-8 py-6">
           <h2 class="text-xl font-semibold text-gray-900 mb-4">
             Quotes
-            <span class="text-sm font-normal text-gray-500 ml-2">(<%= @movement.movement_quotes.count %>)</span>
+            <span class="text-sm font-normal text-gray-500 ml-2">(<%= @movement.quote_details.count %>)</span>
           </h2>
 
           <div class="space-y-4">
-            <% @movement.movement_quotes.includes(:quote).each do |movement_quote| %>
-              <%= link_to movement_quote.quote, class: "block p-4 rounded-lg border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all group" do %>
+            <% @movement.quote_details.includes(:quote).each do |quote_detail| %>
+              <%= link_to quote_detail.quote, class: "block p-4 rounded-lg border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all group" do %>
                 <div class="flex items-start justify-between">
                   <div class="flex-1">
                     <h3 class="font-medium text-gray-900 group-hover:text-indigo-600 transition-colors mb-1">
-                      <%= movement_quote.quote.title %>
+                      <%= quote_detail.quote.title %>
                     </h3>
                     <p class="text-sm text-gray-600 mb-2">
-                      by <%= movement_quote.quote.author %>
+                      by <%= quote_detail.quote.author %>
                     </p>
 
                     <div class="space-y-1 text-sm">
-                      <% if movement_quote.location_in_score.present? %>
+                      <% if quote_detail.location.present? %>
                         <div class="text-gray-600">
-                          <span class="font-medium">Location:</span> <%= movement_quote.location_in_score %>
+                          <span class="font-medium">Location:</span> <%= quote_detail.location %>
                         </div>
                       <% end %>
 
-                      <% if movement_quote.excerpt_text.present? %>
+                      <% if quote_detail.excerpt_text.present? %>
                         <div class="text-gray-600">
-                          <span class="font-medium">Excerpt:</span> "<%= movement_quote.excerpt_text %>"
+                          <span class="font-medium">Excerpt:</span> "<%= quote_detail.excerpt_text %>"
                         </div>
                       <% end %>
                     </div>
                   </div>
 
-                  <% if movement_quote.category.present? %>
+                  <% if quote_detail.category.present? %>
                     <span class="ml-4 px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full flex-shrink-0">
-                      <%= movement_quote.category %>
+                      <%= quote_detail.category %>
                     </span>
                   <% end %>
                 </div>

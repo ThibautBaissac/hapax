@@ -54,9 +54,6 @@
     <% if quote.persisted? %>
       <%= link_to "Cancel", quote_path(quote),
           class: "px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors" %>
-    <% else %>
-      <%= link_to "Cancel", quotes_path,
-          class: "px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors" %>
     <% end %>
   </div>
 <% end %>

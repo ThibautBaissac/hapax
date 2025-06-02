@@ -4,12 +4,13 @@
   <div class="max-w-4xl mx-auto px-4 py-8">
     <!-- Navigation -->
     <div class="mb-8">
-      <%= link_to quotes_path, class: "inline-flex items-center text-indigo-600 hover:text-indigo-700 font-medium transition-colors" do %>
+      <button onclick="if (history.length > 1) { history.back(); } else { window.location.href = '<%= root_path %>'; }"
+              class="inline-flex items-center text-indigo-600 hover:text-indigo-700 cursor-pointer font-medium transition-colors bg-transparent border-0 p-0">
         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
-        All Quotes
-      <% end %>
+        Back
+      </button>
     </div>
 
     <!-- Main Content -->
@@ -54,10 +55,10 @@
             <span class="font-medium text-gray-900"><%= @quote.created_at.strftime("%B %d, %Y") %></span>
           </div>
 
-          <% if @quote.respond_to?(:movement_quotes) && @quote.movement_quotes.any? %>
+          <% if @quote.quote_details.any? %>
             <div class="flex items-center">
               <span class="text-gray-500 mr-2">References:</span>
-              <span class="font-medium text-gray-900"><%= @quote.movement_quotes.count %></span>
+              <span class="font-medium text-gray-900"><%= @quote.quote_details.count %></span>
             </div>
           <% end %>
         </div>
@@ -74,46 +75,81 @@
       <% end %>
 
       <!-- Referenced in Works -->
-      <% if @quote.respond_to?(:movement_quotes) && @quote.movement_quotes.any? %>
+      <% if @quote.quote_details.any? %>
         <div class="px-8 py-6">
           <h2 class="text-xl font-semibold text-gray-900 mb-4">
             Referenced in Works
-            <span class="text-sm font-normal text-gray-500 ml-2">(<%= @quote.movement_quotes.count %>)</span>
+            <span class="text-sm font-normal text-gray-500 ml-2">(<%= @quote.quote_details.count %>)</span>
           </h2>
 
           <div class="space-y-2">
-            <% @quote.movement_quotes.includes(movement: { work: :composer }).each do |movement_quote| %>
-              <%= link_to [movement_quote.movement.work.composer, movement_quote.movement.work, movement_quote.movement], class: "block p-4 rounded-lg border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all group" do %>
-                <div class="flex items-start justify-between">
-                  <div class="flex-1">
-                    <h3 class="font-medium text-gray-900 group-hover:text-indigo-600 transition-colors mb-1">
-                      <%= movement_quote.movement.work.title %> - <%= movement_quote.movement.title %>
-                    </h3>
-                    <p class="text-sm text-gray-600 mb-2">
-                      by <%= movement_quote.movement.work.composer.full_name %>
-                    </p>
+            <% @quote.quote_details.includes(detailable: { work: :composer }).each do |quote_detail| %>
+              <% if quote_detail.detailable_type == "Movement" %>
+                <%= link_to [quote_detail.detailable.work.composer, quote_detail.detailable.work, quote_detail.detailable], class: "block p-4 rounded-lg border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all group" do %>
+                  <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                      <h3 class="font-medium text-gray-900 group-hover:text-indigo-600 transition-colors mb-1">
+                        <%= quote_detail.detailable.work.title %> - <%= quote_detail.detailable.title %>
+                      </h3>
+                      <p class="text-sm text-gray-600 mb-2">
+                        by <%= quote_detail.detailable.work.composer.full_name %>
+                      </p>
 
-                    <div class="space-y-1 text-sm">
-                      <% if movement_quote.location_in_score.present? %>
-                        <div class="text-gray-600">
-                          <span class="font-medium">Location:</span> <%= movement_quote.location_in_score %>
-                        </div>
-                      <% end %>
+                      <div class="space-y-1 text-sm">
+                        <% if quote_detail.location.present? %>
+                          <div class="text-gray-600">
+                            <span class="font-medium">Location:</span> <%= quote_detail.location %>
+                          </div>
+                        <% end %>
 
-                      <% if movement_quote.excerpt_text.present? %>
-                        <div class="text-gray-600">
-                          <span class="font-medium">Excerpt:</span> "<%= movement_quote.excerpt_text %>"
-                        </div>
-                      <% end %>
+                        <% if quote_detail.excerpt_text.present? %>
+                          <div class="text-gray-600">
+                            <span class="font-medium">Excerpt:</span> "<%= quote_detail.excerpt_text %>"
+                          </div>
+                        <% end %>
+                      </div>
                     </div>
-                  </div>
 
-                  <% if movement_quote.category.present? %>
-                    <span class="ml-4 px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full flex-shrink-0">
-                      <%= movement_quote.category %>
-                    </span>
-                  <% end %>
-                </div>
+                    <% if quote_detail.category.present? %>
+                      <span class="ml-4 px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full flex-shrink-0">
+                        <%= quote_detail.category %>
+                      </span>
+                    <% end %>
+                  </div>
+                <% end %>
+              <% elsif quote_detail.detailable_type == "Work" %>
+                <%= link_to [quote_detail.detailable.composer, quote_detail.detailable], class: "block p-4 rounded-lg border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all group" do %>
+                  <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                      <h3 class="font-medium text-gray-900 group-hover:text-indigo-600 transition-colors mb-1">
+                        <%= quote_detail.detailable.title %>
+                      </h3>
+                      <p class="text-sm text-gray-600 mb-2">
+                        by <%= quote_detail.detailable.composer.full_name %>
+                      </p>
+
+                      <div class="space-y-1 text-sm">
+                        <% if quote_detail.location.present? %>
+                          <div class="text-gray-600">
+                            <span class="font-medium">Location:</span> <%= quote_detail.location %>
+                          </div>
+                        <% end %>
+
+                        <% if quote_detail.excerpt_text.present? %>
+                          <div class="text-gray-600">
+                            <span class="font-medium">Excerpt:</span> "<%= quote_detail.excerpt_text %>"
+                          </div>
+                        <% end %>
+                      </div>
+                    </div>
+
+                    <% if quote_detail.category.present? %>
+                      <span class="ml-4 px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full flex-shrink-0">
+                        <%= quote_detail.category %>
+                      </span>
+                    <% end %>
+                  </div>
+                <% end %>
               <% end %>
             <% end %>
           </div>
