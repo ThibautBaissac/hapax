@@ -4,7 +4,8 @@
 }
 
 .progress-bar {
-  transition: width 0.1s linear;
+  transition: none; /* Remove CSS transition to let JS handle the animation */
+  width: 100%; /* Default to full width */
 }
 
 /* Optional: Add a subtle shadow animation */

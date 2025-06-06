@@ -63,20 +63,43 @@ export default class extends Controller {
   }
 
   animateProgressBar() {
+    if (!this.hasProgressBarTarget) {
+      console.log('Flash Controller: No progress bar target found')
+      return
+    }
+
     const progressBar = this.progressBarTarget
     const duration = this.delayValue
     const steps = 100
     const stepDuration = duration / steps
     let currentStep = 0
 
+    console.log('Flash Controller: Starting progress bar animation', {
+      duration,
+      steps,
+      stepDuration
+    })
+
+    // Clear any existing timer
+    if (this.progressTimer) {
+      clearInterval(this.progressTimer)
+    }
+
     progressBar.style.width = '100%'
+    console.log('Flash Controller: Initial width set to 100%')
 
     this.progressTimer = setInterval(() => {
       currentStep++
       const progress = ((steps - currentStep) / steps) * 100
-      progressBar.style.width = `${progress}%`
+      progressBar.style.width = `${Math.max(progress, 0)}%`
 
-      if (currentStep >= steps) {
+      // Log every 10 steps to avoid spam
+      if (currentStep % 10 === 0) {
+        console.log(`Flash Controller: Step ${currentStep}, Progress: ${progress}%`)
+      }
+
+      if (currentStep >= steps || progress <= 0) {
+        console.log('Flash Controller: Progress bar animation completed')
         clearInterval(this.progressTimer)
       }
     }, stepDuration)
@@ -86,43 +109,49 @@ export default class extends Controller {
   pauseAutoDismiss() {
     if (this.dismissTimer) {
       clearTimeout(this.dismissTimer)
+      this.dismissTimer = null
     }
     if (this.progressTimer) {
       clearInterval(this.progressTimer)
+      this.progressTimer = null
     }
   }
 
   // Resume auto-dismiss on mouse leave
   resumeAutoDismiss() {
-    if (this.autoDismissValue) {
+    if (this.autoDismissValue && this.hasProgressBarTarget) {
       // Calculate remaining time based on progress bar width
       const progressBar = this.progressBarTarget
       const currentWidth = parseFloat(progressBar.style.width) || 100
       const remainingTime = (currentWidth / 100) * this.delayValue
 
-      if (remainingTime > 0) {
+      if (remainingTime > 100) { // Only resume if there's at least 100ms left
         this.dismissTimer = setTimeout(() => {
           this.dismiss()
         }, remainingTime)
 
         // Resume progress bar animation
         this.resumeProgressBar(remainingTime, currentWidth)
+      } else {
+        // If very little time left, just dismiss immediately
+        this.dismiss()
       }
     }
   }
 
   resumeProgressBar(remainingTime, currentWidth) {
     const progressBar = this.progressBarTarget
-    const steps = Math.floor(currentWidth)
+    // Ensure we have at least 10 steps for smooth animation
+    const steps = Math.max(Math.floor(currentWidth), 10)
     const stepDuration = remainingTime / steps
     let currentStep = 0
 
     this.progressTimer = setInterval(() => {
       currentStep++
       const progress = currentWidth - ((currentStep / steps) * currentWidth)
-      progressBar.style.width = `${progress}%`
+      progressBar.style.width = `${Math.max(progress, 0)}%`
 
-      if (currentStep >= steps) {
+      if (currentStep >= steps || progress <= 0) {
         clearInterval(this.progressTimer)
       }
     }, stepDuration)
