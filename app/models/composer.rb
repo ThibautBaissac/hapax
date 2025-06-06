@@ -1,12 +1,13 @@
 class Composer < ApplicationRecord
   has_one_attached :portrait
 
+  belongs_to :nationality
   has_many :works, dependent: :destroy
 
   validates :first_name, presence: true
   validates :last_name, presence: true
 
-  sanitizes :first_name, :last_name, :nationality, tags: [], attributes: []
+  sanitizes :first_name, :last_name, tags: [], attributes: []
   sanitizes :short_bio, :bio
 
   def full_name

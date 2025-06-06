@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_05_30_084016) do
+ActiveRecord::Schema[8.1].define(version: 2025_06_06_132412) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -46,9 +46,10 @@ ActiveRecord::Schema[8.1].define(version: 2025_05_30_084016) do
     t.date "death_date"
     t.string "first_name", null: false
     t.string "last_name", null: false
-    t.string "nationality"
+    t.integer "nationality_id"
     t.text "short_bio"
     t.datetime "updated_at", null: false
+    t.index ["nationality_id"], name: "index_composers_on_nationality_id"
   end
 
   create_table "movements", force: :cascade do |t|
@@ -60,6 +61,15 @@ ActiveRecord::Schema[8.1].define(version: 2025_05_30_084016) do
     t.datetime "updated_at", null: false
     t.integer "work_id", null: false
     t.index ["work_id"], name: "index_movements_on_work_id"
+  end
+
+  create_table "nationalities", force: :cascade do |t|
+    t.string "code", null: false
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_nationalities_on_code", unique: true
+    t.index ["name"], name: "index_nationalities_on_name", unique: true
   end
 
   create_table "quote_details", force: :cascade do |t|
@@ -134,6 +144,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_05_30_084016) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "composers", "nationalities"
   add_foreign_key "movements", "works"
   add_foreign_key "quote_details", "quotes"
   add_foreign_key "works", "composers"

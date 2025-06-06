@@ -15,9 +15,9 @@ composers.each do |composer_data|
     last_name: composer_data[:last_name],
     birth_date: composer_data[:birth_date],
     death_date: composer_data[:death_date],
-    nationality: composer_data[:nationality],
     short_bio: Faker::Lorem.sentence(word_count: 15),
-    bio: Faker::Lorem.paragraph(sentence_count: 8, supplemental: true, random_sentences_to_add: 3)
+    bio: Faker::Lorem.paragraph(sentence_count: 8, supplemental: true, random_sentences_to_add: 3),
+    nationality_id: Nationality.pluck(:id).sample
   )
   composer_count += 1
   puts "-- Created composer: #{Composer.last.first_name} #{Composer.last.last_name}"

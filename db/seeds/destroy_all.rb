@@ -1,6 +1,7 @@
 puts "Starting to empty the database..."
 
 models = [
+  Nationality,
   QuoteDetail,
   Quote,
   Movement,

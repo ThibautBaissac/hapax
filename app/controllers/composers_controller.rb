@@ -2,7 +2,7 @@ class ComposersController < ApplicationController
   before_action :set_composer, only: %i[ show edit update destroy ]
 
   def index
-    @pagy, @composers = pagy(Composer.all, items: 12)
+    @pagy, @composers = pagy(Composer.includes(:nationality), items: 12)
   end
 
   def show
@@ -10,9 +10,11 @@ class ComposersController < ApplicationController
 
   def new
     @composer = Composer.new
+    @nationalities = Nationality.ordered
   end
 
   def edit
+    @nationalities = Nationality.ordered
   end
 
   def create
@@ -51,6 +53,6 @@ class ComposersController < ApplicationController
     end
 
     def composer_params
-      params.require(:composer).permit(:first_name, :last_name, :nationality, :birth_date, :death_date, :short_bio, :bio, :portrait)
+      params.require(:composer).permit(:first_name, :last_name, :nationality_id, :birth_date, :death_date, :short_bio, :bio, :portrait)
     end
 end

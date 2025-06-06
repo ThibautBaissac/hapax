@@ -1,4 +1,5 @@
 load "db/seeds/destroy_all.rb"
+load "db/seeds/nationalities.rb"
 load "db/seeds/users.rb"
 load "db/seeds/composers.rb"
 load "db/seeds/works.rb"

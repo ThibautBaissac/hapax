@@ -91,7 +91,7 @@
           <% if @composer.nationality.present? %>
             <div class="flex items-center">
               <span class="text-gray-500 mr-2">Nationality:</span>
-              <span class="font-medium text-gray-900"><%= @composer.nationality %></span>
+              <span class="font-medium text-gray-900"><%= @composer.nationality&.name %></span>
             </div>
           <% end %>
         </div>
