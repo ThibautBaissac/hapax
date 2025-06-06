@@ -12,3 +12,6 @@ application.register("navbar", NavbarController)
 
 import PwaController from "./pwa_controller"
 application.register("pwa", PwaController)
+
+import ImagePreviewController from "./image_preview_controller"
+application.register("image-preview", ImagePreviewController)

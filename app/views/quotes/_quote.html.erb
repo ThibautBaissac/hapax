@@ -20,9 +20,25 @@
 
       <!-- Notes Preview -->
       <% if quote.notes.present? %>
-        <p class="text-sm text-gray-600 line-clamp-2">
+        <p class="text-sm text-gray-600 line-clamp-2 mb-2">
           <%= quote.notes %>
         </p>
+      <% end %>
+
+      <!-- Image Thumbnails -->
+      <% if quote.images.attached? %>
+        <div class="flex items-center gap-2 mt-2">
+          <div class="flex -space-x-1">
+            <% quote.images.limit(3).each do |image| %>
+              <div class="w-8 h-8 rounded border-2 border-white overflow-hidden">
+                <%= image_tag image, class: "w-full h-full object-cover" %>
+              </div>
+            <% end %>
+          </div>
+          <span class="text-xs text-gray-500">
+            <%= pluralize(quote.images.count, 'image') %>
+          </span>
+        </div>
       <% end %>
     </div>
 

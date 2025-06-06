@@ -74,6 +74,23 @@
         </div>
       <% end %>
 
+      <!-- Images -->
+      <% if @quote.images.attached? %>
+        <div class="px-8 py-6 border-b border-gray-100">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">
+            Images
+            <span class="text-sm font-normal text-gray-500 ml-2">(<%= @quote.images.count %>)</span>
+          </h2>
+          <div class="flex flex-wrap gap-4">
+            <% @quote.images.each do |image| %>
+              <div class="h-64 overflow-hidden">
+                <%= image_tag image, class: "h-full w-auto object-cover" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
       <!-- Referenced in Works -->
       <% if @quote.quote_details.any? %>
         <div class="px-8 py-6">
