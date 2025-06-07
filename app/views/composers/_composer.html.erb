@@ -27,7 +27,7 @@
           </h3>
           <div class="flex items-center mt-1 text-sm text-gray-500">
             <% if composer.nationality.present? %>
-              <span><%= composer.nationality.name %></span>
+              <span><%= t("nationalities.#{composer.nationality.code&.downcase}") %></span>
               <span class="mx-2">•</span>
             <% end %>
             <span><%= composer.birth_date&.year || "Unknown" %></span>

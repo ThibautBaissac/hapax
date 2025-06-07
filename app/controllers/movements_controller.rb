@@ -38,7 +38,7 @@ class MovementsController < ApplicationController
     @movement.destroy!
 
     respond_to do |format|
-      format.html { redirect_to(composer_work_movements_path(@composer, @work), status: :see_other, notice: "Movement was successfully destroyed.") }
+      format.html { redirect_to(composer_work_path(@composer, @work), status: :see_other, notice: "Movement was successfully destroyed.") }
     end
   end
 
