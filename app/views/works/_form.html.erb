@@ -29,24 +29,8 @@
             placeholder: "Symphony No. 5 in C minor" %>
       </div>
 
-      <!-- Form, Opus, Duration -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-          <%= form.label :form, class: "block text-sm font-medium text-gray-700 mb-2" %>
-          <%= form.select :form,
-              options_for_select([
-                ['Symphony', 'symphony'],
-                ['Concerto', 'concerto'],
-                ['Sonata', 'sonata'],
-                ['Chamber Music', 'chamber'],
-                ['Opera', 'opera'],
-                ['Ballet', 'ballet'],
-                ['Other', 'other']
-              ], work.form),
-              { prompt: 'Select form' },
-              { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors" } %>
-        </div>
-
+      <!-- Opus and Duration -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <%= form.label :opus, class: "block text-sm font-medium text-gray-700 mb-2" %>
           <%= form.text_field :opus,
@@ -60,6 +44,25 @@
               class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors",
               placeholder: "1800",
               min: 0 %>
+        </div>
+      </div>
+
+      <!-- Form and Structure -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <%= form.label :form, class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= form.select :form,
+              options_from_collection_for_select(Work.forms.map { |key, value| [key.humanize, key] }, :last, :first, work.form),
+              { prompt: 'Select form' },
+              { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors" } %>
+        </div>
+
+        <div>
+          <%= form.label :structure, class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= form.select :structure,
+              options_from_collection_for_select(Work.structures.map { |key, value| [key.humanize, key] }, :last, :first, work.structure),
+              { prompt: 'Select structure' },
+              { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors" } %>
         </div>
       </div>
 
