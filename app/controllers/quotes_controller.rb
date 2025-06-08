@@ -17,8 +17,14 @@ class QuotesController < ApplicationController
     @quote.quote_details.build(detailable: @detailable)
 
     # Get existing quotes from the current composer that are not already linked to this detailable
+    # Use a more explicit approach to handle the polymorphic association
+    existing_quote_ids = QuoteDetail.where(
+      detailable_type: @detailable.class.name,
+      detailable_id: @detailable.id
+    ).pluck(:quote_id)
+
     @existing_quotes = @composer.quotes
-                               .where.not(quote_details: { detailable: @detailable })
+                               .where.not(id: existing_quote_ids)
                                .order(:title)
   end
 
@@ -44,8 +50,13 @@ class QuotesController < ApplicationController
           redirect_path = @movement ? [@composer, @work, @movement, @quote] : [@composer, @work, @quote]
           format.html { redirect_to(redirect_path, notice: "Quote was successfully linked.") }
         else
+          existing_quote_ids = QuoteDetail.where(
+            detailable_type: @detailable.class.name,
+            detailable_id: @detailable.id
+          ).pluck(:quote_id)
+
           @existing_quotes = @composer.quotes
-                                     .where.not(quote_details: { detailable: @detailable })
+                                     .where.not(id: existing_quote_ids)
                                      .order(:title)
           format.html { render(:new, status: :unprocessable_entity) }
         end
@@ -68,8 +79,13 @@ class QuotesController < ApplicationController
           redirect_path = @movement ? [@composer, @work, @movement, @quote] : [@composer, @work, @quote]
           format.html { redirect_to(redirect_path, notice: "Quote was successfully created.") }
         else
+          existing_quote_ids = QuoteDetail.where(
+            detailable_type: @detailable.class.name,
+            detailable_id: @detailable.id
+          ).pluck(:quote_id)
+
           @existing_quotes = @composer.quotes
-                                     .where.not(quote_details: { detailable: @detailable })
+                                     .where.not(id: existing_quote_ids)
                                      .order(:title)
           format.html { render(:new, status: :unprocessable_entity) }
         end
