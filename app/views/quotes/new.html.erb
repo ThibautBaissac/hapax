@@ -37,7 +37,110 @@
       </p>
     </div>
 
-    <!-- Form -->
-    <%= render "form", quote: @quote %>
-  </div>
-</div>
+    <!-- Quote Form Container -->
+    <div data-controller="quote-form">
+      <!-- Option Selection -->
+      <% if @existing_quotes.any? %>
+        <div class="mb-6 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <h2 class="text-lg font-medium text-gray-900 mb-4">Choose an Option</h2>
+
+          <div class="space-y-4">
+            <label class="flex items-start space-x-3 cursor-pointer">
+              <input type="radio" name="quote_option" value="existing" class="mt-1 h-4 w-4 text-rose-600 focus:ring-rose-500 border-gray-300" id="existing_quote_option" data-quote-form-target="existingOption" data-action="change->quote-form#toggle">
+              <div class="flex-1">
+                <div class="text-sm font-medium text-gray-900">Link an existing quote</div>
+                <div class="text-sm text-gray-500">Associate an existing quote from <%= @composer.full_name %> with this work/movement</div>
+              </div>
+            </label>
+
+            <label class="flex items-start space-x-3 cursor-pointer">
+              <input type="radio" name="quote_option" value="new" class="mt-1 h-4 w-4 text-rose-600 focus:ring-rose-500 border-gray-300" id="new_quote_option" data-quote-form-target="newOption" data-action="change->quote-form#toggle">
+              <div class="flex-1">
+                <div class="text-sm font-medium text-gray-900">Create a new quote</div>
+                <div class="text-sm text-gray-500">Create a completely new quote and associate it with this work/movement</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Existing Quote Selection -->
+        <div id="existing_quote_section" class="mb-6 bg-white rounded-xl shadow-sm border border-gray-200 p-6" style="display: none;" data-quote-form-target="existingSection">
+          <h3 class="text-lg font-medium text-gray-900 mb-4">Select Existing Quote</h3>
+
+          <%= form_with url: [@composer, @work, @movement].compact + [Quote.new], local: true, id: "existing_quote_form", class: "space-y-6" do |form| %>
+            <div>
+              <%= label_tag :existing_quote_id, "Choose a quote from #{@composer.full_name}", class: "block text-sm font-medium text-gray-700 mb-2" %>
+              <%= select_tag :existing_quote_id,
+                  options_from_collection_for_select(@existing_quotes, :id, :title_with_author, params[:existing_quote_id]),
+                  {
+                    prompt: "Select a quote...",
+                    class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors"
+                  } %>
+            </div>
+
+            <!-- Quote Detail Information for existing quote -->
+            <div class="bg-gray-50 rounded-lg p-4">
+              <h4 class="text-md font-medium text-gray-900 mb-4">Reference Details</h4>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Category -->
+                <div>
+                  <%= label_tag "quote_detail[category]", "Category", class: "block text-sm font-medium text-gray-700 mb-2" %>
+                  <%= select_tag "quote_detail[category]",
+                      options_for_select([
+                        ["Select a category", ""],
+                        ["Analysis", "analysis"],
+                        ["Biography", "biography"],
+                        ["Performance", "performance"],
+                        ["Historical Context", "historical"],
+                        ["Musicology", "musicology"],
+                        ["Review", "review"],
+                        ["Other", "other"]
+                      ]),
+                      { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors" } %>
+                </div>
+
+                <!-- Location -->
+                <div>
+                  <%= label_tag "quote_detail[location]", "Location in Work", class: "block text-sm font-medium text-gray-700 mb-2" %>
+                  <%= text_field_tag "quote_detail[location]", "",
+                      class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors",
+                      placeholder: "e.g., mm. 1-16, page 23, etc." %>
+                </div>
+              </div>
+
+              <!-- Excerpt Text -->
+              <div class="mt-4">
+                <%= label_tag "quote_detail[excerpt_text]", "Excerpt/Quote", class: "block text-sm font-medium text-gray-700 mb-2" %>
+                <%= text_area_tag "quote_detail[excerpt_text]", "",
+                    rows: 3,
+                    class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors resize-y",
+                    placeholder: "Relevant excerpt from the reference..." %>
+              </div>
+
+              <!-- Detail Notes -->
+              <div class="mt-4">
+                <%= label_tag "quote_detail[notes]", "Additional Notes", class: "block text-sm font-medium text-gray-700 mb-2" %>
+                <%= text_area_tag "quote_detail[notes]", "",
+                    rows: 2,
+                    class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors resize-y",
+                    placeholder: "Notes specific to this association..." %>
+              </div>
+            </div>
+
+            <!-- Form Actions for existing quote -->
+            <div class="flex gap-3">
+              <%= submit_tag "Link Quote", class: "px-4 py-2 bg-rose-600 text-white text-sm font-medium rounded-lg hover:bg-rose-700 transition-colors" %>
+              <% cancel_path = @movement ? [@composer, @work, @movement] : [@composer, @work] %>
+              <%= link_to "Cancel", cancel_path,
+                  class: "px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <!-- New Quote Form -->
+      <div id="new_quote_section" data-quote-form-target="newSection" <% if @existing_quotes.any? %>style="display: none;"<% end %>>
+        <%= render "form", quote: @quote %>
+      </div>
+    </div>

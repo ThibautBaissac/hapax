@@ -11,6 +11,10 @@ class Quote < ApplicationRecord
   sanitizes :title, :author, tags: [], attributes: []
   sanitizes :notes
 
+  def title_with_author
+    "#{title} (by #{author})"
+  end
+
   private
 
   def acceptable_images

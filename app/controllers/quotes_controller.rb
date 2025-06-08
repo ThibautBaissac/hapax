@@ -7,10 +7,7 @@ class QuotesController < ApplicationController
 
   def index
     # Quotes index for a specific composer
-    @quotes = Quote.joins(:quote_details)
-                   .where(quote_details: { detailable: [@composer.works, @composer.works.joins(:movements).select("movements.*")].flatten })
-                   .distinct
-                   .order(:title)
+    @quotes = @composer.quotes.order(:title)
   end
 
   def show
@@ -19,29 +16,64 @@ class QuotesController < ApplicationController
   def new
     @quote = Quote.new
     @quote.quote_details.build(detailable: @detailable)
+
+    # Get existing quotes from the current composer that are not already linked to this detailable
+    @existing_quotes = @composer.quotes
+                               .where.not(quote_details: { detailable: @detailable })
+                               .order(:title)
   end
 
   def edit
   end
 
   def create
-    @quote = Quote.new(quote_params)
+    # Check if user wants to link an existing quote
+    if params[:existing_quote_id].present?
+      @quote = Quote.find(params[:existing_quote_id])
 
-    respond_to do |format|
-      if @quote.save
-        # Create the quote detail association
-        @quote.quote_details.create!(
-          detailable: @detailable,
-          category: params[:quote_detail]&.dig(:category),
-          location: params[:quote_detail]&.dig(:location),
-          excerpt_text: params[:quote_detail]&.dig(:excerpt_text),
-          notes: params[:quote_detail]&.dig(:notes)
-        )
+      # Create only the quote detail association
+      quote_detail = @quote.quote_details.build(
+        detailable: @detailable,
+        category: params[:quote_detail]&.dig(:category),
+        location: params[:quote_detail]&.dig(:location),
+        excerpt_text: params[:quote_detail]&.dig(:excerpt_text),
+        notes: params[:quote_detail]&.dig(:notes)
+      )
 
-        redirect_path = @movement ? [@composer, @work, @movement, @quote] : [@composer, @work, @quote]
-        format.html { redirect_to(redirect_path, notice: "Quote was successfully created.") }
-      else
-        format.html { render(:new, status: :unprocessable_entity) }
+      respond_to do |format|
+        if quote_detail.save
+          redirect_path = @movement ? [@composer, @work, @movement, @quote] : [@composer, @work, @quote]
+          format.html { redirect_to(redirect_path, notice: "Quote was successfully linked.") }
+        else
+          @existing_quotes = @composer.quotes
+                                     .where.not(quote_details: { detailable: @detailable })
+                                     .order(:title)
+          format.html { render(:new, status: :unprocessable_entity) }
+        end
+      end
+    else
+      # Create a new quote
+      @quote = Quote.new(quote_params)
+
+      respond_to do |format|
+        if @quote.save
+          # Create the quote detail association
+          @quote.quote_details.create!(
+            detailable: @detailable,
+            category: params[:quote_detail]&.dig(:category),
+            location: params[:quote_detail]&.dig(:location),
+            excerpt_text: params[:quote_detail]&.dig(:excerpt_text),
+            notes: params[:quote_detail]&.dig(:notes)
+          )
+
+          redirect_path = @movement ? [@composer, @work, @movement, @quote] : [@composer, @work, @quote]
+          format.html { redirect_to(redirect_path, notice: "Quote was successfully created.") }
+        else
+          @existing_quotes = @composer.quotes
+                                     .where.not(quote_details: { detailable: @detailable })
+                                     .order(:title)
+          format.html { render(:new, status: :unprocessable_entity) }
+        end
       end
     end
   end

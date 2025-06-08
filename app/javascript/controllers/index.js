@@ -15,3 +15,6 @@ application.register("pwa", PwaController)
 
 import ImagePreviewController from "./image_preview_controller"
 application.register("image-preview", ImagePreviewController)
+
+import QuoteFormController from "./quote_form_controller"
+application.register("quote-form", QuoteFormController)
