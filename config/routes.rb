@@ -16,13 +16,12 @@ Rails.application.routes.draw do
   # Search route
   get "search", to: "search#index"
 
-  resources :quotes, only: [:show, :edit, :update]
   resources :composers do
+    resources :quotes, only: [:index]
     resources :works do
-      resources :movements
-      resources :quote_details, only: [:new, :create, :destroy], module: :works
-      resources :movements, only: [] do
-        resources :quote_details, only: [:new, :create, :destroy], module: :movements
+      resources :quotes, except: [:index]
+      resources :movements do
+        resources :quotes, except: [:index]
       end
     end
   end

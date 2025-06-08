@@ -53,6 +53,14 @@
 
           <!-- Action Buttons -->
           <div class="flex gap-2 ml-6">
+            <%= link_to composer_quotes_path(@composer),
+                class: "p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors",
+                title: "View Quotes" do %>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10m0 0V6a2 2 0 00-2-2H9a2 2 0 00-2 2v2m10 0v10a2 2 0 01-2 2H9a2 2 0 01-2-2V8m10 0H7"></path>
+              </svg>
+            <% end %>
+
             <%= link_to edit_composer_path(@composer),
                 class: "p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors",
                 title: "Edit Composer" do %>
@@ -143,6 +151,10 @@
                   <% if work.movements.any? %>
                     <span class="ml-4 px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full flex-shrink-0">
                       <%= work.movements.count %> movements
+                    </span>
+                  <% elsif work.quotes.any? %>
+                    <span class="ml-4 px-2 py-1 bg-rose-100 text-rose-600 text-xs rounded-full flex-shrink-0">
+                      <%= work.quotes.count %> quotes
                     </span>
                   <% end %>
                 </div>

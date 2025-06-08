@@ -1,10 +1,20 @@
-<% content_for :title, "New Quote" %>
+<% content_for :title, "New Quote - Hapax" %>
 
 <div class="min-h-screen bg-gray-50">
   <div class="max-w-4xl mx-auto px-4 py-8">
     <!-- Navigation -->
     <div class="mb-8">
-        All Quotes
+      <% back_path = @movement ? [@composer, @work, @movement] : [@composer, @work] %>
+      <%= link_to back_path, class: "inline-flex items-center text-indigo-600 hover:text-indigo-700 font-medium transition-colors" do %>
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        <% if @movement %>
+          <%= @movement.title %>
+        <% else %>
+          <%= @work.title %>
+        <% end %>
+      <% end %>
     </div>
 
     <!-- Header -->
@@ -12,8 +22,18 @@
       <h1 class="text-3xl font-bold text-gray-900 mb-2">
         Add New Quote
       </h1>
-      <p class="text-lg text-gray-600">
-        Create a new scholarly reference to add to your collection
+    </div>
+
+    <!-- Context Info -->
+    <div class="mb-4 p-3 bg-blue-50 rounded-lg">
+      <p class="text-sm text-blue-800">
+        <strong>This quote will be associated with:</strong>
+        <% if @movement %>
+          <%= @movement.work.title %> - <%= @movement.title %>
+        <% else %>
+          <%= @work.title %>
+        <% end %>
+        by <%= @composer.full_name %>
       </p>
     </div>
 

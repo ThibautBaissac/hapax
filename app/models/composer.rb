@@ -13,4 +13,10 @@ class Composer < ApplicationRecord
   def full_name
     [ first_name, last_name ].compact.join(" ").presence
   end
+
+  def quotes
+    Quote.joins(:quote_details)
+         .where(quote_details: { detailable: [works, works.joins(:movements).select("movements.*")].flatten })
+         .distinct
+  end
 end

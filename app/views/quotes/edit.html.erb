@@ -4,7 +4,8 @@
   <div class="max-w-4xl mx-auto px-4 py-8">
     <!-- Navigation -->
     <div class="mb-8">
-      <%= link_to @quote, class: "inline-flex items-center text-indigo-600 hover:text-indigo-700 font-medium transition-colors" do %>
+      <% back_path = @movement ? [@composer, @work, @movement, @quote] : [@composer, @work, @quote] %>
+      <%= link_to back_path, class: "inline-flex items-center text-indigo-600 hover:text-indigo-700 font-medium transition-colors" do %>
         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>

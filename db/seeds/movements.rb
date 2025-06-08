@@ -15,6 +15,13 @@ movement_forms = [
 ]
 
 Work.find_each do |work|
+  # Skip the special Prokofiev "Sarcasms" work - it should have quotes instead of movements
+  next if work.title == "Sarcasms" && work.composer.last_name == "Prokofiev"
+
+  # Randomly skip 30% of works so they can potentially have quotes instead
+  # This ensures some works remain available for quotes according to business rules
+  next if rand < 0.3
+
   movements_count = rand(1..4) # Most works have 1-4 movements
 
   movements_count.times do |position|

@@ -1,8 +1,16 @@
 class QuotesController < ApplicationController
-  before_action :set_quote, only: %i[ show edit update destroy ]
+  before_action :set_composer
+  before_action :set_work, except: [:index]
+  before_action :set_movement, only: [:show, :new, :edit, :create, :update, :destroy]
+  before_action :set_quote, only: [:show, :edit, :update, :destroy]
+  before_action :set_detailable, only: [:new, :create]
 
   def index
-    @pagy, @quotes = pagy(Quote.all, items: 12)
+    # Quotes index for a specific composer
+    @quotes = Quote.joins(:quote_details)
+                   .where(quote_details: { detailable: [@composer.works, @composer.works.joins(:movements).select("movements.*")].flatten })
+                   .distinct
+                   .order(:title)
   end
 
   def show
@@ -10,6 +18,7 @@ class QuotesController < ApplicationController
 
   def new
     @quote = Quote.new
+    @quote.quote_details.build(detailable: @detailable)
   end
 
   def edit
@@ -20,7 +29,17 @@ class QuotesController < ApplicationController
 
     respond_to do |format|
       if @quote.save
-        format.html { redirect_to(@quote, notice: "Quote was successfully created.") }
+        # Create the quote detail association
+        @quote.quote_details.create!(
+          detailable: @detailable,
+          category: params[:quote_detail]&.dig(:category),
+          location: params[:quote_detail]&.dig(:location),
+          excerpt_text: params[:quote_detail]&.dig(:excerpt_text),
+          notes: params[:quote_detail]&.dig(:notes)
+        )
+
+        redirect_path = @movement ? [@composer, @work, @movement, @quote] : [@composer, @work, @quote]
+        format.html { redirect_to(redirect_path, notice: "Quote was successfully created.") }
       else
         format.html { render(:new, status: :unprocessable_entity) }
       end
@@ -29,12 +48,20 @@ class QuotesController < ApplicationController
 
   def update
     respond_to do |format|
-      handle_images
-      # Update other attributes (excluding images which we handled above)
-      update_params = quote_params.except(:images, :images_to_keep)
+      if @quote.update(quote_params)
+        # Update the quote detail if present
+        if @quote.quote_details.any? && params[:quote_detail].present?
+          quote_detail = @quote.quote_details.first
+          quote_detail.update(
+            category: params[:quote_detail][:category],
+            location: params[:quote_detail][:location],
+            excerpt_text: params[:quote_detail][:excerpt_text],
+            notes: params[:quote_detail][:notes]
+          )
+        end
 
-      if @quote.update(update_params)
-        format.html { redirect_to(@quote, notice: "Quote was successfully updated.") }
+        redirect_path = @movement ? [@composer, @work, @movement, @quote] : [@composer, @work, @quote]
+        format.html { redirect_to(redirect_path, notice: "Quote was successfully updated.") }
       else
         format.html { render(:edit, status: :unprocessable_entity) }
       end
@@ -45,48 +72,38 @@ class QuotesController < ApplicationController
     @quote.destroy!
 
     respond_to do |format|
-      format.html { redirect_to(quotes_path, status: :see_other, notice: "Quote was successfully destroyed.") }
+      redirect_path = @movement ? [@composer, @work, @movement] : [@composer, @work]
+      format.html { redirect_to(redirect_path, status: :see_other, notice: "Quote was successfully destroyed.") }
     end
   end
 
   private
 
+    def set_composer
+      @composer = Composer.find(params[:composer_id])
+    end
+
+    def set_work
+      @work = @composer.works.find(params[:work_id]) if params[:work_id]
+    end
+
+    def set_movement
+      @movement = @work.movements.find(params[:movement_id]) if params[:movement_id] && @work
+    end
+
     def set_quote
-      @quote = Quote.find(params.expect(:id))
+      if @movement
+        @quote = Quote.joins(:quote_details).where(quote_details: { detailable: @movement }).find(params[:id])
+      elsif @work
+        @quote = Quote.joins(:quote_details).where(quote_details: { detailable: @work }).find(params[:id])
+      end
+    end
+
+    def set_detailable
+      @detailable = @movement || @work
     end
 
     def quote_params
-      params.expect(quote: [ :title, :author, :notes, images: [], images_to_keep: [] ])
-    end
-
-    def handle_images
-      # Get parameters
-      new_images = params[:quote][:images]&.reject(&:blank?) || []
-      images_to_keep = Array(params[:quote][:images_to_keep]).compact.reject(&:blank?)
-
-      Rails.logger.debug "New images count: #{new_images.length}"
-      Rails.logger.debug "Images to keep: #{images_to_keep}"
-
-      # If we have existing images, handle removal
-      if @quote.images.attached?
-        # Only process removal if images_to_keep parameter was submitted
-        # (this distinguishes between "keep all" and "remove some")
-        if params[:quote].key?(:images_to_keep)
-          @quote.images.each do |image|
-            unless images_to_keep.include?(image.signed_id)
-              Rails.logger.debug "Removing image: #{image.signed_id}"
-              image.purge_later
-            end
-          end
-        else
-          Rails.logger.debug "No images_to_keep parameter found - keeping all existing images"
-        end
-      end
-
-      # Attach new images if any
-      if new_images.any?
-        Rails.logger.debug "Attaching #{new_images.length} new images"
-        @quote.images.attach(new_images)
-      end
+      params.require(:quote).permit(:title, :author, :notes, images: [])
     end
 end

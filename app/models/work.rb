@@ -6,6 +6,7 @@ class Work < ApplicationRecord
   has_many :quotes, through: :quote_details
 
   validates :title, presence: true
+  validate :cannot_have_both_movements_and_quotes
 
   sanitizes :title, :opus, tags: [], attributes: []
   sanitizes :description
@@ -48,6 +49,31 @@ class Work < ApplicationRecord
       "#{title} (#{composer.first_name} #{composer.last_name})"
     else
       title
+    end
+  end
+
+  # Business logic helper methods
+  def can_add_quotes?
+    movements.empty?
+  end
+
+  def can_add_movements?
+    quote_details.empty?
+  end
+
+  def display_quotes?
+    movements.empty? && quote_details.any?
+  end
+
+  def display_movements?
+    movements.any?
+  end
+
+  private
+
+  def cannot_have_both_movements_and_quotes
+    if movements.any? && quote_details.any?
+      errors.add(:base, "A work cannot have both movements and quotes")
     end
   end
 end

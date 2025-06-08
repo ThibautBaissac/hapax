@@ -62,13 +62,6 @@
               <span class="font-medium text-gray-900"><%= time_duration(@movement.duration) %></span>
             </div>
           <% end %>
-
-          <% if @movement.respond_to?(:quote_details) && @movement.quote_details.any? %>
-            <div class="flex items-center">
-              <span class="text-gray-500 mr-2">Quotes:</span>
-              <span class="font-medium text-gray-900"><%= @movement.quote_details.count %></span>
-            </div>
-          <% end %>
         </div>
       </div>
 
@@ -81,16 +74,16 @@
         </div>
       <% end %>
 
-      <!-- Quotes -->
-      <% if @movement.respond_to?(:quote_details) && @movement.quote_details.any? %>
-        <div class="px-8 py-6">
-          <div class="flex justify-between items-center mb-4">
+      <!-- Quotes Section -->
+      <% if @movement.quote_details.any? %>
+        <div class="px-8 py-6 border-t border-gray-100">
+          <div class="flex items-center justify-between mb-4">
             <h2 class="text-xl font-semibold text-gray-900">
               Quotes
               <span class="text-sm font-normal text-gray-500 ml-2">(<%= @movement.quote_details.count %>)</span>
             </h2>
-            <%= link_to new_composer_work_movement_quote_detail_path(@movement.work.composer, @movement.work, @movement),
-                class: "inline-flex items-center px-3 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 border border-indigo-200 rounded-lg hover:bg-indigo-100 hover:border-indigo-300 transition-all" do %>
+            <%= link_to new_composer_work_movement_quote_path(@movement.work.composer, @movement.work, @movement),
+                class: "inline-flex items-center px-3 py-2 border border-green-300 text-sm font-medium rounded-md text-green-600 bg-white hover:bg-green-50 transition-colors" do %>
               <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
               </svg>
@@ -98,9 +91,9 @@
             <% end %>
           </div>
 
-          <div class="space-y-4">
+          <div class="space-y-3">
             <% @movement.quote_details.includes(:quote).each do |quote_detail| %>
-              <%= link_to quote_detail.quote, class: "block p-4 rounded-lg border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all group" do %>
+              <%= link_to [@movement.work.composer, @movement.work, @movement, quote_detail.quote], class: "block p-4 rounded-lg border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all group" do %>
                 <div class="flex items-start justify-between">
                   <div class="flex-1">
                     <h3 class="font-medium text-gray-900 group-hover:text-indigo-600 transition-colors mb-1">
@@ -109,25 +102,16 @@
                     <p class="text-sm text-gray-600 mb-2">
                       by <%= quote_detail.quote.author %>
                     </p>
-
-                    <div class="space-y-1 text-sm">
-                      <% if quote_detail.location.present? %>
-                        <div class="text-gray-600">
-                          <span class="font-medium">Location:</span> <%= quote_detail.location %>
-                        </div>
-                      <% end %>
-
-                      <% if quote_detail.excerpt_text.present? %>
-                        <div class="text-gray-600">
-                          <span class="font-medium">Excerpt:</span> "<%= quote_detail.excerpt_text %>"
-                        </div>
-                      <% end %>
-                    </div>
+                    <% if quote_detail.excerpt_text.present? %>
+                      <p class="text-sm text-gray-500 italic">
+                        "<%= truncate(quote_detail.excerpt_text, length: 100) %>"
+                      </p>
+                    <% end %>
                   </div>
 
                   <% if quote_detail.category.present? %>
-                    <span class="ml-4 px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full flex-shrink-0">
-                      <%= quote_detail.category %>
+                    <span class="ml-4 px-2 py-1 bg-blue-100 text-blue-600 text-xs rounded-full flex-shrink-0">
+                      <%= quote_detail.category.humanize %>
                     </span>
                   <% end %>
                 </div>
@@ -136,22 +120,25 @@
           </div>
         </div>
       <% else %>
-        <!-- Empty state for quotes -->
-        <div class="px-8 py-12 text-center">
-          <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
-            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-            </svg>
+        <!-- Empty Quotes State -->
+        <div class="px-8 py-6 border-t border-gray-100 bg-gray-50">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-semibold text-gray-900">
+              Quotes
+              <span class="text-sm font-normal text-gray-500 ml-2">(0)</span>
+            </h2>
+            <%= link_to new_composer_work_movement_quote_path(@movement.work.composer, @movement.work, @movement),
+                class: "inline-flex items-center px-3 py-2 border border-green-300 text-sm font-medium rounded-md text-green-600 bg-white hover:bg-green-50 transition-colors" do %>
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+              </svg>
+              Add Quote
+            <% end %>
           </div>
-          <h3 class="text-lg font-medium text-gray-900 mb-2">No quotes yet</h3>
-          <p class="text-gray-500 mb-6">Start building your collection by adding the first quote from this movement.</p>
-          <%= link_to new_composer_work_movement_quote_detail_path(@movement.work.composer, @movement.work, @movement),
-              class: "inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-lg shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all" do %>
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-            </svg>
-            Add First Quote
-          <% end %>
+
+          <div class="text-center py-4 text-gray-500">
+            <p>No quotes have been added for this movement yet.</p>
+          </div>
         </div>
       <% end %>
 
