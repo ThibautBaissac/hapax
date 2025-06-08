@@ -44,7 +44,7 @@
                 <span><%= @composer.death_date&.year || "Present" %></span>
               </div>
               <% if @composer.works.any? %>
-                <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800">
+                <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
                   <%= pluralize(@composer.works.count, 'work') %>
                 </div>
               <% end %>
@@ -54,7 +54,7 @@
           <!-- Action Buttons -->
           <div class="flex gap-2 ml-6">
             <%= link_to composer_quotes_path(@composer),
-                class: "p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors",
+                class: "p-2 text-amber-400 hover:text-amber-600 hover:bg-amber-100 rounded-lg transition-colors",
                 title: "View Quotes" do %>
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10m0 0V6a2 2 0 00-2-2H9a2 2 0 00-2 2v2m10 0v10a2 2 0 01-2 2H9a2 2 0 01-2-2V8m10 0H7"></path>
@@ -114,7 +114,7 @@
               <span class="text-sm font-normal text-gray-500 ml-2">(<%= @composer.works.count %>)</span>
             </h2>
             <%= link_to new_composer_work_path(@composer),
-                class: "inline-flex items-center px-3 py-2 border border-indigo-300 text-sm font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 transition-colors" do %>
+                class: "inline-flex items-center px-3 py-2 border border-purple-300 text-sm font-medium rounded-md text-purple-600 bg-white hover:bg-purple-50 transition-colors" do %>
               <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
               </svg>
@@ -124,10 +124,10 @@
 
           <div class="space-y-2">
             <% @composer.works.order(:title).each do |work| %>
-              <%= link_to [@composer, work], class: "block p-4 rounded-lg border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all group" do %>
+              <%= link_to [@composer, work], class: "block p-4 rounded-lg border border-gray-100 hover:border-purple-200 hover:bg-gray-50 transition-all group" do %>
                 <div class="flex items-start justify-between">
                   <div class="flex-1">
-                    <h3 class="font-medium text-gray-900 group-hover:text-indigo-600 transition-colors mb-1">
+                    <h3 class="font-medium text-gray-900 group-hover:text-purple-600 transition-colors mb-1">
                       <%= work.title %>
                     </h3>
                     <% if work.instrumentation.present? %>
@@ -149,11 +149,11 @@
                   </div>
 
                   <% if work.movements.any? %>
-                    <span class="ml-4 px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full flex-shrink-0">
+                    <span class="ml-4 px-2 py-1 bg-emerald-100 text-emerald-600 text-xs rounded-full flex-shrink-0">
                       <%= work.movements.count %> movements
                     </span>
                   <% elsif work.quotes.any? %>
-                    <span class="ml-4 px-2 py-1 bg-rose-100 text-rose-600 text-xs rounded-full flex-shrink-0">
+                    <span class="ml-4 px-2 py-1 bg-amber-100 text-amber-600 text-xs rounded-full flex-shrink-0">
                       <%= work.quotes.count %> quotes
                     </span>
                   <% end %>

@@ -25,8 +25,8 @@
     </div>
 
     <!-- Context Info -->
-    <div class="mb-4 p-3 bg-blue-50 rounded-lg">
-      <p class="text-sm text-blue-800">
+    <div class="mb-4 p-3 bg-amber-50 rounded-lg">
+      <p class="text-sm text-amber-800">
         <strong>This quote will be associated with:</strong>
         <% if @movement %>
           <%= @movement.work.title %> - <%= @movement.title %>
@@ -46,7 +46,7 @@
 
           <div class="space-y-4">
             <label class="flex items-start space-x-3 cursor-pointer">
-              <input type="radio" name="quote_option" value="existing" class="mt-1 h-4 w-4 text-rose-600 focus:ring-rose-500 border-gray-300" id="existing_quote_option" data-quote-form-target="existingOption" data-action="change->quote-form#toggle">
+              <input type="radio" name="quote_option" value="existing" class="mt-1 h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300" id="existing_quote_option" data-quote-form-target="existingOption" data-action="change->quote-form#toggle">
               <div class="flex-1">
                 <div class="text-sm font-medium text-gray-900">Link an existing quote</div>
                 <div class="text-sm text-gray-500">Associate an existing quote from <%= @composer.full_name %> with this work/movement</div>
@@ -54,7 +54,7 @@
             </label>
 
             <label class="flex items-start space-x-3 cursor-pointer">
-              <input type="radio" name="quote_option" value="new" class="mt-1 h-4 w-4 text-rose-600 focus:ring-rose-500 border-gray-300" id="new_quote_option" data-quote-form-target="newOption" data-action="change->quote-form#toggle">
+              <input type="radio" name="quote_option" value="new" class="mt-1 h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300" id="new_quote_option" data-quote-form-target="newOption" data-action="change->quote-form#toggle">
               <div class="flex-1">
                 <div class="text-sm font-medium text-gray-900">Create a new quote</div>
                 <div class="text-sm text-gray-500">Create a completely new quote and associate it with this work/movement</div>
@@ -74,7 +74,7 @@
                   options_from_collection_for_select(@existing_quotes, :id, :title_with_author, params[:existing_quote_id]),
                   {
                     prompt: "Select a quote...",
-                    class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors"
+                    class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"
                   } %>
             </div>
 
@@ -97,14 +97,14 @@
                         ["Review", "review"],
                         ["Other", "other"]
                       ]),
-                      { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors" } %>
+                      { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors" } %>
                 </div>
 
                 <!-- Location -->
                 <div>
                   <%= label_tag "quote_detail[location]", "Location in Work", class: "block text-sm font-medium text-gray-700 mb-2" %>
                   <%= text_field_tag "quote_detail[location]", "",
-                      class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors",
+                      class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors",
                       placeholder: "e.g., mm. 1-16, page 23, etc." %>
                 </div>
               </div>
@@ -114,7 +114,7 @@
                 <%= label_tag "quote_detail[excerpt_text]", "Excerpt/Quote", class: "block text-sm font-medium text-gray-700 mb-2" %>
                 <%= text_area_tag "quote_detail[excerpt_text]", "",
                     rows: 3,
-                    class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors resize-y",
+                    class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors resize-y",
                     placeholder: "Relevant excerpt from the reference..." %>
               </div>
 
@@ -123,14 +123,14 @@
                 <%= label_tag "quote_detail[notes]", "Additional Notes", class: "block text-sm font-medium text-gray-700 mb-2" %>
                 <%= text_area_tag "quote_detail[notes]", "",
                     rows: 2,
-                    class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors resize-y",
+                    class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors resize-y",
                     placeholder: "Notes specific to this association..." %>
               </div>
             </div>
 
             <!-- Form Actions for existing quote -->
             <div class="flex gap-3">
-              <%= submit_tag "Link Quote", class: "px-4 py-2 bg-rose-600 text-white text-sm font-medium rounded-lg hover:bg-rose-700 transition-colors" %>
+              <%= submit_tag "Link Quote", class: "px-4 py-2 bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-amber-700 transition-colors" %>
               <% cancel_path = @movement ? [@composer, @work, @movement] : [@composer, @work] %>
               <%= link_to "Cancel", cancel_path,
                   class: "px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors" %>

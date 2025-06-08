@@ -25,7 +25,7 @@
       <div>
         <%= form.label :title, class: "block text-sm font-medium text-gray-700 mb-2" %>
         <%= form.text_field :title,
-            class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors",
+            class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors",
             placeholder: "Allegro con brio" %>
       </div>
 
@@ -34,7 +34,7 @@
         <div>
           <%= form.label :position, class: "block text-sm font-medium text-gray-700 mb-2" %>
           <%= form.number_field :position,
-              class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors",
+              class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors",
               placeholder: "1",
               min: 1 %>
           <p class="text-xs text-gray-500 mt-1">Order within the work</p>
@@ -43,7 +43,7 @@
         <div>
           <%= form.label :duration, "Duration (seconds)", class: "block text-sm font-medium text-gray-700 mb-2" %>
           <%= form.number_field :duration,
-              class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors",
+              class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors",
               placeholder: "600",
               min: 0 %>
           <p class="text-xs text-gray-500 mt-1">Duration in seconds</p>
@@ -55,7 +55,7 @@
         <%= form.label :description, class: "block text-sm font-medium text-gray-700 mb-2" %>
         <%= form.text_area :description,
             rows: 4,
-            class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors resize-y",
+            class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors resize-y",
             placeholder: "Describe the character, tempo, key, and notable features of this movement..." %>
       </div>
     </div>
@@ -63,7 +63,7 @@
 
   <!-- Form Actions -->
   <div class="flex gap-3">
-    <%= form.submit class: "px-4 py-2 bg-rose-600 text-white text-sm font-medium rounded-lg hover:bg-rose-700 transition-colors" %>
+    <%= form.submit class: "px-4 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-colors" %>
     <% if movement.persisted? %>
       <%= link_to "Cancel", composer_work_movement_path(@composer, @work, movement),
           class: "px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors" %>

@@ -15,12 +15,10 @@
 
     <!-- Header -->
     <div class="mb-8">
-      <h1 class="text-3xl font-bold text-gray-900 mb-2">
-        Edit Quote
+      <h1 class="text-3xl text-gray-900 mb-2">
+        Update
+        <span class="font-bold">"<%= truncate(@quote.title, length: 60) %>"</span>
       </h1>
-      <p class="text-lg text-gray-600">
-        Update information for "<%= truncate(@quote.title, length: 60) %>"
-      </p>
     </div>
 
     <!-- Form -->

@@ -1,7 +1,7 @@
 <% content_for :title, "Quotes by #{@composer.full_name} - Hapax" %>
 
 <div class="min-h-screen bg-gray-50">
-  <div class="max-w-6xl mx-auto px-4 py-8">
+  <div class="max-w-4xl mx-auto px-4 py-8">
     <!-- Navigation -->
     <div class="mb-8">
       <%= link_to composer_path(@composer), class: "inline-flex items-center text-indigo-600 hover:text-indigo-700 font-medium transition-colors" do %>
@@ -49,12 +49,12 @@
                     <% quote.quote_details.each do |detail| %>
                       <% if detail.detailable_type == "Work" %>
                         <%= link_to [@composer, detail.detailable],
-                            class: "inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors" do %>
+                            class: "inline-flex items-center px-3 py-1 rounded-full text-sm bg-purple-100 text-purple-800 hover:bg-purple-200 transition-colors" do %>
                           <%= detail.detailable.title %>
                         <% end %>
                       <% elsif detail.detailable_type == "Movement" %>
                         <%= link_to [@composer, detail.detailable.work, detail.detailable],
-                            class: "inline-flex items-center px-3 py-1 rounded-full text-sm bg-green-100 text-green-800 hover:bg-green-200 transition-colors" do %>
+                            class: "inline-flex items-center px-3 py-1 rounded-full text-sm bg-emerald-100 text-emerald-800 hover:bg-emerald-200 transition-colors" do %>
                           <%= detail.detailable.work.title %> - <%= detail.detailable.title %>
                         <% end %>
                       <% end %>
