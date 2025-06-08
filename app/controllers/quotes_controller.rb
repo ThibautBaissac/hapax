@@ -6,7 +6,6 @@ class QuotesController < ApplicationController
   before_action :set_detailable, only: [:new, :create]
 
   def index
-    # Quotes index for a specific composer
     @quotes = @composer.quotes.order(:title)
   end
 

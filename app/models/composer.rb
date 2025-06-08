@@ -15,8 +15,17 @@ class Composer < ApplicationRecord
   end
 
   def quotes
-    Quote.joins(:quote_details)
-         .where(quote_details: { detailable: [works, works.joins(:movements).select("movements.*")].flatten })
-         .distinct
+    # Get quotes directly from composer's works
+    work_quote_ids = works.joins(:quotes).pluck('quotes.id')
+
+    # Get quotes from movements belonging to composer's works
+    movement_quote_ids = Quote.joins(:quote_details)
+                              .joins("INNER JOIN movements ON quote_details.detailable_id = movements.id")
+                              .where(quote_details: { detailable_type: 'Movement' })
+                              .where(movements: { work_id: works.select(:id) })
+                              .pluck(:id)
+
+    # Return distinct quotes from both sources
+    Quote.where(id: (work_quote_ids + movement_quote_ids).uniq)
   end
 end
