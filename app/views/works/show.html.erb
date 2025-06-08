@@ -18,9 +18,14 @@
       <div class="px-8 py-8 border-b border-gray-100">
         <div class="flex justify-between items-start mb-6">
           <div class="flex-1">
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">
-              <%= @work.title %>
-            </h1>
+            <div class="flex items-center gap-3">
+              <h1 class="text-3xl font-bold text-gray-900 mb-2">
+                <%= @work.title %>
+              </h1>
+              <% if @work.opus.present? %>
+                  <span class="font-medium text-gray-900"><%= @work.opus %></span>
+              <% end %>
+            </div>
             <% if @work.instrumentation.present? %>
               <p class="text-lg text-gray-600">
                 <%= @work.instrumentation %>
@@ -39,7 +44,7 @@
             <% end %>
 
             <%= button_to [@composer, @work], method: :delete,
-                data: { confirm: "Are you sure you want to delete this work?" },
+                data: { confirm: "Are you sure you want to delete this work?", turbo_confirm: "Are you sure you want to delete this work?" },
                 class: "p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors",
                 title: "Delete Work" do %>
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -50,31 +55,10 @@
         </div>
 
         <!-- Metadata -->
-        <div class="flex flex-wrap gap-6 text-sm">
-          <% if @work.form.present? %>
-            <div class="flex items-center">
-              <span class="text-gray-500 mr-2">Form:</span>
-              <span class="font-medium text-gray-900"><%= t("activerecord.values.work.form.#{@work.form}") %></span>
-            </div>
-          <% end %>
-
-          <% if @work.opus.present? %>
-            <div class="flex items-center">
-              <span class="text-gray-500 mr-2">Opus:</span>
-              <span class="font-medium text-gray-900"><%= @work.opus %></span>
-            </div>
-          <% end %>
-
-          <% if @work.duration.present? %>
-            <div class="flex items-center">
-              <span class="text-gray-500 mr-2">Duration:</span>
-              <span class="font-medium text-gray-900">
-                <%= "circa" unless @work.recorded.present? %>
-                <%= time_duration(@work.duration) %>
-              </span>
-            </div>
-          <% end %>
-
+        <div class="space-y-3 text-sm">
+          <!-- Form and Structure -->
+          <% if @work.form.present? || @work.structure.present? %>
+          <!-- Composed -->
           <% if @work.start_date_composed.present? || @work.end_date_composed.present? || @work.unsure_start_date.present? || @work.unsure_end_date.present? %>
             <div class="flex items-center">
               <span class="text-gray-500 mr-2">Composed:</span>
@@ -94,6 +78,34 @@
                 <% elsif @work.unsure_end_date.present? %>
                   [<%= @work.unsure_end_date %>]
                 <% end %>
+              </span>
+            </div>
+          <% end %>
+
+            <div class="flex flex-wrap gap-6">
+              <% if @work.form.present? %>
+                <div class="flex items-center">
+                  <span class="text-gray-500 mr-2">Form:</span>
+                  <span class="font-medium text-gray-900"><%= @work.form.humanize %></span>
+                </div>
+              <% end %>
+
+              <% if @work.structure.present? %>
+                <div class="flex items-center">
+                  <span class="text-gray-500 mr-2">Structure:</span>
+                  <span class="font-medium text-gray-900"><%= @work.structure.humanize %></span>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+
+          <!-- Duration -->
+          <% if @work.duration.present? %>
+            <div class="flex items-center">
+              <span class="text-gray-500 mr-2">Duration:</span>
+              <span class="font-medium text-gray-900">
+                <%= "circa" unless @work.recorded.present? %>
+                <%= time_duration(@work.duration) %>
               </span>
             </div>
           <% end %>
