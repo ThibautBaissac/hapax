@@ -80,8 +80,24 @@ class QuotesController < ApplicationController
 
   def update
     respond_to do |format|
+      # Handle image removal logic
+      if @quote.images.attached? && params[:quote]&.has_key?(:keep_images)
+        keep_image_ids = Array(params[:quote][:keep_images]).map(&:to_i)
+        @quote.images.each do |image|
+          image.purge unless keep_image_ids.include?(image.id)
+        end
+      end
+
+      # Handle new images separately to avoid replacing existing ones
+      new_images = params[:quote][:images] if params[:quote]&.key?(:images)
+
+      # Update quote attributes (excluding images to prevent replacement)
+      quote_params = params.require(:quote).permit(:title, :author, :notes)
+
       if @quote.update(quote_params)
-        # Update the quote detail if present
+        # Attach new images if any were uploaded
+        @quote.images.attach(new_images) if new_images&.any?
+        # Update quote details if present
         if @quote.quote_details.any? && params[:quote_detail].present?
           quote_detail = @quote.quote_details.first
           quote_detail.update(

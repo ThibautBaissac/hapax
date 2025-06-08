@@ -2,18 +2,20 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="image-preview"
 export default class extends Controller {
-  static targets = ["input", "preview", "keepField"]
+  static targets = ["input", "preview"]
 
   connect() {
-    // Initialize the controller
   }
 
   previewImages(event) {
     const input = event.target
     const previewContainer = this.previewTarget
+    const newImagesContainer = document.getElementById('new-images-container')
 
     // Clear existing previews
-    previewContainer.innerHTML = ''
+    if (newImagesContainer) {
+      newImagesContainer.innerHTML = ''
+    }
 
     if (input.files && input.files.length > 0) {
       previewContainer.classList.remove('hidden')
@@ -32,7 +34,9 @@ export default class extends Controller {
                 New
               </div>
             `
-            previewContainer.appendChild(previewDiv)
+            if (newImagesContainer) {
+              newImagesContainer.appendChild(previewDiv)
+            }
           }
           reader.readAsDataURL(file)
         }
@@ -40,7 +44,23 @@ export default class extends Controller {
     } else {
       previewContainer.classList.add('hidden')
     }
-  }  removeImage(event) {
+  }
+
+  removeExistingImage(event) {
+    const index = event.params.index
+    const imageContainer = document.getElementById(`existing_image_${index}`)
+    const keepField = document.getElementById(`keep_image_${index}`)
+
+    if (imageContainer && keepField) {
+      // Hide the image container
+      imageContainer.style.display = 'none'
+      // Remove the keep field so the image will be deleted
+      keepField.remove()
+    }
+  }
+
+  removeImage(event) {
+    // Legacy method for backward compatibility
     const index = event.params.index
     const keepField = document.getElementById(`keep_image_${index}`)
 

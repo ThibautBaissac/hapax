@@ -137,9 +137,9 @@
           <h3 class="text-lg font-medium text-gray-900 mb-4">Reference Images</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <% @quote.images.each do |image| %>
-              <div class="relative group">
+              <div class="overflow-hidden h-48">
                 <%= image_tag image,
-                    class: "w-full h-48",
+                    class: "w-full h-full object-contain",
                     alt: "Reference image for #{@quote.title}" %>
               </div>
             <% end %>
