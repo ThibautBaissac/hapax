@@ -44,21 +44,8 @@ class Work < ApplicationRecord
     scene: 4
   }, default: :movement
 
-  def title_with_composer
-    if composer.present?
-      "#{title} (#{composer.first_name} #{composer.last_name})"
-    else
-      title
-    end
-  end
-
-  # Business logic helper methods
   def can_add_quotes?
     movements.empty?
-  end
-
-  def can_add_movements?
-    quote_details.empty?
   end
 
   def display_quotes?

@@ -5,8 +5,4 @@ class Nationality < ApplicationRecord
   validates :code, presence: true, uniqueness: true
 
   scope :ordered, -> { order(:code) }
-
-  def to_s
-    name
-  end
 end
