@@ -88,7 +88,9 @@ ActiveRecord::Schema[8.1].define(version: 2025_06_06_132412) do
 
   create_table "quotes", force: :cascade do |t|
     t.string "author", null: false
+    t.boolean "circa", default: false
     t.datetime "created_at", null: false
+    t.date "date"
     t.text "notes"
     t.string "title", null: false
     t.datetime "updated_at", null: false

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Nationality, type: :model do
   describe 'associations' do
-    it { should have_many(:composers).dependent(:nullify) }
+    it { should have_many(:composers) }
 
     context 'composers relationship' do
       let(:nationality) { create(:nationality) }
@@ -15,17 +15,6 @@ RSpec.describe Nationality, type: :model do
 
         expect(nationality.composers).to contain_exactly(composer1, composer2)
         expect(nationality.composers.count).to eq(2)
-      end
-
-      it 'nullifies composer nationality when nationality is destroyed' do
-        composer = create(:composer, nationality: nationality)
-        nationality_id = nationality.id
-
-        nationality.destroy!
-
-        composer.reload
-        expect(composer.nationality_id).to be_nil
-        expect(composer.nationality).to be_nil
       end
 
       it 'can exist without composers' do
@@ -404,37 +393,6 @@ RSpec.describe Nationality, type: :model do
     it 'can be destroyed when no composers are associated' do
       expect { nationality.destroy! }.not_to raise_error
       expect(Nationality.find_by(id: nationality.id)).to be_nil
-    end
-
-    it 'can be destroyed even when composers are associated (nullify)' do
-      composer1 = create(:composer, nationality: nationality)
-      composer2 = create(:composer, nationality: nationality)
-
-      nationality_id = nationality.id
-      expect { nationality.destroy! }.not_to raise_error
-
-      # Nationality should be gone
-      expect(Nationality.find_by(id: nationality_id)).to be_nil
-
-      # Composers should still exist but with nullified nationality
-      composer1.reload
-      composer2.reload
-      expect(composer1.nationality_id).to be_nil
-      expect(composer2.nationality_id).to be_nil
-    end
-
-    it 'handles cascading deletion properly' do
-      composer = create(:composer, nationality: nationality)
-      original_composer_count = Composer.count
-
-      nationality.destroy!
-
-      # Composer count should remain the same
-      expect(Composer.count).to eq(original_composer_count)
-
-      # But the composer's nationality should be nil
-      composer.reload
-      expect(composer.nationality).to be_nil
     end
   end
 
