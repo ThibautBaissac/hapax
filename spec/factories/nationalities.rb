@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :nationality do
-    name { Faker::Nation.nationality }
-    code { Faker::Address.country_code }
+    sequence(:name) { |n| "#{Faker::Nation.nationality} #{n}" }
+    sequence(:code) { |n| "C#{n.to_s.rjust(2, '0')}" }
 
     trait :french do
       name { "French" }
