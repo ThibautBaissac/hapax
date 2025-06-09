@@ -1,11 +1,16 @@
 class ComposersController < ApplicationController
-  before_action :set_composer, only: %i[ show edit update destroy ]
+  before_action :set_composer, only: %i[show edit update destroy]
+  before_action :load_nationalities, only: %i[new edit]
+
+  rescue_from Pagy::OverflowError, with: :redirect_to_first_page
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+  rescue_from ActionController::ParameterMissing, with: :bad_request
 
   def index
-    @pagy, @composers = pagy(Composer.includes(:nationality), items: 12)
-  rescue Pagy::OverflowError
-    # Handle invalid page parameter by redirecting to first page
-    redirect_to composers_path and return
+    @pagy, @composers = Composers::FacadeService.paginate(
+      page: params[:page],
+      limit: 12
+    )
   end
 
   def show
@@ -13,51 +18,72 @@ class ComposersController < ApplicationController
 
   def new
     @composer = Composer.new
-    @nationalities = Nationality.ordered
   end
 
   def edit
-    @nationalities = Nationality.ordered
   end
 
   def create
-    @composer = Composer.new(composer_params)
+    service = Composers::FacadeService.create(composer_params)
 
-    respond_to do |format|
-      if @composer.save
-        format.html { redirect_to(@composer, notice: "Composer was successfully created.") }
-      else
-        @nationalities = Nationality.ordered
-        format.html { render(:new, status: :unprocessable_entity) }
-      end
+    if service.success?
+      redirect_to service.composer, notice: success_message(:created)
+    else
+      @composer = service.composer || Composer.new(composer_params)
+      load_nationalities
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    respond_to do |format|
-      if @composer.update(composer_params)
-        format.html { redirect_to(@composer, notice: "Composer was successfully updated.") }
-      else
-        @nationalities = Nationality.ordered
-        format.html { render(:edit, status: :unprocessable_entity) }
-      end
+    service = Composers::FacadeService.update(@composer, composer_params)
+
+    if service.success?
+      redirect_to service.composer, notice: success_message(:updated)
+    else
+      load_nationalities
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @composer.destroy!
+    service = Composers::FacadeService.delete(@composer)
 
-    respond_to do |format|
-      format.html { redirect_to(composers_path, status: :see_other, notice: "Composer was successfully destroyed.") }
+    if service.success?
+      redirect_to composers_path, status: :see_other, notice: success_message(:destroyed)
+    else
+      redirect_to @composer, alert: service.errors.full_messages.join(', ')
     end
   end
 
   private
-    def set_composer
-      @composer = Composer.find(params[:id])
-    end
 
-    def composer_params
-      params.require(:composer).permit(:first_name, :last_name, :nationality_id, :birth_date, :death_date, :short_bio, :bio, :portrait)
-    end
+  def set_composer
+    @composer = Composer.find(params[:id])
+  end
+
+  def load_nationalities
+    @nationalities ||= Nationality.ordered
+  end
+
+  def composer_params
+    params.expect(composer: [ :first_name, :last_name, :nationality_id, :birth_date, :death_date,
+    :short_bio, :bio, :portrait ])
+  end
+
+  def success_message(action)
+    t("composers.messages.#{action}")
+  end
+
+  def redirect_to_first_page
+    redirect_to composers_path
+  end
+
+  def record_not_found
+    render file: "#{Rails.root}/public/404.html", status: :not_found, layout: false
+  end
+
+  def bad_request
+    head :bad_request
+  end
 end

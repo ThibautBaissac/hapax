@@ -37,3 +37,8 @@ en:
           lied: "Lied"
           act: "Act"
           scene: "Scene"
+  composers:
+    messages:
+      created: "Composer was successfully created."
+      updated: "Composer was successfully updated."
+      destroyed: "Composer was successfully destroyed."
