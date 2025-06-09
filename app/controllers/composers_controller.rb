@@ -3,6 +3,9 @@ class ComposersController < ApplicationController
 
   def index
     @pagy, @composers = pagy(Composer.includes(:nationality), items: 12)
+  rescue Pagy::OverflowError
+    # Handle invalid page parameter by redirecting to first page
+    redirect_to composers_path and return
   end
 
   def show
@@ -24,6 +27,7 @@ class ComposersController < ApplicationController
       if @composer.save
         format.html { redirect_to(@composer, notice: "Composer was successfully created.") }
       else
+        @nationalities = Nationality.ordered
         format.html { render(:new, status: :unprocessable_entity) }
       end
     end
@@ -34,6 +38,7 @@ class ComposersController < ApplicationController
       if @composer.update(composer_params)
         format.html { redirect_to(@composer, notice: "Composer was successfully updated.") }
       else
+        @nationalities = Nationality.ordered
         format.html { render(:edit, status: :unprocessable_entity) }
       end
     end
@@ -49,7 +54,7 @@ class ComposersController < ApplicationController
 
   private
     def set_composer
-      @composer = Composer.find(params.expect(:id))
+      @composer = Composer.find(params[:id])
     end
 
     def composer_params
