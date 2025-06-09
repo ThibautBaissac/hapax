@@ -107,7 +107,7 @@ class QuotesController < ApplicationController
       new_images = params[:quote][:images] if params[:quote]&.key?(:images)
 
       # Update quote attributes (excluding images to prevent replacement)
-      quote_params = params.require(:quote).permit(:title, :author, :notes)
+      quote_params = params.require(:quote).permit(:title, :author, :notes, :date, :circa)
 
       if @quote.update(quote_params)
         # Attach new images if any were uploaded
@@ -167,6 +167,6 @@ class QuotesController < ApplicationController
     end
 
     def quote_params
-      params.require(:quote).permit(:title, :author, :notes, images: [])
+      params.require(:quote).permit(:title, :author, :notes, :date, :circa, images: [])
     end
 end

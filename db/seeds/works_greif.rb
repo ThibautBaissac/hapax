@@ -445,8 +445,8 @@ scherzo = greif.works.create!(
 scherzo.quotes.create!(
   title: "Ein Heller und ein Batzen",
   author: "Franz Josef Breuer",
-  # date: Date.new(1930, 1, 1),
-  # circa: true,
+  date: Date.new(1930, 1, 1),
+  circa: true,
 )
 
 ## Sonate pour piano n° 15

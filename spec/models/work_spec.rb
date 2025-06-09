@@ -66,7 +66,7 @@ RSpec.describe Work, type: :model do
           'mass' => 5, 'suite' => 6, 'symphony' => 7, 'sonata' => 8, 'trio' => 9,
           'quartet' => 10, 'quintet' => 11, 'sextet' => 12, 'septet' => 13,
           'concerto' => 14, 'song_cycle' => 15, 'prelude' => 16, 'etude' => 17,
-          'nocturne' => 18, 'lieder' => 19, 'ballade' => 20, 'variation' => 21
+          'nocturne' => 18, 'lieder' => 19, 'ballade' => 20, 'variation' => 21, 'paraphrase' => 22, 'melody' => 23
         }
 
         expect(Work.forms).to eq(expected_forms)
@@ -87,7 +87,7 @@ RSpec.describe Work, type: :model do
     describe 'structure enum' do
       it 'defines all expected structures' do
         expected_structures = {
-          'movement' => 0, 'melody' => 1, 'lied' => 2, 'act' => 3, 'scene' => 4
+          'movement' => 0, 'melodies' => 1, 'lied' => 2, 'act' => 3, 'scene' => 4
         }
 
         expect(Work.structures).to eq(expected_structures)
@@ -423,7 +423,7 @@ RSpec.describe Work, type: :model do
       expect(work).to be_valid
 
       # Prelude with melody
-      work = build(:work, form: :prelude, structure: :melody)
+      work = build(:work, form: :prelude, structure: :melodies)
       expect(work).to be_valid
 
       # Lieder with lied structure

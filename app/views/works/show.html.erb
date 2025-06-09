@@ -126,8 +126,10 @@
         <div class="px-8 py-6">
           <div class="flex items-center justify-between mb-4">
             <h2 class="text-xl font-semibold text-gray-900">
-              <%= t("activerecord.values.work.structure.#{@work.structure}") %>
-              <span class="text-sm font-normal text-gray-500 ml-2">(<%= @work.movements.count %>)</span>
+              <% if @work.structure.present? %>
+                <%= t("activerecord.values.work.structure.#{@work.structure}") %>
+                <span class="text-sm font-normal text-gray-500 ml-2">(<%= @work.movements.count %>)</span>
+              <% end %>
             </h2>
             <%= link_to new_composer_work_movement_path(@composer, @work),
                 class: "inline-flex items-center px-3 py-2 border border-emerald-300 text-sm font-medium rounded-md text-emerald-600 bg-white hover:bg-emerald-50 transition-colors" do %>

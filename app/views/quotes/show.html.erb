@@ -57,8 +57,11 @@
         <!-- Metadata -->
         <div class="flex flex-wrap gap-6 text-sm">
           <div class="flex items-center">
-            <span class="text-gray-500 mr-2">Added:</span>
-            <span class="font-medium text-gray-900"><%= @quote.created_at.strftime("%B %d, %Y") %></span>
+            <span class="text-gray-500 mr-2">Composition:</span>
+            <span class="font-medium text-gray-900">
+              <%= "circa." if @quote.circa %>
+              <%= @quote.date.strftime("%B %d, %Y") %>
+            </span>
           </div>
 
           <% if @quote.quote_details.any? %>

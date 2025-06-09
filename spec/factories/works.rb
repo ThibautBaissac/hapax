@@ -45,7 +45,7 @@ FactoryBot.define do
 
     trait :short_piece do
       form { [:prelude, :etude, :nocturne].sample }
-      structure { :melody }
+      structure { :melodies }
       duration { Faker::Number.between(from: 60, to: 600) } # 1-10 minutes
     end
 
