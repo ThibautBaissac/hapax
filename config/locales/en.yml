@@ -29,9 +29,11 @@ en:
           lieder: "Lieder"
           ballade: "Ballade"
           variation: "Variation"
+          paraphrase: "Paraphrase"
+          melody: "Melody"
         structure:
           movement: "Movement"
-          melody: "Melody"
+          melodies: "Melody"
           lied: "Lied"
           act: "Act"
           scene: "Scene"

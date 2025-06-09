@@ -123,7 +123,7 @@
           </div>
 
           <div class="space-y-2">
-            <% @composer.works.order(:title).each do |work| %>
+            <% @composer.works.order(:end_date_composed).each do |work| %>
               <%= link_to [@composer, work], class: "block p-4 rounded-lg border border-gray-100 hover:border-purple-200 hover:bg-gray-50 transition-all group" do %>
                 <div class="flex items-start justify-between">
                   <div class="flex-1">
@@ -140,7 +140,7 @@
                         <span><%= t("activerecord.values.work.form.#{work.form}") %></span>
                       <% end %>
                       <% if work.opus.present? %>
-                        <span>Op. <%= work.opus %></span>
+                        <span><%= work.opus %></span>
                       <% end %>
                       <% if work.duration.present? %>
                         <span><%= time_duration(work.duration) %></span>

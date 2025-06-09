@@ -33,12 +33,14 @@ class Work < ApplicationRecord
     nocturne: 18,
     lieder: 19,
     ballade: 20,
-    variation: 21
+    variation: 21,
+    paraphrase: 22,
+    melody: 23,
   }, default: :piece
 
   enum :structure, {
     movement: 0,
-    melody: 1,
+    melodies: 1,
     lied: 2,
     act: 3,
     scene: 4

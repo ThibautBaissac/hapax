@@ -34,8 +34,9 @@ book_titles = [
 ]
 
 # Analyze available associations based on business rules
-all_works = Work.includes(:movements, :quote_details).to_a
-all_movements = Movement.includes(:quote_details).to_a
+composer = Composer.find_by(last_name: "Prokofiev")
+all_works = composer.works.includes(:movements, :quote_details).to_a
+all_movements = all_works.flat_map(&:movements)
 
 # Business rules:
 # 1. Works can have quotes ONLY if they don't have movements

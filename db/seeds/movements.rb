@@ -2,6 +2,8 @@ require 'faker'
 
 puts "🎶 Creating movements"
 
+composer = Composer.find_by(last_name: "Prokofiev")
+
 movement_count = 0
 
 movement_tempo_markings = [
@@ -14,9 +16,9 @@ movement_forms = [
   "Scherzo", "Fugue", "ABA Form", "Through-composed"
 ]
 
-Work.find_each do |work|
+composer.works.find_each do |work|
   # Skip the special Prokofiev "Sarcasms" work - it should have quotes instead of movements
-  next if work.title == "Sarcasms" && work.composer.last_name == "Prokofiev"
+  next if work.title == "Sarcasms"
 
   # Randomly skip 30% of works so they can potentially have quotes instead
   # This ensures some works remain available for quotes according to business rules
