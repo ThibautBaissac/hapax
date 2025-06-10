@@ -1,19 +1,25 @@
 module Composers
   class FacadeService
     def self.paginate(page: 1, limit: 12)
-      PaginationService.new(page: page, limit: limit).call
+      PaginationService.call(page: page, limit: limit)
     end
 
     def self.create(params)
-      CreationService.new(params).call
+      service = CreationService.new(params)
+      service.call
+      service
     end
 
     def self.update(composer, params)
-      UpdateService.new(composer, params).call
+      service = UpdateService.new(composer, params)
+      service.call
+      service
     end
 
     def self.delete(composer)
-      DeletionService.new(composer).call
+      service = DeletionService.new(composer)
+      service.call
+      service
     end
   end
 end

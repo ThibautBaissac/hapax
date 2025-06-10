@@ -1,9 +1,5 @@
 module Composers
-  class DeletionService
-    include ActiveModel::Model
-    include ActiveModel::Validations
-    include ServiceResult
-
+  class DeletionService < BaseService
     attr_reader :composer
 
     def initialize(composer)
@@ -12,18 +8,18 @@ module Composers
     end
 
     def call
-      return self unless composer.present?
+      return fail!("Composer not found") unless @composer.present?
 
       begin
-        @composer.destroy!
-        mark_success
+        ApplicationRecord.transaction do
+          @composer.destroy!
+          succeed!(@composer)
+        end
       rescue ActiveRecord::RecordNotDestroyed => e
-        errors.add(:base, "Could not delete composer: #{e.message}")
+        fail!("Could not delete composer: #{e.message}")
       rescue StandardError => e
-        errors.add(:base, "An unexpected error occurred: #{e.message}")
+        fail!("An unexpected error occurred: #{e.message}")
       end
-
-      self
     end
   end
 end

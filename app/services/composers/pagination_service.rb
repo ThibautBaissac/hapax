@@ -1,33 +1,47 @@
-module Composers
+ module Composers
   class PaginationService
-    include ActiveModel::Model
-    include ActiveModel::Validations
+    DEFAULT_PAGE = 1
+    DEFAULT_LIMIT = 12
+    MAX_LIMIT = 100
 
-    attr_accessor :page, :limit
+    def initialize(page: DEFAULT_PAGE, limit: DEFAULT_LIMIT)
+      @page = normalize_page(page)
+      @limit = normalize_limit(limit)
+    end
 
-    validates :page, numericality: { greater_than: 0 }
-    validates :limit, numericality: { greater_than: 0, less_than_or_equal_to: 100 }
-
-    def initialize(page: 1, limit: 12)
-      @page = page.to_i.positive? ? page.to_i : 1
-      @limit = limit.to_i.positive? ? limit.to_i : 12
+    def self.call(page: DEFAULT_PAGE, limit: DEFAULT_LIMIT)
+      new(page: page, limit: limit).call
     end
 
     def call
-      validate!
-
       composers = composer_scope
       pagy = Pagy.new(count: composers.count, page: page, limit: limit)
 
-      [pagy, composers.offset(pagy.offset).limit(pagy.limit)]
+      paginated_composers = composers.offset(pagy.offset).limit(pagy.limit)
+
+      [ pagy, paginated_composers ]
     rescue Pagy::OverflowError => e
-      raise e
+      raise(e)
+    rescue StandardError => e
+      [ nil, Composer.none ]
     end
 
     private
 
+    attr_reader :page, :limit
+
+    def normalize_page(page_param)
+      page_param.to_i.positive? ? page_param.to_i : DEFAULT_PAGE
+    end
+
+    def normalize_limit(limit_param)
+      limit_int = limit_param.to_i
+      return DEFAULT_LIMIT unless limit_int.positive?
+      [ limit_int, MAX_LIMIT ].min
+    end
+
     def composer_scope
-      Composer.includes(:nationality)
+      Composer.includes(:nationality).order(:last_name, :first_name)
     end
   end
-end
+ end

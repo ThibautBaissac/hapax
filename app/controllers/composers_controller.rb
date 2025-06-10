@@ -27,11 +27,11 @@ class ComposersController < ApplicationController
     service = Composers::FacadeService.create(composer_params)
 
     if service.success?
-      redirect_to service.composer, notice: success_message(:created)
+      redirect_to(service.composer, notice: success_message(:created))
     else
       @composer = service.composer || Composer.new(composer_params)
       load_nationalities
-      render :new, status: :unprocessable_entity
+      render(:new, status: :unprocessable_entity)
     end
   end
 
@@ -39,10 +39,10 @@ class ComposersController < ApplicationController
     service = Composers::FacadeService.update(@composer, composer_params)
 
     if service.success?
-      redirect_to service.composer, notice: success_message(:updated)
+      redirect_to(service.composer, notice: success_message(:updated))
     else
       load_nationalities
-      render :edit, status: :unprocessable_entity
+      render(:edit, status: :unprocessable_entity)
     end
   end
 
@@ -50,9 +50,9 @@ class ComposersController < ApplicationController
     service = Composers::FacadeService.delete(@composer)
 
     if service.success?
-      redirect_to composers_path, status: :see_other, notice: success_message(:destroyed)
+      redirect_to(composers_path, status: :see_other, notice: success_message(:destroyed))
     else
-      redirect_to @composer, alert: service.errors.full_messages.join(', ')
+      redirect_to(@composer, alert: service.errors.full_messages.join(", "))
     end
   end
 
@@ -76,14 +76,14 @@ class ComposersController < ApplicationController
   end
 
   def redirect_to_first_page
-    redirect_to composers_path
+    redirect_to(composers_path)
   end
 
   def record_not_found
-    render file: "#{Rails.root}/public/404.html", status: :not_found, layout: false
+    render(file: "#{Rails.root}/public/404.html", status: :not_found, layout: false)
   end
 
   def bad_request
-    head :bad_request
+    head(:bad_request)
   end
 end

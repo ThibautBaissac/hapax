@@ -41,7 +41,7 @@
 * Tests must be comprehensive and cover as many edge cases as possible.
 * Use factory bot for test data generation.
 * Follow Rails testing best practices (e.g., naming conventions, setup/teardown patterns).
-* Run tests via `rspec path/to/test/file.rb`.
+* Run tests via `bundle exec rspec path/to/test/file.rb --format documentation`.
 
 ---
 
