@@ -144,8 +144,6 @@ RSpec.describe ComposersController, type: :request do
         allow(mock_service).to receive(:composer).and_return(nil)
         allow(mock_service).to receive(:errors).and_return(mock_errors)
 
-        allow(Composers::FacadeService).to receive(:create).and_return(mock_service)
-
         post "/composers", params: { composer: { first_name: "Test" } }
         expect(response).to have_http_status(:unprocessable_entity)
       end
