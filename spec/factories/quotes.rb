@@ -3,6 +3,8 @@ FactoryBot.define do
     title { Faker::Book.title }
     author { Faker::Book.author }
     notes { Faker::Lorem.paragraph(sentence_count: 2) }
+    date { Date.current }
+    circa { false }
 
     trait :classical_music_quote do
       title { "On Musical Expression" }

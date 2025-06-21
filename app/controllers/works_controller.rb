@@ -1,6 +1,10 @@
 class WorksController < ApplicationController
   before_action :set_composer
-  before_action :set_work, only: %i[ show edit update destroy ]
+  before_action :set_work, only: %i[show edit update destroy]
+
+  def index
+    @works = @composer.works.includes(:movements, :quotes)
+  end
 
   def show
   end
@@ -15,43 +19,48 @@ class WorksController < ApplicationController
   def create
     @work = @composer.works.build(work_params)
 
-    respond_to do |format|
-      if @work.save
-        format.html { redirect_to([@composer, @work], notice: "Work was successfully created.") }
-      else
-        format.html { render(:new, status: :unprocessable_entity) }
-      end
+    if @work.save
+      redirect_to([@composer, @work], notice: success_message(:created))
+    else
+      render(:new, status: :unprocessable_entity)
     end
   end
 
   def update
-    respond_to do |format|
-      if @work.update(work_params)
-        format.html { redirect_to([@composer, @work], notice: "Work was successfully updated.") }
-      else
-        format.html { render(:edit, status: :unprocessable_entity) }
-      end
+    if @work.update(work_params)
+      redirect_to([@composer, @work], notice: success_message(:updated))
+    else
+      render(:edit, status: :unprocessable_entity)
     end
   end
 
   def destroy
-    @work.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to(composer_works_path(@composer), status: :see_other, notice: "Work was successfully destroyed.") }
+    if @work.destroy
+      redirect_to(composer_works_path(@composer), status: :see_other, notice: success_message(:destroyed))
+    else
+      redirect_to([@composer, @work], alert: @work.errors.full_messages.join(", "))
     end
   end
 
   private
-    def set_composer
-      @composer = Composer.find(params.expect(:composer_id))
-    end
 
-    def set_work
-      @work = @composer.works.find(params.expect(:id))
-    end
+  def set_composer
+    @composer = Composer.find(params[:composer_id])
+  end
 
-    def work_params
-      params.expect(work: [ :opus, :title, :description, :duration ])
-    end
+  def set_work
+    @work = @composer.works.find(params[:id])
+  end
+
+  def work_params
+    params.expect(work: [
+      :opus, :title, :description, :duration, :form, :structure,
+      :instrumentation, :recorded, :start_date_composed, :end_date_composed,
+      :unsure_start_date, :unsure_end_date
+    ])
+  end
+
+  def success_message(action)
+    t("works.messages.#{action}")
+  end
 end

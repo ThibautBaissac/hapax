@@ -42,3 +42,14 @@ en:
       created: "Composer was successfully created."
       updated: "Composer was successfully updated."
       destroyed: "Composer was successfully destroyed."
+  works:
+    messages:
+      created: "Work was successfully created."
+      updated: "Work was successfully updated."
+      destroyed: "Work was successfully destroyed."
+  quotes:
+    messages:
+      created: "Quote was successfully created."
+      updated: "Quote was successfully updated."
+      destroyed: "Quote was successfully destroyed."
+      linked: "Quote was successfully linked."
