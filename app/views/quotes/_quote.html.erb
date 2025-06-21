@@ -1,0 +1,66 @@
+<div class="p-4 hover:bg-gray-50 transition-colors">
+  <div class="flex items-start justify-between">
+    <div class="flex-1 min-w-0">
+      <h3 class="text-lg font-semibold text-gray-900 mb-1">
+        <%= quote.title %>
+      </h3>
+      <p class="text-sm text-gray-600 mb-2">by <%= quote.author %></p>
+
+      <!-- Associated Works/Movements -->
+      <% if quote.quote_details.any? %>
+        <div class="mb-2">
+          <span class="text-xs text-gray-500">Related to:</span>
+          <div class="flex flex-wrap gap-1 mt-1">
+            <% quote.quote_details.limit(3).each do |detail| %>
+              <% if detail.detailable_type == "Work" %>
+                <span class="inline-block px-2 py-0.5 bg-purple-100 text-purple-800 text-xs rounded-full">
+                  <%= detail.detailable.title %>
+                </span>
+              <% elsif detail.detailable_type == "Movement" %>
+                <span class="inline-block px-2 py-0.5 bg-emerald-100 text-emerald-800 text-xs rounded-full">
+                  <%= detail.detailable.work.title %> - <%= detail.detailable.title %>
+                </span>
+              <% end %>
+            <% end %>
+            <% if quote.quote_details.count > 3 %>
+              <span class="text-xs text-gray-500">+<%= quote.quote_details.count - 3 %> more</span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Notes preview -->
+      <% if quote.notes.present? %>
+        <p class="text-sm text-gray-600 line-clamp-2">
+          <%= truncate(quote.notes, length: 150) %>
+        </p>
+      <% end %>
+    </div>
+
+    <div class="flex-shrink-0 ml-4">
+      <%
+        # For search results, we need to construct the path to the quote.
+        # Since quotes are nested under works or movements, we need to find
+        # the first associated detail to build the correct path.
+        if quote.quote_details.any?
+          first_detail = quote.quote_details.first
+          if first_detail.detailable_type == 'Movement'
+            quote_path = [first_detail.detailable.work.composer, first_detail.detailable.work, first_detail.detailable, quote]
+          else
+            quote_path = [first_detail.detailable.composer, first_detail.detailable, quote]
+          end
+        else
+          # Fallback - should not happen in normal usage but handle gracefully
+          quote_path = quotes_path
+        end
+      %>
+      <%= link_to quote_path, class: "inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-blue-600 bg-blue-100 hover:bg-blue-200 hover:text-blue-700 transition-colors" do %>
+        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+        </svg>
+        View
+      <% end %>
+    </div>
+  </div>
+</div>
