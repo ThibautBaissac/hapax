@@ -2,11 +2,10 @@ source "https://rubygems.org"
 
 gem "bootsnap", require: false
 gem "chartkick"
-gem "cssbundling-rails"
+gem "importmap-rails"
 gem "devise"
 gem "groupdate"
 gem "jbuilder"
-gem "jsbundling-rails"
 gem "kamal", require: false
 gem "pagy", "~> 9.3"
 gem "propshaft"
@@ -18,6 +17,7 @@ gem "solid_cache"
 gem "solid_queue"
 gem "sqlite3", ">= 2.1"
 gem "stimulus-rails"
+gem "tailwindcss-rails"
 gem "thruster", require: false
 gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
